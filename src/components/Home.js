@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import '../css/intro.css';
 
 const Home = () => {
-    const [isLoad, setIsLoad] = useState(true);
+    
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoad(false)
-        }, 1200);
+        console.log(process.env.REACT_APP_URL_API);
         return () => {
             console.log("Intro");
         }
@@ -38,12 +36,9 @@ const Home = () => {
                     </div>
                 </div>
                 
-            </div>
-            
-            
-            
+            </div>    
         </div>
     )
 }
 
-export default Home
+export default Home;

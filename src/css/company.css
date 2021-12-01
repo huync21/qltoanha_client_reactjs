@@ -1,0 +1,173 @@
+.modal {
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.7;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: -410px;
+    z-index: 5;
+    display: none;
+}
+
+.admin-post__container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 90vh;
+    /* background-color: rgb(233, 77, 77); */
+    margin: auto;
+    margin-top: 70px;
+    color: #000;
+    min-width: 600px;
+}
+
+.admin-post__head {
+    display: flex;
+    position: relative;
+    /* justify-content: space-between; */
+    align-items: center;
+    height: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.admin-post__head .admin-post__title {
+    font-size: 30px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.admin-post__head .admin-post__button {
+    position: absolute;
+    right: 120px;
+}
+
+.admin-post__head .admin-post__button button{
+    /* width: 140px;
+    height: 40px; */
+    outline: none;
+    border: none;
+    background-color: #01afac;
+    color: white;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+}
+
+.admin-post__head .admin-post__button a{
+    /* width: 140px;
+    height: 40px; */
+    background-color: #01afac;
+    color: white;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+}
+
+.admin-post__head .admin-post__button a:hover {
+    background-color: #00cec9;
+}
+
+table#admin-post__table {
+    max-width: 1100px;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+table#admin-post__table td, th {
+    border: 1px solid rgb(182, 182, 182);
+    text-align: center;
+    padding: 10px;
+}
+
+table#admin-post__table th:nth-child(1) {
+    width: 50px;
+    font-size: 20px;
+    border-top-left-radius: 5px;
+}
+
+table#admin-post__table th:nth-child(2) {
+    font-size: 20px;
+}
+
+table#admin-post__table th:nth-child(3) {
+    width: 150px;
+    font-size: 20px;
+}
+
+table#admin-post__table th:nth-child(4) {
+    width: 150px;
+    font-size: 20px;
+}
+
+table#admin-post__table th:nth-child(5) {
+    width: 150px;
+    font-size: 20px;
+}
+
+table#admin-post__table td {
+    height: 52px;
+}
+
+#admin-post__table .post-edit-btn {
+    background-color: #e67e22;
+    color: #fff;
+    /* height: 36px; */
+    font-size: 18px;
+    border-radius: 5px;
+    /* width: 80px; */
+    cursor: pointer;
+    padding: 5px 10px;
+    font-weight: lighter;
+    outline: none;
+    border: none;
+}
+
+#admin-post__table .post-edit-btn:hover {
+    background-color: #f39c12;
+}
+
+#admin-post__table .post-edit-item-btn {
+    background-color: #e67e22;
+    outline: none;
+    border: none;
+    color: #fff;
+    height: 36px;
+    font-size: 18px;
+    border-radius: 5px;
+    width: 80px;
+    cursor: pointer;
+}
+
+#admin-post__table .post-edit-item-btn:hover {
+    background-color: #f39c12;
+}
+
+#admin-post__table .post-delete-btn {
+    outline: none;
+    border: none;
+    background-color: #e74c3c;
+    color: #fff;
+    height: 36px;
+    font-size: 18px;
+    border-radius: 5px;
+    width: 80px;
+    cursor: pointer;
+}
+
+#admin-post__table .post-delete-btn:hover {
+    background-color: #d63031;
+}
+
+@media screen and (max-width: 768px)  {
+    .modal {
+        right: -186px;
+    }
+}

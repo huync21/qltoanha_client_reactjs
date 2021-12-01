@@ -88,24 +88,19 @@ const Header = () => {
                             <div id="about" style={{cursor: 'pointer'}}
                                 className="nav__link dropdown__link" 
                                 onClick={ () => linkAction('about',false)}>
-                                Quản lý Nhân viên
+                                Quản lý tòa nhà
                                 <i className="bx bx-chevron-down dropdown__icon" />
                             </div>
                         
                             <ul className="dropdown__menu">
                                 <li className="dropdown__item">
-                                    <Link className="nav__link link__item" to= '/' onClick={ () => linkAction('about',true)}>
-                                        Dịch vụ 1
+                                    <Link className="nav__link link__item" to= '/company' onClick={ () => linkAction('about',true)}>
+                                        Công ty
                                     </Link>
                                 </li>
                                 <li className="dropdown__item">
                                     <Link className="nav__link link__item" to= '/' onClick={ () => linkAction('about',true)}>
-                                        Dịch vụ 2
-                                    </Link>
-                                </li>
-                                <li className="dropdown__item">
-                                    <Link className="nav__link link__item" to= '/' onClick={ () => linkAction('about',true)}>
-                                        Dịch vụ 3
+                                        Mặt bằng
                                     </Link>
                                 </li>
                             </ul>
