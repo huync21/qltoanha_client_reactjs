@@ -1,0 +1,78 @@
+@import url('./font.css');
+.d-logo-wrapper {
+    display: flex
+}
+
+.d-logo-text {
+    width: 300px;
+    height: 72px;
+    font-weight: 900;
+    background-color: #f80040;
+    color: white;
+    font-size: 20px;
+    transform: skew(-40deg);
+    margin-left: 20px;
+    text-align: center;
+}
+
+.d-logo-text div {
+    transform: skew(30deg);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    font-family: 'Noto Serif Display', serif;
+}
+
+.logo-home .d-logo-text{
+    width: 280px;
+    height: 50px;
+}
+
+.logo-home .d-logo-text div {
+    font-size: 30px;
+}
+
+.d-logo-text.logo2 {
+    background-color:yellow;
+    color: #000;
+}
+
+.logo-home .d-logo-text.logo2 div {
+    font-family: 'DejaVu-Serif';
+    margin-top: 5px;
+}
+
+
+@media screen and (max-width: 1040px){
+    .logo-home .d-logo-text {
+        width: 200px;
+        height: 40px;
+    }
+
+    .logo-home .d-logo-text div {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .logo-home .d-logo-text {
+        width: 200px;
+        height: 40px;
+    }
+
+    .logo-home .d-logo-text div {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 436px){
+    .logo-home .d-logo-text {
+        width: 150px;
+        height: 30px;
+    }
+
+    .logo-home .d-logo-text div {
+        font-size: 18px;
+    }
+}

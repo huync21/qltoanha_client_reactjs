@@ -1,32 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import logo from './logo.svg';
 import './App.css';
-
-
+import Header from './components/Header';
+import React from 'react'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from 'react-router-dom'
+// import "swiper/css/bundle";
+import {useSelector} from 'react-redux'
+import Home from './components/Home';
+import Login from './components/Login';
+import Footer from './components/Footer';
+import Contact from './components/Contact';
 
 function App() {
-
-  const [a, setA] = useState(1);
-  useEffect(() => {
-    async function fetchFloors(){
-      const res = await axios({
-        method: 'get',
-        baseURL: 'http://localhost:8080',
-        url: 'floors'
-      })
-      console.log(res.data);
-    }
-    fetchFloors();
-  }, [  a ])
-
-
-  return (
-    <div className="App">
-      <button onClick={() => setA(a+1)}> click </button>
-      <h1> {a} </h1>
-    </div>
-  );
+    // const isAdmin = useSelector(state => state.login.isAdmin);
+    return (
+        <div className="App">
+            <Router>
+                <Header />
+                <Switch>
+                    <Route path="/login">
+                        <Login />
+                    </Route>
+                    <Route path="/contact">
+                        <Contact />
+                    </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
+                <Footer />
+            </Router>
+        </div>
+    );
 }
 
 export default App;

@@ -1,0 +1,125 @@
+@import url('./font.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+.intro-container {
+    position: relative;
+    width: 100%;
+    /* display: flex;
+    flex-direction: row-reverse; */
+    margin-top: 68px;
+    min-height: 80vh;
+    background: url('../assets/img/introBG.png') ;
+    background-size: cover;
+    background-position: bottom;
+    /* padding-bottom: 30px; */
+    /* margin-bottom: 30px; */
+}
+
+.intro-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1350px;
+    margin: auto;
+}
+
+.intro-body {
+    width: 100%;
+    display: flex;
+    /* flex-direction: row-reverse; */
+    flex-wrap: wrap;
+}
+
+.intro-wrapper-left {
+    width: 90%;
+    padding-top: 15px;
+    padding-left: 20px;
+}
+
+.intro-title {
+    margin-left: 20px;
+    padding-top: 30px;
+}
+
+.intro-title div:nth-child(1),
+.intro-title div:nth-child(3),
+.intro-title div:nth-child(4) {
+    font-size: 18px;
+    color: yellow;
+    font-weight: bold;
+    font-family: 'Arturo-outline';
+    letter-spacing: 1.5px;
+}
+
+.intro-title div:nth-child(4) {
+    color: rgb(255, 43, 43);
+    margin-top: 10px;
+    letter-spacing: 1.5px;
+}
+
+.intro-title div:nth-child(2) {
+    font-size: 32px;
+    color: yellow;
+    font-weight: bolder;
+    font-family: 'Arturo-outline';
+    margin-top: 15px;
+    margin-bottom: 5px;
+    letter-spacing: 1.5px;
+}
+
+/* .intro-content {
+    margin-top: 50px;
+} */
+
+.intro-content div {
+    font-size: 15.5px;
+    color: #fff;
+    margin-top: 10px;
+    font-family: 'Noto Sans', sans-serif;
+    padding-right: 20px;
+}
+
+.intro-wrapper-right {
+    width: 30%;
+    padding-left: 20px;
+    /* padding: 20px 40px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.intro-wrapper-img {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.intro-wrapper-img img {
+    width: 100%;
+    height: 110%;
+}
+
+.intro-wrapper-title {
+    color: #fff;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 19px;
+    letter-spacing: -2px;
+}
+
+@media screen and (max-width: 768px){
+    .intro-container {
+        width: 100%;
+        flex-direction: column;
+        margin-top: 51px;
+        /* background: none; */
+    }
+
+    .intro-wrapper-right,
+    .intro-wrapper-left {
+        width: 100%;
+    }
+
+    .intro-wrapper-left {
+        padding-left: 20px;
+    }
+}

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Arturo-outline';
+    src: url('../assets/font/Arturo-Heavy-Outline-Trial.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'DejaVu-Serif';
+    src: url('../assets/font/DejaVuSerif.ttf') format('opentype');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
