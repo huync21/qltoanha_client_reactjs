@@ -86,12 +86,12 @@ export const createNewCompany = (data) => async dispatch => {
     }
 }
 
-export const updateCompany = (data) => async dispatch => {
+export const updateCompany = (id, data) => async dispatch => {
     try {
         const res = await axios({
-            method: 'PATCH',
+            method: 'PUT',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `company`,
+            url: `company/${id}`,
             data: data
         })
         if(res.status == 200){
@@ -114,12 +114,12 @@ export const updateCompany = (data) => async dispatch => {
     }
 }
 
-export const deleteCompany = () => async dispatch => {
+export const deleteCompany = (id) => async dispatch => {
     try {
         const res = await axios({
             method: 'DELETE',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `company`,
+            url: `company/${id}`,
         })
         if(res.status == 200){
             dispatch({

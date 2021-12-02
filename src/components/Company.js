@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import '../css/company.css'
+import '../css/form.css'
+import '../css/dialog.css'
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCompany } from '../redux/actions/company';
+import { getAllCompany, createNewCompany, updateCompany, deleteCompany } from '../redux/actions/company';
 
 const Company = () => {
     const [isShow, setIsShow] = useState(false)
-    const companies = useSelector(state => state.company.data)
+    const data = useSelector(state => state.company.data)
+    const [companies, setCompanies] = useState(data);
     const [isAdd, setIsAdd] = useState(false);
     const location = useLocation();
-    const [item, setItem] = useState({});
-    const [title, setTitle] = useState('');
+    const [indexEditCompany, setIndexEditCompany] = useState(null);
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllCompany());
@@ -20,9 +23,18 @@ const Company = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
+    useEffect(() => {
+        setCompanies(data);
+    }, [data])
+
     const editClick = (index) => {
         setIsShow(true);
         setIsAdd(false);
+        setIndexEditCompany(index);
+        document.getElementById('name').value = companies[index].name;
+        document.getElementById('tax-code').value = companies[index].taxCode;
+        document.getElementById('authorized-capital').value = companies[index].authorizedCapital;
+        document.getElementById('phone-no').value = companies[index].phoneNo;
         document.querySelector('.form-post').classList.add('active');
     }
 
@@ -31,15 +43,11 @@ const Company = () => {
         setIsAdd(true);
         document.querySelector('.form-post').classList.add('active');
         if(mode === "edit") {
-            document.querySelector('.dialog__title').textContent = "Sửa mục bài viết";
+            document.querySelector('.dialog__title').textContent = "Sửa thông tin công ty";
         }
         else {
-            document.querySelector('.dialog__title').textContent = "Thêm mục bài viết";
-            // document.querySelector('.form-post__field input').value = "";
-            // document.querySelector('.form-post__field input').textarea = "";
+            document.querySelector('.dialog__title').textContent = "Thêm mới công ty";
         }
-        // document.getElementById("imgInp").value="";
-        // document.getElementById("blah").value = null;
     }
 
     const cancelClick = () => {
@@ -48,76 +56,95 @@ const Company = () => {
         document.querySelector('.form-post').classList.remove('active');
     }
 
-    const handleChange = () => {
-        console.log('alo')
-    }
-
-    const imgChange = () => {
-        const imgInp = document.getElementById('imgInp');
-        const [file] = imgInp.files;
-        if (file) {
-            const imgPreview = document.getElementById('blah');
-            imgPreview.src = URL.createObjectURL(file)
-        }
-    }
-
-    const editTitleArticle = () => {
-        
-    }
-
-    const editItemArticle = () => {
+    const addOrUpdateItem = () => {
         if(isAdd){
             addItem();
-            return;
         }
-        const imgInp = document.getElementById('imgInp');
-        const titleInp = document.getElementById('title-item').value;
-        const contentInp = document.getElementById('content-item').value;
-        const form = new FormData();
-        const [file] = imgInp.files;
-        if (file) {
-            form.append('image', file);
+        else{
+            editCompany();
         }
-        else form.append('image', null);
-        form.append('title', titleInp);
-        form.append('content', contentInp);
-        // if(item?.id)
-        //     dispatch(editItem(item.id, form));
+        
         cancelClick();
+        window.location.reload();
     }
 
-    const removeItemArticle = (id) => {
-        // if(id){
-        //     dispatch(removeItem(id));
-        // }
+    const editCompany = () => {
+        const name = document.getElementById('name').value;
+        const taxCode = document.getElementById('tax-code').value;
+        const authorizedCapital = document.getElementById('authorized-capital').value;
+        const phoneNo = document.getElementById('phone-no').value;
+        
+        const data = {
+            name: name,
+            taxCode: taxCode,
+            authorizedCapital: Number(authorizedCapital),
+            phoneNo: phoneNo
+        }
+        dispatch(updateCompany(companies[indexEditCompany].id, data));
+    }
+
+    const removeCompany = (id) => {
+        if(id){
+            dispatch(deleteCompany(id));
+            window.location.reload();
+        }
     }
 
     const addItem = () => {
-        const imgInp = document.getElementById('imgInp');
-        const titleInp = document.getElementById('title-item').value;
-        const contentInp = document.getElementById('content-item').value;
-        const form = new FormData();
-        const [file] = imgInp.files;
-        if (file) {
-            form.append('image', file);
-        }
-        else form.append('image', null);
-        // form.append('title', titleInp);
-        // form.append('content', contentInp);
-        // form.append('indexing', article.items.length+1);
+        const name = document.getElementById('name').value;
+        const taxCode = document.getElementById('tax-code').value;
+        const authorizedCapital = document.getElementById('authorized-capital').value;
+        const phoneNo = document.getElementById('phone-no').value;
         
-        document.getElementById("imgInp").value=""; 
-        document.getElementById("blah").value = null; 
+        const data = {
+            name: name,
+            taxCode: taxCode,
+            authorizedCapital: Number(authorizedCapital),
+            phoneNo: phoneNo
+        }
+
+        dispatch(createNewCompany(data));
+        
         cancelClick();
+    }
+
+    const viewEmployee = (id) => {
+
     }
 
     return (
         <div style={{position: 'relative'}}>
-            <div style={{display: isShow ? 'block' : 'none'}} className="modal"></div>
+            <div style={{display: isShow ? 'block' : 'none'}} className="modal">
             <div className="form-post">
                 <div className="form-post__title dialog__title">
-                    Sửa Công ty
+                    Thêm mới công ty
                 </div>
+                <div className="form-post__content">
+                    <div className="form-post__wrapper">
+                        <div className="form-post__field">
+                            <input style={{width: '100%'}} type="text" id='name' placeholder = "Name"/>
+                        </div>
+                        <div className="form-post__field">
+                            <input style={{width: '100%'}} type="text" id='tax-code' placeholder = "Tax code"/>
+                        </div>
+                        <div className="form-post__field">
+                            <input style={{width: '100%'}} type="text" id='authorized-capital' placeholder = "Authorized Capital"/>
+                        </div>
+                        <div className="form-post__field">
+                            <input style={{width: '100%'}} type="text" id='phone-no' placeholder = "Phone No"/>
+                        </div>
+                    </div>
+                    <div className="form-post__control">
+                        <button onClick={() => cancelClick() } className="cancel-btn">
+                            Hủy
+                        </button>
+                        <button className="add-section-btn" onClick={() => addOrUpdateItem()}>
+                            <i className='bx bx-save'></i>
+                            Lưu
+                        </button>
+                    </div>
+                </div>  
+            </div>
             </div>
             <div style={{maxWidth: "1100px", minHeight: "100vh"}} className="admin-post__container">
                 <div className="admin-post__wrapper">
@@ -146,18 +173,18 @@ const Company = () => {
                                     <th style={{width: '105px'}} >Xóa</th>
                                 </tr>
                                 {
-                                    companies?.items?.map((item, index) => (
+                                    companies?.map((item, index) => (
                                         <tr key = {index}>
                                             <td>{index+1}</td>
                                             <td>{item.name}</td>
                                             <td>{item.taxCode}</td>
                                             <td>{item.authorizedCapital}</td>
                                             <td>{item.phoneNo}</td>
-                                            <td>{item.employees.length}</td>
+                                            <td>{item?.numberOfEmployee}</td>
                                             <td>
-                                                <button onClick={() => editClick(index)} className="post-edit-item-btn">
+                                                <button onClick={() => viewEmployee(item.id)} className="post-edit-item-btn">
                                                     <i className='bx bxs-pencil'></i>
-                                                    View Employee
+                                                    View
                                                 </button>
                                             </td>
                                             <td>
@@ -167,7 +194,7 @@ const Company = () => {
                                                 </button>
                                             </td>
                                             <td>
-                                                <button className="post-delete-btn" onClick={() => removeItemArticle(item.id)}>
+                                                <button className="post-delete-btn" onClick={() => removeCompany(item.id)}>
                                                     <i className='bx bx-trash'></i>
                                                     Xóa
                                                 </button>
