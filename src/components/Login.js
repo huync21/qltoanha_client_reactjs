@@ -3,18 +3,23 @@ import {Redirect, useLocation } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import '../css/login.css'
 import imgPath from '../assets/img/img-login.svg'
+import { login } from '../redux/actions/login';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const location = useLocation();
-    const token = null;
+    const token = localStorage.getItem('token');
     const checkError = false;
     const [loginOrSignUp, setLoginOrSignUp] = useState(false);
     const [visible, setVisible] = useState(false);
+    const dispatch = useDispatch();
+    const dataLogin = useSelector(state => state.login.data);
+    const error = useSelector(state => state.login.error);
+
     useEffect(() => {
-        if(checkError === true){
+        if(error === true){
             if(loginOrSignUp) {
                 document.querySelector('.msg-log').textContent = "Đăng nhập thất bại";
                 document.querySelector('.msg-log').classList.add('active');
@@ -35,17 +40,9 @@ const Login = () => {
                 console.log("Đăng kí thất bại");
             }
         }
-        return () => {
-            document.querySelector('.msg-log').textContent = "Lỗi thực hiện!!";
-            document.querySelector('.msg-log').classList.add('active');
-            setTimeout(() => {
-                document.querySelector('.msg-log').classList.remove('active');
-                setVisible(false);
-            }, 1200);
-            console.log("Login/SignUp error")
-        }
+        return () => console.log("")
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [checkError])
+    }, [error])
     const toggleLogin = (mode) => {
         const loginIn = document.getElementById('login-in')
         const loginUp = document.getElementById('login-up')
@@ -72,16 +69,16 @@ const Login = () => {
     const signUp = (e) => {
         e.preventDefault();
         const usernameTag = document.querySelector('#username-up');
-        const emailTag = document.querySelector('#email-up');
+        // const emailTag = document.querySelector('#email-up');
         const passwordTag = document.querySelector('#password-up');
         if(username.trim().length < 6){
             usernameTag.parentElement.classList.add('empty');
             return;
         }
-        if(!validateEmail(email)){
-            emailTag.parentElement.classList.add('emailError');
-            return;
-        }
+        // if(!validateEmail(email)){
+        //     emailTag.parentElement.classList.add('emailError');
+        //     return;
+        // }
         if(password.trim().length < 6 ){
             passwordTag.parentElement.classList.add('numError');
             return;
@@ -89,34 +86,35 @@ const Login = () => {
         const data = {
             username: username,
             password: password,
-            email: email,
-            emailOwner: 'vuthanhcong110502@gmail.com'
+            // email: email,
         }
         setLoginOrSignUp(false);
         if(location.pathname === '/login')
             console.log(data);
     }
 
-    const signIn = (e) => {
+    const signIn = async (e) => {
         e.preventDefault();
-        const emailTag = document.querySelector('#email').parentElement;
-        const passwordTag = document.querySelector('#password').parentElement;
-
-        if(!validateEmail(email)){
-            emailTag.classList.add('emailError');
-            return;
-        }
-        if(password.trim().length < 6 ){
-            passwordTag.classList.add('numError');
-            return;
-        }
+        // const emailTag = document.querySelector('#email').parentElement;
+        // const passwordTag = document.querySelector('#password').parentElement;
+        // const usernameTag = document.querySelector('#username-up');
+        // if(username.trim().length < 6){
+        //     usernameTag.parentElement.classList.add('empty');
+        //     return;
+        // }
+        // if(password.trim().length < 6 ){
+        //     passwordTag.classList.add('numError');
+        //     return;
+        // }
 
         // api
         const data = {
-            email: email,
+            username: username,
             password: password
         }
-        console.log(data);
+
+        dispatch(login(data));
+        
     }
 
 
@@ -140,14 +138,14 @@ const Login = () => {
                     <form className="login__registre" id="login-in">
                         <h1 className="login__title">Đăng nhập</h1>
                         <div className="login__box">
-                            <i className="bx bx-at login__icon" />
+                            <i className="bx bx-user login__icon" />
                             <input 
                                 onFocus={onFocusInput} 
-                                type="email" 
-                                placeholder="Email" 
+                                type="text" 
+                                placeholder="Username" 
                                 className="login__input" 
-                                onChange = {(e) => setEmail(e.target.value)}
-                                id="email"
+                                onChange = {(e) => setUsername(e.target.value)}
+                                id="username-up"
                             />
                         </div>
                         <div className="login__box">

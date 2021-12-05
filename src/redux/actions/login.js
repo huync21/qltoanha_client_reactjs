@@ -5,12 +5,14 @@ export const login = (data) => async dispatch => {
     try {
         const res = await axios({
             method: 'POST',
-            baseURL: process.env.REACT_APP_URL_API,
-            url: "account/login",
+            baseURL: 'http://localhost:8080',
+            url: "login",
             data: data
         });
 
         if(res.status == 200 ){
+            localStorage.setItem("token", res.data.accessToken);
+            localStorage.setItem("username", res.data.username);
             dispatch({
                 type: LOGIN,
                 data: res.data
@@ -37,7 +39,7 @@ export const signUp = (data) => async dispatch => {
         const res = await axios({
             method: 'POST',
             baseURL: process.env.REACT_APP_URL_API,
-            url: "account/register",
+            url: "register",
             data: data
         });
 

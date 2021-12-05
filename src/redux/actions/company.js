@@ -8,7 +8,11 @@ export const getAllCompany = () => async dispatch => {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: 'company'
+            url: 'company',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
         })
         if(res.status == 200){
             dispatch({

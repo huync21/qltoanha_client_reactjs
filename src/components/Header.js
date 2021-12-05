@@ -27,6 +27,7 @@ const Header = () => {
 
     const logout = () => {
         // dispatch({type: LOGOUT, data: null})
+        localStorage.removeItem("token")
         setIsLogout(true);
     }
 
@@ -161,8 +162,8 @@ const Header = () => {
                                             <i style={{fontSize: "26px", marginRight: "5px"}} className='bx bxs-user-circle'></i>
                                             {username}
                                         </div>
-                                        <span style={{display: token && isAdmin === 'true' ? 'none' : 'block', marginLeft: "30px", fontSize: "12px"}} 
-                                        className="user-amount"> {localStorage.getItem('money') ? localStorage.getItem('money') : 0}đ </span>
+                                        {/* <span style={{display: token && isAdmin === 'true' ? 'none' : 'block', marginLeft: "30px", fontSize: "12px"}} 
+                                        className="user-amount"> {localStorage.getItem('money') ? localStorage.getItem('money') : 0}đ </span> */}
                                     </div>
                                     <ul className="dropdown__menu">
                                         <li style={{cursor: "pointer"}} className="dropdown__item" onClick={() => logout()}>
