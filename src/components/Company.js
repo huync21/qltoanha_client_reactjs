@@ -115,6 +115,7 @@ const Company = () => {
     return (
         <div style={{position: 'relative'}}>
             <div style={{display: isShow ? 'block' : 'none'}} className="modal">
+            <div className="modal_overlay"></div>
             <div className="form-post">
                 <div className="form-post__title dialog__title">
                     Thêm mới công ty

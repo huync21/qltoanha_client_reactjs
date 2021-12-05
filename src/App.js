@@ -13,6 +13,8 @@ import Login from './components/Login';
 import Footer from './components/Footer';
 import Contact from './components/Contact';
 import Company from './components/Company';
+import ServiceRegistration_Company from './components/ServiceRegistration_Company';
+import ServiceRegistration_RegisteredService from './components/ServiceRegistration_RegisteredServices';
 
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
@@ -29,6 +31,12 @@ function App() {
                     </Route>
                     <Route path="/company">
                         <Company/>
+                    </Route>
+                    <Route path="/service-registration/companies">
+                        <ServiceRegistration_Company/>
+                    </Route>
+                    <Route path="/service-registration/registered-services">
+                        <ServiceRegistration_RegisteredService />
                     </Route>
                     <Route path="/">
                         <Home />
