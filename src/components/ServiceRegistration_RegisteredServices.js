@@ -53,6 +53,12 @@ function ServiceRegistration_RegisteredServices(props) {
         }
     }
 
+    const editRegisterdService = (item) =>{
+        if(item){
+            
+        }
+    }
+
     return (registeredService?
         <Redirect to={{
             pathname:"/company",
@@ -76,11 +82,12 @@ function ServiceRegistration_RegisteredServices(props) {
                             <tbody>
                                 <tr>
                                     <th>STT</th>
-                                    <th style={{width: '200px'}}>Service</th>
-                                    <th style={{width: '200px'}}>Start Date</th>
-                                    <th style={{width: '200px'}}>Current Price</th>
-                                    <th style={{width: '200px'}}>Description</th>
-                                    <th style={{width: '200px'}} >Cancel Service</th>               
+                                    <th style={{width: '200px'}}>Dịch vụ</th>
+                                    <th style={{width: '200px'}}>Ngày bắt đầu sử dụng</th>
+                                    <th style={{width: '200px'}}>Giá hiện tại với công ty</th>
+                                    <th style={{width: '200px'}}>Mô tả</th>
+                                    <th style={{width: '200px'}}>Cập nhật thông tin</th>
+                                    <th style={{width: '200px'}} >Hủy dịch vụ</th>               
                                 </tr>
                                 {
                                     registeredServices?.map((item, index) => (
@@ -91,13 +98,19 @@ function ServiceRegistration_RegisteredServices(props) {
                                             <td>{item?.currentPrice}</td>
                                             <td>{item?.description}</td>
                                             <td>
+                                                <button onClick={(item)=> editRegisterdService(item)} className="post-edit-item-btn">
+                                                <i className='bx bxs-pencil'></i>
+                                                    SỬA
+                                                </button>
+                                            </td>
+                                            <td>
                                                 { item?.service?.required === 0 ?
                                                 <button onClick={() => cancelRegisteredService(item?.id)} className="post-delete-btn">
-                                                    <i className='bx bxs-pencil'>Cancel</i>
+                                                    <i className='bx bx-trash'></i>HỦY
                                                 </button>
                                                 :
                                                 <button className="post-disabled-btn">
-                                                    <i className='bx bxs-pencil'>Cancel</i>
+                                                   <i className='bx bx-trash'></i> HỦY
                                                 </button>
                                                 }
                                             </td>        

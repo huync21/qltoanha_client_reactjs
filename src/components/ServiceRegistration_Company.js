@@ -35,7 +35,7 @@ const ServiceRegistration_Company = () => {
 
     return (
         <>
-             <div style={{ position: 'relative'}} >
+            <div style={{ position: 'relative' }} >
                 <div style={{ maxWidth: "1100px", minHeight: "100vh" }} className="admin-post__container">
                     <div className="admin-post__wrapper">
                         <div className="admin-post__head">
@@ -48,13 +48,13 @@ const ServiceRegistration_Company = () => {
                                 <tbody>
                                     <tr>
                                         <th>STT</th>
-                                        <th style={{ width: '200px' }}>Name</th>
-                                        <th style={{ width: '200px' }}>Tax code</th>
-                                        <th style={{ width: '200px' }}>Authorized Capital</th>
-                                        <th style={{ width: '200px' }}>Phone No</th>
-                                        <th style={{ width: '200px' }} >Employees</th>
-                                        <th style={{ width: '200px' }}>Sum Of Rented Area</th>
-                                        <th style={{ width: '105px' }}>Services</th>
+                                        <th style={{ width: '200px' }}>Tên công ty</th>
+                                        <th style={{ width: '200px' }}>Mã số thuế</th>
+                                        <th style={{ width: '200px' }}>Vốn điều lệ</th>
+                                        <th style={{ width: '200px' }}>SĐT</th>
+                                        <th style={{ width: '200px' }} >Sô nhân viên</th>
+                                        <th style={{ width: '200px' }}>Tổng diện tích mặt bằng</th>
+                                        <th style={{ width: '105px' }}>Dịch vụ</th>
                                     </tr>
                                     {
                                         companies?.map((item, index) => (
@@ -62,14 +62,17 @@ const ServiceRegistration_Company = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item?.name}</td>
                                                 <td>{item?.taxCode}</td>
-                                                <td>{item?.authorizedCapital}</td>
+                                                <td>{new Intl.NumberFormat('vi-VN', {
+                                                    style: 'currency',
+                                                    currency: 'VND',
+                                                }).format(item?.authorizedCapital)}</td>
                                                 <td>{item?.phoneNo}</td>
                                                 <td>{item?.numberOfEmployee}</td>
                                                 <td>{item?.sumOfRentedArea}</td>
                                                 <td>
                                                     <Link to={{
                                                         pathname: "/service-registration/registered-services",
-                                                        search: `?companyId=`+item?.id,
+                                                        search: `?companyId=` + item?.id,
                                                     }}>
                                                         <button onClick={() => viewRegisteredServices(item)} className="post-edit-item-btn">
                                                             <i className='bx bxs-pencil'></i>
