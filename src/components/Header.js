@@ -13,6 +13,7 @@ const Header = () => {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     const isAdmin = localStorage.getItem('isAdmin');
+    const serviceData = localStorage.getItem('service');
     // const dispatch = useDispatch();
     const location = useLocation();
     useEffect(() => {
@@ -107,30 +108,20 @@ const Header = () => {
                             </ul>
                         </li>
                         <li className="nav__item dropdown">
-                            <div id="about" style={{cursor: 'pointer'}}
-                                className="nav__link dropdown__link" 
-                                onClick={ () => linkAction('about',false)}>
+                            <Link id="service" style={{cursor: 'pointer'}}
+                                className="nav__link"
+                                to={`/service`}
+                                onClick={ () => linkAction('service',false)}>
                                 Quản lý Dịch vụ
-                                <i className="bx bx-chevron-down dropdown__icon" />
-                            </div>
+                            </Link>
                         
-                            <ul className="dropdown__menu">
+                        {/* {serviceData.map ((service) => (<ul className="dropdown__menu">
                                 <li className="dropdown__item">
                                     <Link className="nav__link link__item" to= '/' onClick={ () => linkAction('about',true)}>
-                                        Dịch vụ 1
+                                        {service.name}
                                     </Link>
                                 </li>
-                                <li className="dropdown__item">
-                                    <Link className="nav__link link__item" to= '/' onClick={ () => linkAction('about',true)}>
-                                        Dịch vụ 2
-                                    </Link>
-                                </li>
-                                <li className="dropdown__item">
-                                    <Link className="nav__link link__item" to= '/' onClick={ () => linkAction('about',true)}>
-                                        Dịch vụ 3
-                                    </Link>
-                                </li>
-                            </ul>
+                            </ul>))} */}
                         </li>
                         
                         <li className="nav__item">

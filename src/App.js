@@ -13,6 +13,7 @@ import Login from './components/Login';
 import Footer from './components/Footer';
 import Contact from './components/Contact';
 import Company from './components/Company';
+import Service from './components/Service';
 
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
@@ -29,6 +30,9 @@ function App() {
                     </Route>
                     <Route path="/company">
                         <Company/>
+                    </Route>
+                    <Route path="/service">
+                        <Service/>
                     </Route>
                     <Route path="/">
                         <Home />
