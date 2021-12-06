@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
@@ -20,7 +20,7 @@ const Company = () => {
         return () => {
             console.log(location.pathname);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const Company = () => {
         setIsShow(true);
         setIsAdd(true);
         document.querySelector('.form-post').classList.add('active');
-        if(mode === "edit") {
+        if (mode === "edit") {
             document.querySelector('.dialog__title').textContent = "Sửa thông tin công ty";
         }
         else {
@@ -57,13 +57,13 @@ const Company = () => {
     }
 
     const addOrUpdateItem = () => {
-        if(isAdd){
+        if (isAdd) {
             addItem();
         }
-        else{
+        else {
             editCompany();
         }
-        
+
         cancelClick();
         window.location.reload();
     }
@@ -73,7 +73,7 @@ const Company = () => {
         const taxCode = document.getElementById('tax-code').value;
         const authorizedCapital = document.getElementById('authorized-capital').value;
         const phoneNo = document.getElementById('phone-no').value;
-        
+
         const data = {
             name: name,
             taxCode: taxCode,
@@ -84,7 +84,7 @@ const Company = () => {
     }
 
     const removeCompany = (id) => {
-        if(id){
+        if (id) {
             dispatch(deleteCompany(id));
             window.location.reload();
         }
@@ -95,7 +95,7 @@ const Company = () => {
         const taxCode = document.getElementById('tax-code').value;
         const authorizedCapital = document.getElementById('authorized-capital').value;
         const phoneNo = document.getElementById('phone-no').value;
-        
+
         const data = {
             name: name,
             taxCode: taxCode,
@@ -104,7 +104,7 @@ const Company = () => {
         }
 
         dispatch(createNewCompany(data));
-        
+
         cancelClick();
     }
 
@@ -113,47 +113,47 @@ const Company = () => {
     }
 
     return (
-        <div style={{position: 'relative'}}>
-            <div style={{display: isShow ? 'block' : 'none'}} className="modal">
-            <div className="modal_overlay"></div>
-            <div className="form-post">
-                <div className="form-post__title dialog__title">
-                    Thêm mới công ty
+        <div style={{ position: 'relative' }}>
+            <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
+                <div className="modal_overlay"></div>
+                <div className="form-post">
+                    <div className="form-post__title dialog__title">
+                        Thêm mới công ty
+                    </div>
+                    <div className="form-post__content">
+                        <div className="form-post__wrapper">
+                            <div className="form-post__field">
+                                <input style={{ width: '100%' }} type="text" id='name' placeholder="Name" />
+                            </div>
+                            <div className="form-post__field">
+                                <input style={{ width: '100%' }} type="text" id='tax-code' placeholder="Tax code" />
+                            </div>
+                            <div className="form-post__field">
+                                <input style={{ width: '100%' }} type="text" id='authorized-capital' placeholder="Authorized Capital" />
+                            </div>
+                            <div className="form-post__field">
+                                <input style={{ width: '100%' }} type="text" id='phone-no' placeholder="Phone No" />
+                            </div>
+                        </div>
+                        <div className="form-post__control">
+                            <button onClick={() => cancelClick()} className="cancel-btn">
+                                Hủy
+                            </button>
+                            <button className="add-section-btn" onClick={() => addOrUpdateItem()}>
+                                <i className='bx bx-save'></i>
+                                Lưu
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div className="form-post__content">
-                    <div className="form-post__wrapper">
-                        <div className="form-post__field">
-                            <input style={{width: '100%'}} type="text" id='name' placeholder = "Name"/>
-                        </div>
-                        <div className="form-post__field">
-                            <input style={{width: '100%'}} type="text" id='tax-code' placeholder = "Tax code"/>
-                        </div>
-                        <div className="form-post__field">
-                            <input style={{width: '100%'}} type="text" id='authorized-capital' placeholder = "Authorized Capital"/>
-                        </div>
-                        <div className="form-post__field">
-                            <input style={{width: '100%'}} type="text" id='phone-no' placeholder = "Phone No"/>
-                        </div>
-                    </div>
-                    <div className="form-post__control">
-                        <button onClick={() => cancelClick() } className="cancel-btn">
-                            Hủy
-                        </button>
-                        <button className="add-section-btn" onClick={() => addOrUpdateItem()}>
-                            <i className='bx bx-save'></i>
-                            Lưu
-                        </button>
-                    </div>
-                </div>  
             </div>
-            </div>
-            <div style={{maxWidth: "1100px", minHeight: "100vh"}} className="admin-post__container">
+            <div style={{ maxWidth: "1100px", minHeight: "100vh" }} className="admin-post__container">
                 <div className="admin-post__wrapper">
                     <div className="admin-post__head">
-                        <div style={{fontSize: "20px", marginLeft: "-20px"}} className="admin-post__title">
+                        <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
                             Danh sách công ty
                         </div>
-                        <div style={{right: '10px'}} className="admin-post__button">
+                        <div style={{ right: '10px' }} className="admin-post__button">
                             <button onClick={() => popUpActive()}>
                                 Thêm công ty
                             </button>
@@ -164,19 +164,19 @@ const Company = () => {
                             <tbody>
                                 <tr>
                                     <th>STT</th>
-                                    <th style={{width: '200px'}}>Name</th>
-                                    <th style={{width: '200px'}}>Tax code</th>
-                                    <th style={{width: '200px'}}>Authorized Capital</th>
-                                    <th style={{width: '200px'}}>Phone No</th>
-                                    <th style={{width: '200px'}} >Employees</th>
-                                    <th style={{width: '105px'}}>View Employee</th>
-                                    <th style={{width: '105px'}}>Sửa</th>
-                                    <th style={{width: '105px'}} >Xóa</th>
+                                    <th style={{ width: '200px' }}>Name</th>
+                                    <th style={{ width: '200px' }}>Tax code</th>
+                                    <th style={{ width: '200px' }}>Authorized Capital</th>
+                                    <th style={{ width: '200px' }}>Phone No</th>
+                                    <th style={{ width: '200px' }} >Employees</th>
+                                    <th style={{ width: '105px' }}>View Employee</th>
+                                    <th style={{ width: '105px' }}>Sửa</th>
+                                    <th style={{ width: '105px' }} >Xóa</th>
                                 </tr>
                                 {
                                     companies?.map((item, index) => (
-                                        <tr key = {index}>
-                                            <td>{index+1}</td>
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
                                             <td>{item?.name}</td>
                                             <td>{item?.taxCode}</td>
                                             <td>{item?.authorizedCapital}</td>
@@ -205,7 +205,7 @@ const Company = () => {
                                 }
 
                             </tbody>
-                        </table>            
+                        </table>
                     </div>
                 </div>
             </div>
