@@ -6,7 +6,7 @@ import { Redirect, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllRegisterdServices, deleteRegisterdService } from '../redux/actions/registed_service';
 import PropTypes from 'prop-types';
-
+import moment from 'moment';
 
 
 ServiceRegistration_RegisteredServices.propTypes = {
@@ -57,7 +57,7 @@ function ServiceRegistration_RegisteredServices(props) {
 
     const popUpEditForm = (item) => {
         setRegisteredService(item)
-        document.getElementById('start-date').value = item.startDate
+        document.getElementById('start-date').value =moment(item.startDate).format("YYYY-DD-MM")
         document.getElementById('description').value = item.description
         setIsShow(true)
         document.querySelector('.form-post').classList.add('active');
@@ -67,10 +67,8 @@ function ServiceRegistration_RegisteredServices(props) {
         setIsShow(false)
     }
 
-    const editRegisterdService = (item) => {
-        if (item) {
-
-        }
+    const editRegisterdService = () => {
+        
     }
 
 
@@ -93,14 +91,14 @@ function ServiceRegistration_RegisteredServices(props) {
                                     <p style={{ textAlign: "left" }}><strong>Tên dịch vụ:</strong> {registeredService?.service?.name}</p>
                                 </div>
                                 <div className="form-post__field">
-                                    <p style={{ textAlign: "left" }}><strong>Giá tiền tháng này:</strong>{new Intl.NumberFormat('vi-VN', {
+                                    <p style={{ textAlign: "left" }}><strong>Giá tiền tháng này:</strong> {new Intl.NumberFormat('vi-VN', {
                                         style: 'currency',
                                         currency: 'VND',
                                     }).format(registeredService?.currentPrice)}</p>
                                 </div>
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Ngày bắt đàu:</strong></p>
-                                    <input style={{ width: '100%' }} type="text" id='start-date' placeholder="Ngày bắt đầu" />
+                                    <input style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
                                 </div>
 
                                 <div className="form-post__field">
@@ -177,8 +175,10 @@ function ServiceRegistration_RegisteredServices(props) {
 
                                 </tbody>
                             </table>
-                            <i style={{ fontSize: "15px" }}>(Chú ý: giá hiện tại mỗi tháng của mỗi dịch vụ được tính bằng công thức: công ty dưới 10 người và thuê dưới 100 m2 thì có cùng mức giá dịch vụ cho mỗi dịch vụ
-                                , cứ thêm 5 người hoặc thêm 10 m2 diện tích sàn thì đơn giá tăng lên 5% cho mỗi mục))</i>
+                            <i style={{ fontSize: "15px" }}>(Chú ý: giá hiện tại tháng này của mỗi dịch vụ được tính bằng công thức: công ty dưới 10 người và thuê dưới 100 m2 thì có cùng mức giá dịch vụ cho mỗi dịch vụ
+                                , cứ thêm 5 người hoặc thêm 10 m2 diện tích sàn thì đơn giá tăng lên 5% cho mỗi mục. Tiền dịch vụ được tính
+                                từ ngày đăng ký, hoặc từ đầu tháng đến thời điểm hiện tại. Số tiền dịch vụ
+                                được tính bằng tỉ lệ giữa ngày đã sử dụng trên tổng số ngày trong tháng))</i>
                         </div>
                     </div>
                 </div>
