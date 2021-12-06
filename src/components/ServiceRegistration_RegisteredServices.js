@@ -24,6 +24,7 @@ function ServiceRegistration_RegisteredServices(props) {
     const [registeredService, setRegisteredService] = useState(null);
     const dispatch = useDispatch();
 
+    // Lấy dữ liệu công ty mà người dùng click ở component trước từ trên redux đã đẩy lên
     const company = useSelector(state => state.registeredService.company)
     useEffect(() => {   
         dispatch(getAllRegisterdServices(company));
@@ -74,14 +75,14 @@ function ServiceRegistration_RegisteredServices(props) {
                                     registeredServices?.map((item, index) => (
                                         <tr key = {index}>
                                             <td>{index+1}</td>
-                                            <td>chán vl bị lỗi</td>
-                                            <td>{item.startDate}</td>
-                                            <td>{item.currentPrice}</td>
-                                            <td>{item.description}</td>
+                                            <td>{item?.service?.name}</td>
+                                            <td>{item?.startDate}</td>
+                                            <td>{item?.currentPrice}</td>
+                                            <td>{item?.description}</td>
                                             <td>
-                                                <button onClick={() => viewRegisteredServices(item)} className="post-edit-item-btn">
-                                                    <i className='bx bxs-pencil'></i>
-                                                    Cancel
+                                                <button onClick={() => viewRegisteredServices(item)} className="post-delete-btn">
+                                                    <i className='bx bxs-pencil'>Cancel</i>
+                                                    
                                                 </button>
                                             </td>        
                                         </tr>

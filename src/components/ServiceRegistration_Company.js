@@ -5,15 +5,13 @@ import '../css/dialog.css'
 import { Redirect, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCompany } from '../redux/actions/company';
-import { Link } from 'react-router-dom';
-import ServiceRegistration_RegisteredServices from './ServiceRegistration_RegisteredServices';
 import { saveCompanyToRedux } from '../redux/actions/registed_service';
+import { Link } from 'react-router-dom';
 
 const ServiceRegistration_Company = () => {
     const data = useSelector(state => state.company.data)
     const [companies, setCompanies] = useState(data);
     const location = useLocation();
-    const [company, setCompany] = useState(null);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -31,20 +29,13 @@ const ServiceRegistration_Company = () => {
     }, [data])
 
     const viewRegisteredServices = (item) => {
-        setCompany(item);
+        // Đẩy dữ liệu company mà mình click lên redux để component sau lấy xuống
         dispatch(saveCompanyToRedux(item))
     }
 
-    return (company ?
-        <Redirect
-            to={{
-                pathname:"/service-registration/registered-services",
-                state:{company:company}
-            }}
-        />
-        :
+    return (
         <>
-            <div style={{ position: 'relative', display: company? 'none':'block'}} >
+             <div style={{ position: 'relative'}} >
                 <div style={{ maxWidth: "1100px", minHeight: "100vh" }} className="admin-post__container">
                     <div className="admin-post__wrapper">
                         <div className="admin-post__head">
@@ -69,19 +60,21 @@ const ServiceRegistration_Company = () => {
                                         companies?.map((item, index) => (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
-                                                <td>{item.name}</td>
-                                                <td>{item.taxCode}</td>
-                                                <td>{item.authorizedCapital}</td>
-                                                <td>{item.phoneNo}</td>
+                                                <td>{item?.name}</td>
+                                                <td>{item?.taxCode}</td>
+                                                <td>{item?.authorizedCapital}</td>
+                                                <td>{item?.phoneNo}</td>
                                                 <td>{item?.numberOfEmployee}</td>
                                                 <td>{item?.sumOfRentedArea}</td>
                                                 <td>
-                                                   
+                                                    <Link to={{
+                                                        pathname: "/service-registration/registered-services"
+                                                    }}>
                                                         <button onClick={() => viewRegisteredServices(item)} className="post-edit-item-btn">
                                                             <i className='bx bxs-pencil'></i>
                                                             View
                                                         </button>
-                                                    
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))

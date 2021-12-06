@@ -39,7 +39,11 @@ export const getCompanyById = (id) => async dispatch => {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `company/${id}`
+            url: `company/${id}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
         })
         if(res.status == 200){
             dispatch({
@@ -68,7 +72,11 @@ export const createNewCompany = (data) => async dispatch => {
             method: 'POST',
             baseURL: process.env.REACT_APP_URL_API,
             url: `company`,
-            data: data
+            data: data,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
         })
         if(res.status == 200){
             dispatch({
@@ -96,7 +104,11 @@ export const updateCompany = (id, data) => async dispatch => {
             method: 'PUT',
             baseURL: process.env.REACT_APP_URL_API,
             url: `company/${id}`,
-            data: data
+            data: data,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
         })
         if(res.status == 200){
             dispatch({
@@ -124,6 +136,10 @@ export const deleteCompany = (id) => async dispatch => {
             method: 'DELETE',
             baseURL: process.env.REACT_APP_URL_API,
             url: `company/${id}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
         })
         if(res.status == 200){
             dispatch({

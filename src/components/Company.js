@@ -177,10 +177,10 @@ const Company = () => {
                                     companies?.map((item, index) => (
                                         <tr key = {index}>
                                             <td>{index+1}</td>
-                                            <td>{item.name}</td>
-                                            <td>{item.taxCode}</td>
-                                            <td>{item.authorizedCapital}</td>
-                                            <td>{item.phoneNo}</td>
+                                            <td>{item?.name}</td>
+                                            <td>{item?.taxCode}</td>
+                                            <td>{item?.authorizedCapital}</td>
+                                            <td>{item?.phoneNo}</td>
                                             <td>{item?.numberOfEmployee}</td>
                                             <td>
                                                 <button onClick={() => viewEmployee(item.id)} className="post-edit-item-btn">
