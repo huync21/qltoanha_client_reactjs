@@ -68,7 +68,8 @@ const ServiceRegistration_Company = () => {
                                                 <td>{item?.sumOfRentedArea}</td>
                                                 <td>
                                                     <Link to={{
-                                                        pathname: "/service-registration/registered-services"
+                                                        pathname: "/service-registration/registered-services",
+                                                        search: `?companyId=`+item?.id,
                                                     }}>
                                                         <button onClick={() => viewRegisteredServices(item)} className="post-edit-item-btn">
                                                             <i className='bx bxs-pencil'></i>

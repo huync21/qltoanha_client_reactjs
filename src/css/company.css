@@ -172,8 +172,24 @@ table#admin-post__table td {
     background-color: #d63031;
 }
 
+#admin-post__table .post-disabled-btn {
+    outline: none;
+    border: none;
+    background-color: #9b9797;
+    color: #fff;
+    height: 36px;
+    font-size: 18px;
+    border-radius: 5px;
+    width: 80px;
+    cursor: pointer;
+}
+
+
+
 @media screen and (max-width: 768px)  {
     .modal {
         right: -186px;
     }
 }
+
+

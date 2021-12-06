@@ -1,12 +1,12 @@
 import axios from "axios";
 import { ERROR } from "../constants/base";
 import { DELETE, GET_ALL,PUSH_COMPANY_TO_REDUX,GET_COMPANY_FROM_REDUX } from "../constants/registered_service";
-export const getAllRegisterdServices = (company) => async dispatch => {
+export const getAllRegisterdServices = (companyId) => async dispatch => {
     try {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `service-registrations/companyId=${company.id}`,
+            url: `service-registrations/companyId=${companyId}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
@@ -38,6 +38,9 @@ export const deleteRegisterdService = (id) => async dispatch => {
             method: 'DELETE',
             baseURL: process.env.REACT_APP_URL_API,
             url: `service-registrations/${id}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+            }
         })
         if(res.status == 200){
             dispatch({
