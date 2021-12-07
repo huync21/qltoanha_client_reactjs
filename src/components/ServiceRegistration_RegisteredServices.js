@@ -2,22 +2,16 @@ import React, { useState, useEffect } from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
-import { Redirect, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllRegisterdServices, deleteRegisterdService, updateRegisterdService } from '../redux/actions/registed_service';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { getCompanyById } from '../redux/actions/company';
 
 
-ServiceRegistration_RegisteredServices.propTypes = {
-    companyId: PropTypes.any
-};
-
-ServiceRegistration_RegisteredServices.default = {
-    company: null
-};
-
-function ServiceRegistration_RegisteredServices(props) {
+function ServiceRegistration_RegisteredServices() {
     const data = useSelector(state => state.registeredService.data)
     const [registeredServices, setRegisteredServices] = useState(data);
     // biến để show pop up sửa thông tin
@@ -30,13 +24,14 @@ function ServiceRegistration_RegisteredServices(props) {
     const search = useLocation().search;
     const companyId = new URLSearchParams(search).get('companyId');
 
-    // Lấy dữ liệu công ty mà người dùng click ở component trước từ trên redux đã đẩy lên
-    const company = useSelector(state => state.registeredService.company)
+    // Lấy dữ liệu công ty mà người dùng click từ trên redux đã đẩy lên
+    const company = useSelector(state => state.company.company)
 
-    const [startDate,setStartDate] = useState(null)
-    const [description,setDescription] = useState("")
+    const [startDate, setStartDate] = useState(null)
+    const [description, setDescription] = useState("")
     useEffect(() => {
         dispatch(getAllRegisterdServices(companyId));
+        dispatch(getCompanyById(companyId))
         return () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +52,7 @@ function ServiceRegistration_RegisteredServices(props) {
     // Mở pop up edit item
     const popUpEditForm = (item) => {
         setRegisteredService(item)
-        setStartDate(moment(item.startDate,'DD-MM-YYYY',true).format("YYYY-MM-DD"))
+        setStartDate(moment(item.startDate, 'DD-MM-YYYY', true).format("YYYY-MM-DD"))
         setDescription(item.description)
         setIsShow(true)
         document.querySelector('.form-post').classList.add('active');
@@ -70,7 +65,7 @@ function ServiceRegistration_RegisteredServices(props) {
         setDescription("")
     }
 
-    const onStartDateChange= (e) =>{
+    const onStartDateChange = (e) => {
         setStartDate(e.target.value)
         setRegisteredService({
             ...registeredService,
@@ -78,7 +73,7 @@ function ServiceRegistration_RegisteredServices(props) {
         })
     }
 
-    const onDescriptionChange = (e)=>{
+    const onDescriptionChange = (e) => {
         setDescription(e.target.value)
         setRegisteredService({
             ...registeredService,
@@ -87,11 +82,11 @@ function ServiceRegistration_RegisteredServices(props) {
     }
 
     const editRegisterdService = (item) => {
-        if(item){
+        if (item) {
             const copyOfRegisteredService = {
                 ...item
             }
-            dispatch(updateRegisterdService(copyOfRegisteredService.id,copyOfRegisteredService))
+            dispatch(updateRegisterdService(copyOfRegisteredService.id, copyOfRegisteredService))
             window.location.reload();
         }
     }
@@ -124,12 +119,12 @@ function ServiceRegistration_RegisteredServices(props) {
                                 </div>
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Ngày bắt đàu:</strong></p>
-                                    <input value = {startDate} onChange = {(e)=>{onStartDateChange(e)}} style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
+                                    <input value={startDate} onChange={(e) => { onStartDateChange(e) }} style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
                                 </div>
 
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Mô tả</strong></p>
-                                    <input value = {description} onChange = {(e)=>{onDescriptionChange(e)}} style={{ width: '100%' }} type="text" id='description' placeholder="Mô tả" />
+                                    <input value={description} onChange={(e) => { onDescriptionChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Mô tả" />
                                 </div>
 
                             </div>
@@ -153,7 +148,16 @@ function ServiceRegistration_RegisteredServices(props) {
                                 <br />
 
                             </div>
-
+                            <div style={{ right: '10px' }} className="admin-post__button">
+                                <Link to={{
+                                    pathname: "/service-registration/services",
+                                    search: `?companyId=` + companyId,
+                                }}>
+                                <button>
+                                    Đăng ký thêm dịch vụ
+                                </button>
+                                </Link>
+                            </div>
                         </div>
                         <div className="admin-post__body">
                             <table id="admin-post__table">

@@ -1,12 +1,14 @@
 import { ERROR } from "../constants/base";
-import { GET_ALL, DELETE, PUSH_COMPANY_TO_REDUX, UPDATE } from "../constants/registered_service";
+import { GET_ALL, DELETE, PUSH_COMPANY_TO_REDUX, UPDATE, GET_ALL_SERVICES_TO_ADD, REGISTER_SERVICE_FOR_COMPANY, ERROR_EXISTED_SERVICE_REGISTRATION } from "../constants/registered_service";
 
 const initState = {
     data: [],
     registeredService: {},
     error: false,
     success: true,
-    company: {}
+    company: {},
+    allServices: [],
+    message:""
 }
 const registeredServiceReducers = (state = initState, payload) => {
     switch (payload.type) {
@@ -38,6 +40,24 @@ const registeredServiceReducers = (state = initState, payload) => {
             return {
                 ...state,
                 company: payload.data,
+            }
+        case GET_ALL_SERVICES_TO_ADD:
+            return {
+                ...state,
+                allServices: payload.data
+            }
+        case REGISTER_SERVICE_FOR_COMPANY:
+            console.log("message reducer 200: ",payload.data)
+            return {
+                ...state,
+                message: payload.data
+                
+            }
+        case ERROR_EXISTED_SERVICE_REGISTRATION:
+            console.log("message reducer 417: ",payload.data)
+            return{
+                ...state,
+                message: payload.data,
             }
         default:
             return state;
