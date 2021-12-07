@@ -1,5 +1,5 @@
 import { ERROR } from "../constants/base";
-import { GET_ALL, DELETE, PUSH_COMPANY_TO_REDUX, GET_COMPANY_FROM_REDUX } from "../constants/registered_service";
+import { GET_ALL, DELETE, PUSH_COMPANY_TO_REDUX, UPDATE } from "../constants/registered_service";
 
 const initState = {
     data: [],
@@ -23,6 +23,12 @@ const registeredServiceReducers = (state = initState, payload) => {
                 error: true
             }
         case DELETE:
+            return {
+                ...state,
+                success: true,
+                error: false
+            }
+        case UPDATE:
             return {
                 ...state,
                 success: true,

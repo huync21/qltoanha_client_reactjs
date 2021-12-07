@@ -4,7 +4,7 @@ import '../css/form.css'
 import '../css/dialog.css'
 import { Redirect, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllRegisterdServices, deleteRegisterdService } from '../redux/actions/registed_service';
+import { getAllRegisterdServices, deleteRegisterdService, updateRegisterdService } from '../redux/actions/registed_service';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -32,22 +32,21 @@ function ServiceRegistration_RegisteredServices(props) {
 
     // Lấy dữ liệu công ty mà người dùng click ở component trước từ trên redux đã đẩy lên
     const company = useSelector(state => state.registeredService.company)
-    useEffect(() => {
 
+    const [startDate,setStartDate] = useState(null)
+    const [description,setDescription] = useState("")
+    useEffect(() => {
         dispatch(getAllRegisterdServices(companyId));
-        console.log("use effect 1");
         return () => {
-            console.log(location.pathname);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
     useEffect(() => {
         setRegisteredServices(data);
-        console.log("=================", data)
-        console.log("use effect 2");
     }, [data])
 
+    // Gọi api hủy dịch vụ
     const cancelRegisteredService = (registerdServiceId) => {
         if (registerdServiceId) {
             dispatch(deleteRegisterdService(registerdServiceId));
@@ -55,21 +54,48 @@ function ServiceRegistration_RegisteredServices(props) {
         }
     }
 
+    // Mở pop up edit item
     const popUpEditForm = (item) => {
         setRegisteredService(item)
-        document.getElementById('start-date').value =moment(item.startDate).format("YYYY-DD-MM")
-        document.getElementById('description').value = item.description
+        setStartDate(moment(item.startDate,'DD-MM-YYYY',true).format("YYYY-MM-DD"))
+        setDescription(item.description)
         setIsShow(true)
         document.querySelector('.form-post').classList.add('active');
     }
 
+    // Tắt pop up
     const cancelClick = () => {
         setIsShow(false)
+        setStartDate(null)
+        setDescription("")
     }
 
-    const editRegisterdService = () => {
-        
+    const onStartDateChange= (e) =>{
+        setStartDate(e.target.value)
+        setRegisteredService({
+            ...registeredService,
+            startDate: moment(e.target.value).format("DD-MM-YYYY")
+        })
     }
+
+    const onDescriptionChange = (e)=>{
+        setDescription(e.target.value)
+        setRegisteredService({
+            ...registeredService,
+            description: e.target.value
+        })
+    }
+
+    const editRegisterdService = (item) => {
+        if(item){
+            const copyOfRegisteredService = {
+                ...item
+            }
+            dispatch(updateRegisterdService(copyOfRegisteredService.id,copyOfRegisteredService))
+            window.location.reload();
+        }
+    }
+
 
 
 
@@ -98,12 +124,12 @@ function ServiceRegistration_RegisteredServices(props) {
                                 </div>
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Ngày bắt đàu:</strong></p>
-                                    <input style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
+                                    <input value = {startDate} onChange = {(e)=>{onStartDateChange(e)}} style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
                                 </div>
 
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Mô tả</strong></p>
-                                    <input style={{ width: '100%' }} type="text" id='description' placeholder="Mô tả" />
+                                    <input value = {description} onChange = {(e)=>{onDescriptionChange(e)}} style={{ width: '100%' }} type="text" id='description' placeholder="Mô tả" />
                                 </div>
 
                             </div>
@@ -111,7 +137,7 @@ function ServiceRegistration_RegisteredServices(props) {
                                 <button onClick={() => cancelClick()} className="cancel-btn">
                                     Hủy
                                 </button>
-                                <button className="add-section-btn" onClick={() => editRegisterdService()}>
+                                <button className="add-section-btn" onClick={() => editRegisterdService(registeredService)}>
                                     <i className='bx bx-save'></i>
                                     Lưu
                                 </button>

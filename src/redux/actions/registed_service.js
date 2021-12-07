@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ERROR } from "../constants/base";
-import { DELETE, GET_ALL,PUSH_COMPANY_TO_REDUX,GET_COMPANY_FROM_REDUX } from "../constants/registered_service";
+import { DELETE, GET_ALL,PUSH_COMPANY_TO_REDUX,UPDATE } from "../constants/registered_service";
 export const getAllRegisterdServices = (companyId) => async dispatch => {
     try {
         const res = await axios({
@@ -15,6 +15,38 @@ export const getAllRegisterdServices = (companyId) => async dispatch => {
         if(res.status == 200){
             dispatch({
                 type: GET_ALL,
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
+
+export const updateRegisterdService = (id,registerdService) => async dispatch =>{
+    try {
+        const res = await axios({
+            method: 'PUT',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `service-registrations/${id}`,
+            data: registerdService,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: UPDATE,
                 data: res.data
             })
         }
