@@ -16,6 +16,7 @@ import Company from './components/Company';
 import ServiceRegistration_Company from './components/ServiceRegistration_Company';
 import ServiceRegistration_RegisteredService from './components/ServiceRegistration_RegisteredServices';
 import ServiceRegistration_Services from './components/ServiceRegistration_Services';
+import Service from './components/Service';
 
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
@@ -32,6 +33,9 @@ function App() {
                     </Route>
                     <Route path="/company">
                         <Company/>
+                    </Route>
+                    <Route path="/service-management">
+                        <Service/>
                     </Route>
                     <Route path="/service-registration/companies">
                         <ServiceRegistration_Company/>

@@ -107,20 +107,25 @@ const Header = () => {
                                 </ul>
                             </li>
                             <li className="nav__item dropdown">
-                                <div id="about" style={{ cursor: 'pointer' }}
+                                <div id="service" style={{ cursor: 'pointer' }}
                                     className="nav__link dropdown__link"
-                                    onClick={() => linkAction('about', false)}>
+                                    onClick={() => linkAction('service', false)}>
                                     Quản lý Dịch vụ
                                     <i className="bx bx-chevron-down dropdown__icon" />
                                 </div>
 
                                 <ul className="dropdown__menu">
                                     <li className="dropdown__item">
-                                        <Link className="nav__link link__item" to='/service-registration/companies' onClick={() => linkAction('about', true)}>
+                                        <Link className="nav__link link__item" to='/service-registration/companies' onClick={() => linkAction('service', true)}>
                                             Đăng ký dịch vụ
                                         </Link>
                                     </li>
                                     <li className="dropdown__item">
+                                        <Link className="nav__link link__item" to='/service-management' onClick={() => linkAction('service', true)}>
+                                            Quản lý dịch vụ
+                                        </Link>
+                                    </li>
+                                    {/* <li className="dropdown__item">
                                         <Link className="nav__link link__item" to='/' onClick={() => linkAction('about', true)}>
                                             Dịch vụ 2
                                         </Link>
@@ -129,7 +134,7 @@ const Header = () => {
                                         <Link className="nav__link link__item" to='/' onClick={() => linkAction('about', true)}>
                                             Dịch vụ 3
                                         </Link>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </li>
 
