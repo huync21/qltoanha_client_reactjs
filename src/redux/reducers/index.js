@@ -11,7 +11,7 @@ const reducers = combineReducers({
     company: companyReducers,
     registeredService: registeredServiceReducers,
     floors: floorReducers,
-    rentedAreas: rentedAreaReducers
+    rentedAreas: rentedAreaReducers,
     service: serviceReducers
 });
 
