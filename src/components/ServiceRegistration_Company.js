@@ -76,7 +76,7 @@ const ServiceRegistration_Company = () => {
                                                     }}>
                                                         <button onClick={() => viewRegisteredServices(item)} className="post-edit-item-btn">
                                                             <i className='bx bxs-pencil'></i>
-                                                            View
+                                                            Xem
                                                         </button>
                                                     </Link>
                                                 </td>

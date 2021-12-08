@@ -74,7 +74,7 @@ function Floor() {
                                     <th>STT</th>
                                     <th style={{ width: '200px' }}>Tầng</th>
                                     <th style={{ width: '200px' }}>Diện tích(m2)</th>
-                                    <th style={{ width: '200px' }}>Giá tiền /m2</th>
+                                    <th style={{ width: '200px' }}>Giá tiền /m2 1 tháng</th>
                                     <th style={{ width: '105px' }}>Danh sách mặt bằng</th>
                                     <th style={{ width: '105px' }}>Sửa</th>
                                     <th style={{ width: '105px' }} >Xóa</th>

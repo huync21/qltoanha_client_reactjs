@@ -104,7 +104,7 @@ function ServiceRegistration_Services() {
                 <div style={{ position: 'relative' }}>
                     <div class="loading-content" style={{display:iconLoad? "block":"none"}}>
                     <div class="loader"></div>
-                    </div>
+                </div>
                     <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                         <div className="modal_overlay"></div>
                         <div className="form-post">
