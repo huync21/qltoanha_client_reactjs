@@ -5,20 +5,21 @@ import { getAllRentedAreas, getTheRestArea } from '../redux/actions/rented_area'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { getFloorById } from '../redux/actions/floor';
+import moment from 'moment';
 function RentedArea() {
     const [isShow, setIsShow] = useState(false)
     const location = useLocation()
     const dispatch = useDispatch();
     const rentedAreaFromReducer = useSelector(state => state.rentedAreas.data)
-
+    const floor = useSelector(state => state.floors.floor)
     const search = useLocation().search;
     const floorId = new URLSearchParams(search).get('floorId');
     
 
     useEffect(() => {
         dispatch(getAllRentedAreas(floorId))
-        
+        dispatch(getFloorById(floorId))
         return () => {
 
         }
@@ -30,7 +31,7 @@ function RentedArea() {
                 <div className="modal_overlay"></div>
                 <div className="form-post">
                     <div className="form-post__title dialog__title">
-                        Đăng ký mặt bằng
+                        Đăng ký mặt bằng 
                     </div>
                     <div className="form-post__content">
                         <div className="form-post__wrapper">
@@ -63,7 +64,7 @@ function RentedArea() {
                 <div className="admin-post__wrapper">
                     <div className="admin-post__head">
                         <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
-                            Danh sách các mặt bằng của
+                            Danh sách các mặt bằng của {floor?.name}
                         </div>
                         <div style={{ right: '10px' }} className="admin-post__button">
                             <Link to={{
@@ -71,7 +72,7 @@ function RentedArea() {
                                 search: `?floorId=` + floorId,
                             }}>
                             <button>
-                            Đăng ký mặt bằng
+                            Đăng ký mặt bằng tại {floor?.name}
                             </button>
                             </Link>
                         </div>
@@ -96,8 +97,8 @@ function RentedArea() {
                                             <td>{item?.position}</td>
                                             <td>{item?.company?.name}</td>
                                             <td>{item?.rentedArea}</td>
-                                            <td>{item?.startDate}</td>
-                                            <td>{item?.endDate}</td>
+                                            <td>{moment(item?.rentedDate).format("DD-MM-YYYY")}</td>
+                                            <td>{moment(item?.expiredDate).format("DD-MM-YYYY")}</td>
 
                                             <td>
                                                 <button className="post-edit-item-btn">

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ERROR } from "../constants/base";
 import { GET_THE_REST_AREA } from "../constants/floor";
-import { DELETE, GET_ALL, POST, UPDATE } from "../constants/rented_area";
+import { DELETE, GET_ALL, POST, UPDATE,REGISTER_CONTRACT } from "../constants/rented_area";
 
 
 export const getAllRentedAreas = (floorId) => async dispatch => {
@@ -49,6 +49,38 @@ export const getTheRestArea = (floorId) => async dispatch => {
         if(res.status == 200){
             dispatch({
                 type: GET_THE_REST_AREA,
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
+
+export const createContract = (companyId,floorId,contract) => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `rented-areas?companyId=${companyId}&floorId=${floorId}`,
+            data: contract,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: REGISTER_CONTRACT,
                 data: res.data
             })
         }

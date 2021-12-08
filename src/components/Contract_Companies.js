@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCompany } from '../redux/actions/company';
 import { useLocation } from 'react-router';
 import { getFloorById } from '../redux/actions/floor';
-import { getTheRestArea } from '../redux/actions/rented_area';
+import { getTheRestArea,createContract} from '../redux/actions/rented_area';
+import { Redirect } from 'react-router';
 
 const ContractCompany = () => {
     const data = useSelector(state => state.company.data)
@@ -20,6 +21,13 @@ const ContractCompany = () => {
     const dispatch = useDispatch();
     const restAreaFromReducer = useSelector(state=> state.rentedAreas.restArea)
 
+    //form states
+    const [startDate,setStartDate] = useState(null)
+    const [endDate,setEndDate] = useState(null)
+    const [rentArea,setRentArea] = useState(0)
+    const [position,setPosition] = useState("")
+
+    const [doneRegistration,setDoneRegistration] = useState(false)
     useEffect(() => {
         dispatch(getAllCompany());
         dispatch(getFloorById(floorId))
@@ -49,10 +57,44 @@ const ContractCompany = () => {
         setIsShow(false)
     }
 
+    const startDateOnChange = (e)=>{
+        setStartDate(e.target.value)
+    }
+    const endDateOnChange = (e)=>{
+        setEndDate(e.target.value)
+    }
 
+    const rentAreaChange = (e) => {
+        setRentArea(e.target.value)
+    }
+
+    const positionChange = (e) => {
+        setPosition(e.target.value)
+    }
+
+    const registerContract = () =>{
+        const contract = {
+            rentedDate: startDate,
+            expiredDate: endDate,
+            rentedArea: rentArea,
+            position: position
+        }
+
+        dispatch(createContract(company.id,floorId,contract))
+
+        setTimeout(()=>{
+            setDoneRegistration(true)
+        },1000)
+    }
 
     return (
-        <>
+            doneRegistration ?
+            <Redirect push to={{
+                pathname: "/rented-areas",
+                search: `?floorId=` + floorId,
+            }}/>
+            :
+            <>
             <div style={{ position: 'relative' }} >
             <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                         <div className="modal_overlay"></div>
@@ -70,27 +112,27 @@ const ContractCompany = () => {
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Ngày bắt đầu:</strong></p>
-                                        <input   style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
+                                        <input onChange={(e)=>{startDateOnChange(e)}}  style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Ngày kết thúc:</strong></p>
-                                        <input   style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày kết thúc" />
+                                        <input onChange={(e)=>{endDateOnChange(e)}}  style={{ width: '100%' }} type="date" id='end-date' placeholder="Ngày kết thúc" />
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Diện tích thuê:</strong></p>
-                                        <input   style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
+                                        <input  onChange={(e)=>{rentAreaChange(e)}} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Tên khu vực thuê:</strong></p>
-                                        <input   style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
+                                        <input  onChange={(e)=>{positionChange(e)}} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
                                     </div>
                                 </div>
                                 <div className="form-post__control">
                                     <button onClick={() => cancelClick()} className="cancel-btn">
                                         Hủy
                                     </button>
-                                    <button className="add-section-btn" >
-                                        <i className='bx bx-save'></i>
+                                    <button onClick={()=>{registerContract()}} className="add-section-btn" >
+                                        <i className='bx bx-save' ></i>
                                         Đăng ký
                                     </button>
                                 </div>
