@@ -100,7 +100,7 @@ const Header = () => {
                                         </Link>
                                     </li>
                                     <li className="dropdown__item">
-                                        <Link className="nav__link link__item" to='/' onClick={() => linkAction('about', true)}>
+                                        <Link className="nav__link link__item" to='/floors' onClick={() => linkAction('about', true)}>
                                             Mặt bằng
                                         </Link>
                                     </li>

@@ -11,8 +11,6 @@ import moment from 'moment';
 import { getCompanyById } from '../redux/actions/company';
 
 
-
-
 function ServiceRegistration_Services() {
     const data = useSelector(state => state.registeredService.allServices)
     const registerdServices = useSelector(state => state.registeredService.data)

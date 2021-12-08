@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
+import '../css/loading.css'
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllRegisterdServices, deleteRegisterdService, updateRegisterdService } from '../redux/actions/registed_service';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import { getCompanyById } from '../redux/actions/company';
 
@@ -29,6 +29,8 @@ function ServiceRegistration_RegisteredServices() {
 
     const [startDate, setStartDate] = useState(null)
     const [description, setDescription] = useState("")
+
+    const [iconLoad,setIconLoad] = useState(false)
     useEffect(() => {
         dispatch(getAllRegisterdServices(companyId));
         dispatch(getCompanyById(companyId))
@@ -45,7 +47,11 @@ function ServiceRegistration_RegisteredServices() {
     const cancelRegisteredService = (registerdServiceId) => {
         if (registerdServiceId) {
             dispatch(deleteRegisterdService(registerdServiceId));
-            window.location.reload();
+            setIconLoad(true)
+            setTimeout(() => { 
+                dispatch(getAllRegisterdServices(companyId)); 
+                    setIconLoad(false)
+            }, 500)
         }
     }
 
@@ -87,7 +93,15 @@ function ServiceRegistration_RegisteredServices() {
                 ...item
             }
             dispatch(updateRegisterdService(copyOfRegisteredService.id, copyOfRegisteredService))
-            window.location.reload();
+            setIconLoad(true)
+            setTimeout(() => { 
+                dispatch(getAllRegisterdServices(companyId)); 
+                setIconLoad(false)
+                setIsShow(false)
+                setStartDate(null)
+                setDescription("")
+            }, 500)
+            
         }
     }
 
@@ -97,6 +111,9 @@ function ServiceRegistration_RegisteredServices() {
     return (
         <>
             <div style={{ position: 'relative' }}>
+            <div class="loading-content" style={{display:iconLoad? "block":"none"}}>
+                    <div class="loader"></div>
+                    </div>
                 <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                     <div className="modal_overlay"></div>
                     <div className="form-post">
@@ -153,9 +170,9 @@ function ServiceRegistration_RegisteredServices() {
                                     pathname: "/service-registration/services",
                                     search: `?companyId=` + companyId,
                                 }}>
-                                <button>
-                                    Đăng ký thêm dịch vụ
-                                </button>
+                                    <button>
+                                        Đăng ký thêm dịch vụ
+                                    </button>
                                 </Link>
                             </div>
                         </div>
