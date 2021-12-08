@@ -15,4 +15,4 @@ const reducers = combineReducers({
     service: serviceReducers
 });
 
-export default (state, action) => reducers(state, action);
+export default (state, action) => reducers(state, action);  

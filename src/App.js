@@ -18,6 +18,9 @@ import ServiceRegistration_RegisteredService from './components/ServiceRegistrat
 import ServiceRegistration_Services from './components/ServiceRegistration_Services';
 import Service from './components/Service';
 
+import Floor from './components/Floor';
+import RentedArea from './components/RentedArea';
+import ContractCompany from './components/Contract_Companies';
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
     return (
@@ -45,6 +48,15 @@ function App() {
                     </Route>
                     <Route path="/service-registration/services">
                         <ServiceRegistration_Services/>
+                    </Route>
+                    <Route path="/floors">
+                        <Floor/>
+                    </Route>
+                    <Route path="/rented-areas">
+                        <RentedArea/>
+                    </Route>
+                    <Route path = "/contract-registration">
+                        <ContractCompany/>
                     </Route>
                     <Route path="/">
                         <Home />
