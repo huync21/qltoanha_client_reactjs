@@ -2,35 +2,38 @@ import React, { useState, useEffect } from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
-import { Redirect, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCompany } from '../redux/actions/company';
-import { saveCompanyToRedux } from '../redux/actions/registed_service';
+import { getCompaniesForRegistrationByName, saveCompanyToRedux,getAllCompanyForRegistration} from '../redux/actions/registed_service';
 import { Link } from 'react-router-dom';
+import '../css/search_bar.css'
 
 const ServiceRegistration_Company = () => {
-    const data = useSelector(state => state.company.data)
-    const [companies, setCompanies] = useState(data);
+    const data = useSelector(state => state.registeredService.data)
     const location = useLocation();
 
     const dispatch = useDispatch();
+    const [companyName,setCompanyName] = useState("")
     useEffect(() => {
-        dispatch(getAllCompany());
-        console.log("use effect 1");
+        dispatch(getAllCompanyForRegistration());
         return () => {
             console.log(location.pathname);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
-    useEffect(() => {
-        setCompanies(data);
-        console.log("use effect 2");
-    }, [data])
 
     const viewRegisteredServices = (item) => {
         // Đẩy dữ liệu company mà mình click lên redux để component sau lấy xuống
         dispatch(saveCompanyToRedux(item))
+    }
+
+    const searchBarChange= (e) =>{
+        setCompanyName(e.target.value)
+    }
+
+    const findCompaniesByNameClick=()=>{
+        dispatch(getCompaniesForRegistrationByName(companyName))
     }
 
     return (
@@ -42,7 +45,14 @@ const ServiceRegistration_Company = () => {
                             <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
                                 Chọn công ty để đăng ký hoặc hủy dịch vụ
                             </div>
+                            <form action="javascript:" class="search-bar" style={{marginRight: "-45px"}}>
+                                <input value={companyName}  onChange={(e)=>{searchBarChange(e)}} type="search" name="search" pattern=".*\S.*" required/>
+                                <button onClick={()=>{findCompaniesByNameClick()}} class="search-btn" type="submit">
+                                    <span>Search</span>
+                                </button>
+                            </form>
                         </div>
+
                         <div className="admin-post__body">
                             <table id="admin-post__table">
                                 <tbody>
@@ -57,7 +67,7 @@ const ServiceRegistration_Company = () => {
                                         <th style={{ width: '105px' }}>Dịch vụ</th>
                                     </tr>
                                     {
-                                        companies?.map((item, index) => (
+                                        data?.map((item, index) => (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{item?.name}</td>
