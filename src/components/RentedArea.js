@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useLocation } from 'react-router';
-import { getAllRentedAreas, getTheRestArea } from '../redux/actions/rented_area';
+import { deleteRentedArea, getAllRentedAreas, getTheRestArea, updateRegisterdRentedArea } from '../redux/actions/rented_area';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,8 +15,40 @@ function RentedArea() {
     const floor = useSelector(state => state.floors.floor)
     const search = useLocation().search;
     const floorId = new URLSearchParams(search).get('floorId');
-    
+    const [registeredRentedArea, setregisteredRentedArea] = useState(null);
 
+    const [rentedDate, setRentedDate] = useState(null)
+    const [expiredDate, setExpiredDate] = useState(null)
+    const [rentedArea, setRentedArea] = useState(null)
+    const [position, setPosition] = useState(null)
+
+    const [company, setCompany] = useState(null)
+
+    const popUpEditForm = (item) => {
+        setregisteredRentedArea(item)
+        setRentedDate(item.rentedDate)
+        setExpiredDate(item.expiredDate)
+        setRentedArea(item.rentedArea)
+        setPosition(item.position)
+        setCompany(item.company)
+        setIsShow(true)
+        document.querySelector('.form-post').classList.add('active');
+    }
+    const cancelClick = () => {
+        setIsShow(false)
+    }
+    const editRegisterdRentedArea = (item) => {
+        if (item) {
+            const copyOfRegisteredRentedArea = {
+                ...item
+            }
+
+            dispatch(updateRegisterdRentedArea(copyOfRegisteredRentedArea.id, copyOfRegisteredRentedArea))
+            cancelClick();
+            window.location.reload();
+
+        }
+    }
     useEffect(() => {
         dispatch(getAllRentedAreas(floorId))
         dispatch(getFloorById(floorId))
@@ -24,35 +56,55 @@ function RentedArea() {
 
         }
     }, [location.pathname])
+    const removeRentedArea = (id) => {
+        if (id) {
+            dispatch(deleteRentedArea(id));
+            window.location.reload();
+        }
+    }
 
+    const expiredDateOnChange = (e) => {
+        setExpiredDate(e.target.value)
+        setregisteredRentedArea({
+            ...registeredRentedArea,
+            expiredDate: e.target.value
+        })
+    }
     return (
         <div style={{ position: 'relative' }}>
             <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                 <div className="modal_overlay"></div>
                 <div className="form-post">
                     <div className="form-post__title dialog__title">
-                        Đăng ký mặt bằng 
+                        Gia hạn mặt bằng
                     </div>
                     <div className="form-post__content">
                         <div className="form-post__wrapper">
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='name' placeholder="Name" />
+                                <p style={{ textAlign: "left" }}><strong>Tên công ty:</strong> {company?.name}</p>
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='tax-code' placeholder="Tax code" />
+                                <p style={{ textAlign: "left" }}><strong>Vị trí:</strong> {position}</p>
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='authorized-capital' placeholder="Authorized Capital" />
+                                <p style={{ textAlign: "left" }}><strong>Diện tích thuê:</strong> {rentedArea}</p>
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='phone-no' placeholder="Phone No" />
+                                <p style={{ textAlign: "left" }}><strong>Ngày bắt đàu:</strong> {moment(rentedDate).format("DD-MM-YYYY")}</p>
+
                             </div>
+                            <div className="form-post__field">
+                                <p style={{ textAlign: "left" }}><strong>Ngày kết thúc:</strong></p>
+                                <input onChange={(e) => { expiredDateOnChange(e) }} style={{ width: '100%' }} type="date" id='end-date' placeholder="Ngày kết thúc" />
+                            </div>
+
+
                         </div>
                         <div className="form-post__control">
-                            <button className="cancel-btn">
+                            <button className="cancel-btn" onClick={() => cancelClick()}>
                                 Hủy
                             </button>
-                            <button className="add-section-btn" >
+                            <button className="add-section-btn" onClick={() => editRegisterdRentedArea(registeredRentedArea)} >
                                 <i className='bx bx-save'></i>
                                 Lưu
                             </button>
@@ -71,9 +123,9 @@ function RentedArea() {
                                 pathname: "/contract-registration",
                                 search: `?floorId=` + floorId,
                             }}>
-                            <button>
-                            Đăng ký mặt bằng tại {floor?.name}
-                            </button>
+                                <button>
+                                    Đăng ký mặt bằng tại {floor?.name}
+                                </button>
                             </Link>
                         </div>
                     </div>
@@ -87,7 +139,7 @@ function RentedArea() {
                                     <th style={{ width: '200px' }}>Diện tích thuê(m2)</th>
                                     <th style={{ width: '200px' }}>Ngày bắt đầu thuê</th>
                                     <th style={{ width: '200px' }}>Ngày kết thúc</th>
-                                    <th style={{ width: '105px' }}>Sửa</th>
+                                    <th style={{ width: '135px' }}>Gia hạn</th>
                                     <th style={{ width: '105px' }}>Xóa</th>
                                 </tr>
                                 {
@@ -101,13 +153,13 @@ function RentedArea() {
                                             <td>{moment(item?.expiredDate).format("DD-MM-YYYY")}</td>
 
                                             <td>
-                                                <button className="post-edit-item-btn">
+                                                <button className="post-edit-item-btn" style={{ width: 100 }} onClick={() => popUpEditForm(item)}>
                                                     <i className='bx bxs-pencil'></i>
-                                                    Sửa
+                                                    Gia hạn
                                                 </button>
                                             </td>
                                             <td>
-                                                <button className="post-delete-btn" >
+                                                <button className="post-delete-btn" onClick={() => removeRentedArea(item.id)} >
                                                     <i className='bx bx-trash'></i>
                                                     Xóa
                                                 </button>

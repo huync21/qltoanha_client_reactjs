@@ -23,6 +23,24 @@ const floorReducers = (state = initState, payload) => {
                 success: true,
                 error: false
             }
+        case DELETE:
+            return {
+                ...state,
+                success: true,
+                error: false
+            }
+        case POST:
+            return {
+                ...state,
+                success: true,
+                error: false
+            }
+        case UPDATE:
+            return {
+                ...state,
+                success: true,
+                error: false
+            }
         case ERROR:
             return {
                 ...state,
