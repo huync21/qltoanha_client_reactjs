@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ERROR } from "../constants/base";
-import { DELETE, ERROR_EXISTED_SERVICE_REGISTRATION, GET_ALL,GET_ALL_SERVICES_TO_ADD,PUSH_COMPANY_TO_REDUX,REGISTER_SERVICE_FOR_COMPANY,UPDATE } from "../constants/registered_service";
+import { DELETE, GET_COMPANIES_FOR_REGISTRATION_BY_NAME, GET_ALL,GET_ALL_SERVICES_TO_ADD,PUSH_COMPANY_TO_REDUX,REGISTER_SERVICE_FOR_COMPANY,UPDATE,GET_ALL_COMPANY, GET_ALL_SERVICES, GET_SERVICES_BY_NAME } from "../constants/registered_service";
 export const getAllRegisterdServices = (companyId) => async dispatch => {
     try {
         const res = await axios({
@@ -159,6 +159,129 @@ export const registerServiceForCompany = (idCompany,idService,data) => async dis
     }
 }
 
+export const getCompaniesForRegistrationByName = (name) => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `company/name=${name}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: GET_COMPANIES_FOR_REGISTRATION_BY_NAME,
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
+
+export const getAllCompanyForRegistration = () => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: 'company',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: GET_ALL_COMPANY,
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
+
+export const getServicesForRegistrationByName = (name) => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `services/name=${name}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: GET_SERVICES_BY_NAME,
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
+
+export const getAllServicesForRegistration = () => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: 'services',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: GET_ALL_SERVICES,
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
 export const saveCompanyToRedux = (company) => async dispatch => {
             dispatch({
                 type: PUSH_COMPANY_TO_REDUX,

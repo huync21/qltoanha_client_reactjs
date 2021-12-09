@@ -170,9 +170,7 @@ function ServiceRegistration_RegisteredServices() {
                                     pathname: "/service-registration/services",
                                     search: `?companyId=` + companyId,
                                 }}>
-                                    <button>
                                         Đăng ký thêm dịch vụ
-                                    </button>
                                 </Link>
                             </div>
                         </div>
