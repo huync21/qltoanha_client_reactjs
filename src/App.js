@@ -23,6 +23,7 @@ import RentedArea from './components/RentedArea';
 import ContractCompany from './components/Contract_Companies';
 import Statistics from './components/Statistics';
 import StatisticsRentedAreas from './components/Statistics_RentedAreas';
+import Employee from './components/Employee';
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
     return (
@@ -35,6 +36,9 @@ function App() {
                     </Route>
                     <Route path="/contact">
                         <Contact />
+                    </Route>
+                    <Route path="/company/view-employees/:id">
+                        <Employee />
                     </Route>
                     <Route path="/company">
                         <Company />

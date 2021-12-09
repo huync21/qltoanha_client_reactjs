@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import companyReducers from './company';
+import employeeReducers from './employee';
 import floorReducers from './floor';
 import loginReducers from './login';
 import registeredServiceReducers from './registered_service';
@@ -11,6 +12,7 @@ import statisticsRentedAreasReducers from './statistics_rented_areas';
 const reducers = combineReducers({
     login: loginReducers,
     company: companyReducers,
+    employee: employeeReducers,
     registeredService: registeredServiceReducers,
     floors: floorReducers,
     rentedAreas: rentedAreaReducers,
