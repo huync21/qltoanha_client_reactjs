@@ -59,6 +59,7 @@ const ServiceRegistration_Company = () => {
                                     <tr>
                                         <th>STT</th>
                                         <th style={{ width: '200px' }}>Tên công ty</th>
+                                        <th style={{ width: '200px' }}>Lĩnh vực hoạt động</th>
                                         <th style={{ width: '200px' }}>Mã số thuế</th>
                                         <th style={{ width: '200px' }}>Vốn điều lệ</th>
                                         <th style={{ width: '200px' }}>SĐT</th>
@@ -71,6 +72,7 @@ const ServiceRegistration_Company = () => {
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{item?.name}</td>
+                                                <td>{item?.activeField}</td>
                                                 <td>{item?.taxCode}</td>
                                                 <td>{new Intl.NumberFormat('vi-VN', {
                                                     style: 'currency',
