@@ -7,7 +7,7 @@ import {
     Route,
 } from 'react-router-dom'
 // import "swiper/css/bundle";
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import Home from './components/Home';
 import Login from './components/Login';
 import Footer from './components/Footer';
@@ -17,7 +17,14 @@ import ServiceRegistration_Company from './components/ServiceRegistration_Compan
 import ServiceRegistration_RegisteredService from './components/ServiceRegistration_RegisteredServices';
 import ServiceRegistration_Services from './components/ServiceRegistration_Services';
 import Service from './components/Service';
+import Salary  from './components/Salary';
+import BuildingEmployee  from './components/BuildingEmployee';
 
+// import Floor from './components/Floor';
+// import RentedArea from './components/RentedArea';
+// import ContractCompany from './components/Contract_Companies';
+// import Statistics from './components/Statistics';
+// import StatisticsRentedAreas from './components/Statistics_RentedAreas';
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
     return (
@@ -32,19 +39,25 @@ function App() {
                         <Contact />
                     </Route>
                     <Route path="/company">
-                        <Company/>
+                        <Company />
                     </Route>
                     <Route path="/service-management">
-                        <Service/>
+                        <Service />
                     </Route>
                     <Route path="/service-registration/companies">
-                        <ServiceRegistration_Company/>
+                        <ServiceRegistration_Company />
                     </Route>
                     <Route path="/service-registration/registered-services">
                         <ServiceRegistration_RegisteredService />
                     </Route>
                     <Route path="/service-registration/services">
-                        <ServiceRegistration_Services/>
+                        <ServiceRegistration_Services />
+                    </Route>
+                    <Route path="/salary">
+                        <Salary/>
+                    </Route>
+                    <Route path="/buildingemployee">
+                        <BuildingEmployee/>
                     </Route>
                     <Route path="/">
                         <Home />

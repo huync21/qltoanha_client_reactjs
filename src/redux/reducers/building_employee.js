@@ -1,50 +1,48 @@
-import {DELETE, GET_ALL, GET_ONE, POST, UPDATE} from "../constants/service"
-import {ERROR} from "../constants/base"
 const initState = {
     data: [],
-    service: {},
+    buildingEmployee: {},
     error: false,
-    success: true
+    success: true,
 }
 
-const serviceReducers = (state=initState, payload) => {
+const buildingEmployeeReducers = (state = initState, payload) => {
     switch (payload.type) {
-        case GET_ALL:
+        case 'GET_ALL_BUILDING_EMPLOYEE':
             return {
                 ...state,
                 data: payload.data,
                 success: true,
                 error: false
             }
-        case GET_ONE:
-            return {
+        case 'GET_ONE_BUILDING_EMPLOYEE':
+            return{
                 ...state,
-                service: payload.data,
+                data: payload.data,
                 success: true,
-                error: false
+                error: false,
             }
-        case POST:
-            return {
-                ...state,
-                success: true,
-                error: false
-            }
-        case UPDATE:
-            return {
-                ...state,
-                success: true,
-                error: false
-            }
-        case DELETE:
-            return {
-                ...state,
-                success: true,
-                error: false
-            }
-        case ERROR:
+        case 'ERROR':
             return {
                 ...state,
                 error: true
+            }
+        case 'DELETE_BUILDING_EMPLOYEE':
+            return {
+                ...state,
+                success: true,
+                error: false
+            }
+        case 'UPDATE_BUILDING_EMPLOYEE':
+            return {
+                ...state,
+                success: true,
+                error: false
+            }
+        case 'CREATE_BUILDING_EMPLOYEE':
+            return {
+                ...state,
+                success: true,
+                error: false,
             }
         default:
             return state;
@@ -52,4 +50,4 @@ const serviceReducers = (state=initState, payload) => {
 }
 
 
-export default serviceReducers;
+export default buildingEmployeeReducers;

@@ -5,6 +5,8 @@ import '../css/dialog.css'
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllService, createNewService, updateService, deleteService } from '../redux/actions/service';
+import {saveServiceToRedux} from '../redux/actions/salary'
+import { Link } from 'react-router-dom';
 const Service = () =>{
     const [isShow, setIsShow] = useState(false)
     const data = useSelector(state => state.service.data)
@@ -107,6 +109,9 @@ const Service = () =>{
         cancelClick();
     }
 
+    const viewSalary = (service) => {
+        dispatch(saveServiceToRedux(service));
+    }
     
     return(
         <div style={{position: 'relative'}}>
@@ -165,6 +170,7 @@ const Service = () =>{
                                     <th style={{width: '200px'}}>Loại dịch vụ</th>
                                     {/* <th style={{width: '200px'}} >Employees</th>
                                     <th style={{width: '105px'}}>View Employee</th> */}
+                                    <th style={{width: '105px'}}>Xem mức lương</th>
                                     <th style={{width: '105px'}}>Sửa</th>
                                     <th style={{width: '105px'}} >Xóa</th>
                                 </tr>
@@ -183,6 +189,17 @@ const Service = () =>{
                                                     View
                                                 </button>
                                             </td> */}
+                                            <td>
+                                                    <Link to={{
+                                                        pathname: "/salary",
+                                                        search: `?serviceId=` + item?.id,
+                                                    }}>
+                                                        <button onClick={() => viewSalary(item)} className="post-edit-item-btn">
+                                                            <i className='bx bxs-pencil'></i>
+                                                            Xem
+                                                        </button>
+                                                    </Link>
+                                            </td>
                                             <td>
                                                 <button onClick={() => editClick(index)} className="post-edit-item-btn">
                                                     <i className='bx bxs-pencil'></i>
