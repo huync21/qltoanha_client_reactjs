@@ -4,12 +4,12 @@ import '../css/form.css'
 import '../css/dialog.css'
 import '../css/login.css'
 import '../css/loading.css'
+import '../css/search_bar.css'
 import { Redirect, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getALLServicesToAdd, registerServiceForCompany, getAllRegisterdServices } from '../redux/actions/registed_service';
+import { getALLServicesToAdd, registerServiceForCompany, getAllRegisterdServices, getServicesForRegistrationByName } from '../redux/actions/registed_service';
 import moment from 'moment';
 import { getCompanyById } from '../redux/actions/company';
-
 
 
 
@@ -40,6 +40,7 @@ function ServiceRegistration_Services() {
 
     const [doneRegistration, setDoneRegistration] = useState(false)
     const [iconLoad,setIconLoad] = useState(false)
+    const [serviceName,setServiceName] = useState("")
     useEffect(() => {
         dispatch(getALLServicesToAdd());
         dispatch(getAllRegisterdServices(companyId))
@@ -95,6 +96,14 @@ function ServiceRegistration_Services() {
         }
     }
 
+    const searchBarChange= (e) =>{
+        setServiceName(e.target.value)
+    }
+
+    const searchClick=()=>{
+        dispatch(getServicesForRegistrationByName(serviceName))
+    }
+
     return (
         doneRegistration ?
             <Redirect push to={{
@@ -106,7 +115,7 @@ function ServiceRegistration_Services() {
                 <div style={{ position: 'relative' }}>
                     <div class="loading-content" style={{display:iconLoad? "block":"none"}}>
                     <div class="loader"></div>
-                    </div>
+                </div>
                     <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                         <div className="modal_overlay"></div>
                         <div className="form-post">
@@ -158,7 +167,12 @@ function ServiceRegistration_Services() {
                                     <br />
 
                                 </div>
-
+                                <form action="javascript:" class="search-bar" style={{marginRight: "-45px"}}>
+                                <input  onChange={(e)=>{searchBarChange(e)}} type="search" name="search" pattern=".*\S.*" required/>
+                                <button onClick={()=>{searchClick()}} class="search-btn" type="submit">
+                                    <span>Search</span>
+                                </button>
+                            </form>
                             </div>
                             <div className="admin-post__body">
                                 <table id="admin-post__table">

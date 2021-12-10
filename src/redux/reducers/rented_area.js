@@ -1,13 +1,15 @@
 import { ERROR } from "../constants/base";
-import { DELETE, GET_ALL, GET_ONE, POST, UPDATE } from "../constants/employee";
+import { GET_THE_REST_AREA } from "../constants/floor";
+import { DELETE, GET_ALL, POST, UPDATE, REGISTER_CONTRACT, GET_COMPANIES_FOR_REGISTRATION_BY_NAME } from "../constants/rented_area";
 
 const initState = {
     data: [],
-    employee: {},
+    rentedArea: {},
     error: false,
-    success: true
+    success: true,
+    restArea: 0,
 }
-const employeeReducers = (state=initState, payload) => {
+const rentedAreaReducers = (state = initState, payload) => {
     switch (payload.type) {
         case GET_ALL:
             return {
@@ -16,16 +18,16 @@ const employeeReducers = (state=initState, payload) => {
                 success: true,
                 error: false
             }
-        case GET_ONE:
+        case DELETE:
             return {
                 ...state,
-                employee: payload.data,
                 success: true,
                 error: false
             }
-        case POST:
+        case GET_COMPANIES_FOR_REGISTRATION_BY_NAME:
             return {
                 ...state,
+                data: payload.data,
                 success: true,
                 error: false
             }
@@ -35,7 +37,14 @@ const employeeReducers = (state=initState, payload) => {
                 success: true,
                 error: false
             }
-        case DELETE:
+        case GET_THE_REST_AREA:
+            return {
+                ...state,
+                restArea: payload.data,
+                success: true,
+                error: false
+            }
+        case REGISTER_CONTRACT:
             return {
                 ...state,
                 success: true,
@@ -46,10 +55,13 @@ const employeeReducers = (state=initState, payload) => {
                 ...state,
                 error: true
             }
+
         default:
             return state;
     }
 }
 
 
-export default employeeReducers;
+
+
+export default rentedAreaReducers;

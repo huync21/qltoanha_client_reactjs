@@ -19,12 +19,12 @@ import ServiceRegistration_Services from './components/ServiceRegistration_Servi
 import Service from './components/Service';
 import Salary  from './components/Salary';
 import BuildingEmployee  from './components/BuildingEmployee';
-
-// import Floor from './components/Floor';
-// import RentedArea from './components/RentedArea';
-// import ContractCompany from './components/Contract_Companies';
-// import Statistics from './components/Statistics';
-// import StatisticsRentedAreas from './components/Statistics_RentedAreas';
+import Floor from './components/Floor';
+import RentedArea from './components/RentedArea';
+import ContractCompany from './components/Contract_Companies';
+import Statistics from './components/Statistics';
+import StatisticsRentedAreas from './components/Statistics_RentedAreas';
+import Employee from './components/Employee';
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
     return (
@@ -37,6 +37,9 @@ function App() {
                     </Route>
                     <Route path="/contact">
                         <Contact />
+                    </Route>
+                    <Route path="/company/view-employees/:id">
+                        <Employee />
                     </Route>
                     <Route path="/company">
                         <Company />
@@ -58,6 +61,20 @@ function App() {
                     </Route>
                     <Route path="/buildingemployee">
                         <BuildingEmployee/>
+                    <Route path="/floors">
+                        <Floor />
+                    </Route>
+                    <Route path="/rented-areas">
+                        <RentedArea />
+                    </Route>
+                    <Route path="/contract-registration">
+                        <ContractCompany />
+                    </Route>
+                    <Route path="/monthly-fee-statistics/rented-areas-of-company">
+                        <StatisticsRentedAreas/>
+                    </Route>
+                    <Route path="/monthly-fee-statistics">
+                        <Statistics />
                     </Route>
                     <Route path="/">
                         <Home />

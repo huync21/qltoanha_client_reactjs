@@ -1,13 +1,13 @@
 import { ERROR } from "../constants/base";
-import { DELETE, GET_ALL, GET_ONE, POST, UPDATE } from "../constants/employee";
+import { DELETE, GET_ALL, GET_ONE, POST, UPDATE } from "../constants/floor";
 
 const initState = {
     data: [],
-    employee: {},
+    floor: {},
     error: false,
     success: true
 }
-const employeeReducers = (state=initState, payload) => {
+const floorReducers = (state = initState, payload) => {
     switch (payload.type) {
         case GET_ALL:
             return {
@@ -19,7 +19,13 @@ const employeeReducers = (state=initState, payload) => {
         case GET_ONE:
             return {
                 ...state,
-                employee: payload.data,
+                floor: payload.data,
+                success: true,
+                error: false
+            }
+        case DELETE:
+            return {
+                ...state,
                 success: true,
                 error: false
             }
@@ -30,12 +36,6 @@ const employeeReducers = (state=initState, payload) => {
                 error: false
             }
         case UPDATE:
-            return {
-                ...state,
-                success: true,
-                error: false
-            }
-        case DELETE:
             return {
                 ...state,
                 success: true,
@@ -52,4 +52,4 @@ const employeeReducers = (state=initState, payload) => {
 }
 
 
-export default employeeReducers;
+export default floorReducers;

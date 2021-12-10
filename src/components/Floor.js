@@ -1,62 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import '../css/company.css'
-import '../css/form.css'
-import '../css/dialog.css'
+import React from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router';
+import { getAllFloors, deleteFloor, createNewFloor, updateFloor } from '../redux/actions/floor';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCompany, createNewCompany, updateCompany, deleteCompany } from '../redux/actions/company';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Company = () => {
+
+function Floor() {
+
     const [isShow, setIsShow] = useState(false)
-    const data = useSelector(state => state.company.data)
-    const [companies, setCompanies] = useState(data);
     const [isAdd, setIsAdd] = useState(false);
-    const location = useLocation();
-    const [indexEditCompany, setIndexEditCompany] = useState(null);
-
+    const [indexEditFloor, setIndexEditFloor] = useState(null);
+    const location = useLocation()
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getAllCompany());
-        return () => {
-            console.log(location.pathname);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
+    const floorsFromReducer = useSelector(state => state.floors.data)
 
     useEffect(() => {
-        setCompanies(data);
-    }, [data])
+        dispatch(getAllFloors())
+        return () => {
+
+        }
+    }, [location.pathname])
 
     const editClick = (index) => {
         setIsShow(true);
         setIsAdd(false);
-        setIndexEditCompany(index);
-        document.getElementById('name').value = companies[index].name;
-        document.getElementById('tax-code').value = companies[index].taxCode;
-        document.getElementById('authorized-capital').value = companies[index].authorizedCapital;
-        document.getElementById('phone-no').value = companies[index].phoneNo;
+        setIndexEditFloor(index);
+        document.getElementById('name').value = floorsFromReducer[index].name;
+        document.getElementById('price-per-m2').value = floorsFromReducer[index].pricePerM2;
+        document.getElementById('ground-area').value = floorsFromReducer[index].groundArea;
         document.querySelector('.form-post').classList.add('active');
     }
-
     const popUpActive = (mode) => {
         setIsShow(true);
         setIsAdd(true);
         document.querySelector('.form-post').classList.add('active');
         if (mode === "edit") {
-            document.querySelector('.dialog__title').textContent = "Sửa thông tin công ty";
+            document.querySelector('.dialog__title').textContent = "Sửa thông tin tầng này";
         }
         else {
-            document.querySelector('.dialog__title').textContent = "Thêm mới công ty";
+            document.querySelector('.dialog__title').textContent = "Thêm mới tầng";
         }
     }
-
     const cancelClick = () => {
         setIsShow(false);
         setIsAdd(false);
         document.querySelector('.form-post').classList.remove('active');
     }
-
     const addOrUpdateItem = () => {
         if (isAdd) {
             addItem();
@@ -68,79 +59,70 @@ const Company = () => {
         cancelClick();
         window.location.reload();
     }
-
     const editCompany = () => {
         const name = document.getElementById('name').value;
-        const taxCode = document.getElementById('tax-code').value;
-        const authorizedCapital = document.getElementById('authorized-capital').value;
-        const phoneNo = document.getElementById('phone-no').value;
+        const pricePerM2 = document.getElementById('price-per-m2').value;
+        const groundArea = document.getElementById('ground-area').value;
+
 
         const data = {
             name: name,
-            taxCode: taxCode,
-            authorizedCapital: Number(authorizedCapital),
-            phoneNo: phoneNo
-        }
-        dispatch(updateCompany(companies[indexEditCompany].id, data));
-    }
+            pricePerM2: pricePerM2,
+            groundArea: groundArea
 
-    const removeCompany = (id) => {
+        }
+        dispatch(updateFloor(floorsFromReducer[indexEditFloor].id, data));
+        window.location.reload();
+    }
+    const removeFloor = (id) => {
         if (id) {
-            dispatch(deleteCompany(id));
+            dispatch(deleteFloor(id));
             window.location.reload();
         }
     }
-
     const addItem = () => {
         const name = document.getElementById('name').value;
-        const taxCode = document.getElementById('tax-code').value;
-        const authorizedCapital = document.getElementById('authorized-capital').value;
-        const phoneNo = document.getElementById('phone-no').value;
+        const pricePerM2 = document.getElementById('price-per-m2').value;
+        const groundArea = document.getElementById('ground-area').value;
 
         const data = {
             name: name,
-            taxCode: taxCode,
-            authorizedCapital: Number(authorizedCapital),
-            phoneNo: phoneNo
+            pricePerM2: pricePerM2,
+            groundArea: groundArea
+
         }
 
-        dispatch(createNewCompany(data));
+        dispatch(createNewFloor(data));
 
         cancelClick();
+        window.location.reload();
     }
-
-    const viewEmployee = (id) => {
-
-    }
-
     return (
         <div style={{ position: 'relative' }}>
             <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                 <div className="modal_overlay"></div>
                 <div className="form-post">
                     <div className="form-post__title dialog__title">
-                        Thêm mới công ty
+                        Thêm mới tầng
                     </div>
                     <div className="form-post__content">
                         <div className="form-post__wrapper">
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='name' placeholder="Name" />
+                                <input style={{ width: '100%' }} type="text" id='name' placeholder="Tên" />
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='tax-code' placeholder="Tax code" />
+                                <input style={{ width: '100%' }} type="text" id='price-per-m2' placeholder="Giá / m2" />
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='authorized-capital' placeholder="Authorized Capital" />
+                                <input style={{ width: '100%' }} type="text" id='ground-area' placeholder="Tổng diện tích" />
                             </div>
-                            <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='phone-no' placeholder="Phone No" />
-                            </div>
+
                         </div>
                         <div className="form-post__control">
-                            <button onClick={() => cancelClick()} className="cancel-btn">
+                            <button className="cancel-btn" onClick={() => cancelClick()}>
                                 Hủy
                             </button>
-                            <button className="add-section-btn" onClick={() => addOrUpdateItem()}>
+                            <button className="add-section-btn" onClick={() => addOrUpdateItem()} >
                                 <i className='bx bx-save'></i>
                                 Lưu
                             </button>
@@ -152,11 +134,11 @@ const Company = () => {
                 <div className="admin-post__wrapper">
                     <div className="admin-post__head">
                         <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
-                            Danh sách công ty
+                            Danh sách các tầng
                         </div>
                         <div style={{ right: '10px' }} className="admin-post__button">
                             <button onClick={() => popUpActive()}>
-                                Thêm công ty
+                                Thêm tầng
                             </button>
                         </div>
                     </div>
@@ -165,41 +147,44 @@ const Company = () => {
                             <tbody>
                                 <tr>
                                     <th>STT</th>
-                                    <th style={{ width: '200px' }}>Name</th>
-                                    <th style={{ width: '200px' }}>Tax code</th>
-                                    <th style={{ width: '200px' }}>Authorized Capital</th>
-                                    <th style={{ width: '200px' }}>Phone No</th>
-                                    <th style={{ width: '200px' }} >Employees</th>
-                                    
-                                    <th style={{ width: '300px' }} >Sum of rented area</th>
-                                    <th style={{ width: '105px' }}>View Employee</th>
+                                    <th style={{ width: '200px' }}>Tầng</th>
+                                    <th style={{ width: '200px' }}>Diện tích(m2)</th>
+                                    <th style={{ width: '200px' }}>Giá tiền /m2 1 tháng</th>
+                                    <th style={{ width: '105px' }}>Danh sách mặt bằng</th>
                                     <th style={{ width: '105px' }}>Sửa</th>
                                     <th style={{ width: '105px' }} >Xóa</th>
                                 </tr>
                                 {
-                                    companies?.map((item, index) => (
+                                    floorsFromReducer?.map((item, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{item?.name}</td>
-                                            <td>{item?.taxCode}</td>
-                                            <td>{item?.authorizedCapital}</td>
-                                            <td>{item?.phoneNo}</td>
-                                            <td>{item?.numberOfEmployee}</td>
-                                            <td>{item?.sumOfRentedArea}</td>
+                                            <td>{item?.groundArea}</td>
+                                            <td>{new Intl.NumberFormat('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            }).format(item?.pricePerM2)}</td>
+
+
                                             <td>
-                                                <button onClick={() => viewEmployee(item.id)} className="post-edit-item-btn">
-                                                    <i className='fas fa-eye' aria-hidden="true"></i>
-                                                    <Link to={`company/view-employees/${item.id}`}>View</Link>
-                                                </button>
+                                                <Link to={{
+                                                    pathname: "/rented-areas",
+                                                    search: `?floorId=` + item?.id,
+                                                }}>
+                                                    <button className="post-edit-item-btn">
+                                                        <i className='bx bxs-pencil'></i>
+                                                        Xem
+                                                    </button>
+                                                </Link>
                                             </td>
                                             <td>
-                                                <button onClick={() => editClick(index)} className="post-edit-item-btn">
+                                                <button className="post-edit-item-btn" onClick={() => editClick(index)} >
                                                     <i className='bx bxs-pencil'></i>
                                                     Sửa
                                                 </button>
                                             </td>
                                             <td>
-                                                <button className="post-delete-btn" onClick={() => removeCompany(item.id)}>
+                                                <button className="post-delete-btn" onClick={() => removeFloor(item.id)}>
                                                     <i className='bx bx-trash'></i>
                                                     Xóa
                                                 </button>
@@ -214,7 +199,7 @@ const Company = () => {
                 </div>
             </div>
         </div>
-    )
-};
+    );
+}
 
-export default Company;
+export default Floor;

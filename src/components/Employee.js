@@ -2,22 +2,28 @@ import React, { useState, useEffect } from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
+import { getCompaniesForRegistrationByName, saveCompanyToRedux,getAllCompanyForRegistration} from '../redux/actions/registed_service';
+import { Link } from 'react-router-dom';
+import '../css/search_bar.css'
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCompany, createNewCompany, updateCompany, deleteCompany } from '../redux/actions/company';
-import { Link } from 'react-router-dom';
+import { createEmployee, deleteEmployee, getAllEmployeeBy, updateEmployee } from '../redux/actions/empoyee';
 
-const Company = () => {
+const Employee = () => {
     const [isShow, setIsShow] = useState(false)
-    const data = useSelector(state => state.company.data)
-    const [companies, setCompanies] = useState(data);
+    const data = useSelector(state => state.employee.data)
+    const [employees, setEmployees] = useState(data);
     const [isAdd, setIsAdd] = useState(false);
     const location = useLocation();
-    const [indexEditCompany, setIndexEditCompany] = useState(null);
+    const [indexEditEmployee, setIndexEditEmployee] = useState(null);
+    const [companyId, setCompanyId] = useState(0);
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllCompany());
+        const id = location.pathname.split('/')[3];
+        setCompanyId(Number(id))
+        dispatch(getAllEmployeeBy(Number(id)));
         return () => {
             console.log(location.pathname);
         }
@@ -25,17 +31,17 @@ const Company = () => {
     }, [location.pathname])
 
     useEffect(() => {
-        setCompanies(data);
+        setEmployees(data);
     }, [data])
 
     const editClick = (index) => {
         setIsShow(true);
         setIsAdd(false);
-        setIndexEditCompany(index);
-        document.getElementById('name').value = companies[index].name;
-        document.getElementById('tax-code').value = companies[index].taxCode;
-        document.getElementById('authorized-capital').value = companies[index].authorizedCapital;
-        document.getElementById('phone-no').value = companies[index].phoneNo;
+        setIndexEditEmployee(index);
+        document.getElementById('name').value = employees[index].name;
+        document.getElementById('date').value = employees[index].dateOfBirth;
+        document.getElementById('socialId').value = employees[index].socialId;
+        document.getElementById('phone-no').value = employees[index].phoneNo;
         document.querySelector('.form-post').classList.add('active');
     }
 
@@ -62,56 +68,55 @@ const Company = () => {
             addItem();
         }
         else {
-            editCompany();
+            editEmployee();
         }
 
         cancelClick();
         window.location.reload();
     }
 
-    const editCompany = () => {
+    const editEmployee = () => {
         const name = document.getElementById('name').value;
-        const taxCode = document.getElementById('tax-code').value;
-        const authorizedCapital = document.getElementById('authorized-capital').value;
+        const dateOfBirth = document.getElementById('date').value;
+        const socialId = document.getElementById('socialId').value;
         const phoneNo = document.getElementById('phone-no').value;
 
         const data = {
             name: name,
-            taxCode: taxCode,
-            authorizedCapital: Number(authorizedCapital),
-            phoneNo: phoneNo
+            dateOfBirth: new Date(dateOfBirth),
+            socialId: socialId,
+            phoneNo: phoneNo,
+            company: employees[indexEditEmployee].company
         }
-        dispatch(updateCompany(companies[indexEditCompany].id, data));
+        console.log("employees[indexEditEmployee].id ", employees[indexEditEmployee].id)
+        dispatch(updateEmployee(employees[indexEditEmployee].id, data));
     }
 
-    const removeCompany = (id) => {
+    const removeEmployee = (id) => {
         if (id) {
-            dispatch(deleteCompany(id));
+            dispatch(deleteEmployee(id));
             window.location.reload();
         }
     }
 
     const addItem = () => {
         const name = document.getElementById('name').value;
-        const taxCode = document.getElementById('tax-code').value;
-        const authorizedCapital = document.getElementById('authorized-capital').value;
+        const dateOfBirth = document.getElementById('date').value;
+        const socialId = document.getElementById('socialId').value;
         const phoneNo = document.getElementById('phone-no').value;
 
         const data = {
             name: name,
-            taxCode: taxCode,
-            authorizedCapital: Number(authorizedCapital),
+            dateOfBirth: new Date(dateOfBirth),
+            socialId: socialId,
             phoneNo: phoneNo
         }
 
-        dispatch(createNewCompany(data));
+        dispatch(createEmployee(data, companyId));
 
         cancelClick();
     }
 
-    const viewEmployee = (id) => {
-
-    }
 
     return (
         <div style={{ position: 'relative' }}>
@@ -119,7 +124,7 @@ const Company = () => {
                 <div className="modal_overlay"></div>
                 <div className="form-post">
                     <div className="form-post__title dialog__title">
-                        Thêm mới công ty
+                        Thêm mới nhân viên
                     </div>
                     <div className="form-post__content">
                         <div className="form-post__wrapper">
@@ -127,10 +132,10 @@ const Company = () => {
                                 <input style={{ width: '100%' }} type="text" id='name' placeholder="Name" />
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='tax-code' placeholder="Tax code" />
+                                <input style={{ width: '100%' }} type="text" id='date' placeholder="date of birth: mm/dd/yyyy" />
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='authorized-capital' placeholder="Authorized Capital" />
+                                <input style={{ width: '100%' }} type="text" id='socialId' placeholder="social id"/>
                             </div>
                             <div className="form-post__field">
                                 <input style={{ width: '100%' }} type="text" id='phone-no' placeholder="Phone No" />
@@ -152,11 +157,11 @@ const Company = () => {
                 <div className="admin-post__wrapper">
                     <div className="admin-post__head">
                         <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
-                            Danh sách công ty
+                            Danh sách nhân viên
                         </div>
                         <div style={{ right: '10px' }} className="admin-post__button">
                             <button onClick={() => popUpActive()}>
-                                Thêm công ty
+                                Thêm nhân viên
                             </button>
                         </div>
                     </div>
@@ -165,33 +170,21 @@ const Company = () => {
                             <tbody>
                                 <tr>
                                     <th>STT</th>
-                                    <th style={{ width: '200px' }}>Name</th>
-                                    <th style={{ width: '200px' }}>Tax code</th>
-                                    <th style={{ width: '200px' }}>Authorized Capital</th>
-                                    <th style={{ width: '200px' }}>Phone No</th>
-                                    <th style={{ width: '200px' }} >Employees</th>
-                                    
-                                    <th style={{ width: '300px' }} >Sum of rented area</th>
-                                    <th style={{ width: '105px' }}>View Employee</th>
+                                    <th style={{ width: '200px' }}>Tên</th>
+                                    <th style={{ width: '200px' }}>Mã nhân viên</th>
+                                    <th style={{ width: '200px' }}>Số điện thoại</th>
+                                    <th style={{ width: '200px' }}>Ngày sinh</th>
                                     <th style={{ width: '105px' }}>Sửa</th>
                                     <th style={{ width: '105px' }} >Xóa</th>
                                 </tr>
                                 {
-                                    companies?.map((item, index) => (
+                                    employees?.map((item, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{item?.name}</td>
-                                            <td>{item?.taxCode}</td>
-                                            <td>{item?.authorizedCapital}</td>
+                                            <td>{item?.socialId}</td>
                                             <td>{item?.phoneNo}</td>
-                                            <td>{item?.numberOfEmployee}</td>
-                                            <td>{item?.sumOfRentedArea}</td>
-                                            <td>
-                                                <button onClick={() => viewEmployee(item.id)} className="post-edit-item-btn">
-                                                    <i className='fas fa-eye' aria-hidden="true"></i>
-                                                    <Link to={`company/view-employees/${item.id}`}>View</Link>
-                                                </button>
-                                            </td>
+                                            <td>{item?.dateOfBirth?.split("T")[0]}</td>
                                             <td>
                                                 <button onClick={() => editClick(index)} className="post-edit-item-btn">
                                                     <i className='bx bxs-pencil'></i>
@@ -199,7 +192,7 @@ const Company = () => {
                                                 </button>
                                             </td>
                                             <td>
-                                                <button className="post-delete-btn" onClick={() => removeCompany(item.id)}>
+                                                <button className="post-delete-btn" onClick={() => removeEmployee(item.id)}>
                                                     <i className='bx bx-trash'></i>
                                                     Xóa
                                                 </button>
@@ -217,4 +210,4 @@ const Company = () => {
     )
 };
 
-export default Company;
+export default Employee;
