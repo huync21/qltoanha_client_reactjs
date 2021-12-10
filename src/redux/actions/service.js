@@ -134,6 +134,10 @@ export const deleteService = (id) => async dispatch => {
             method: 'DELETE',
             baseURL: process.env.REACT_APP_URL_API,
             url: `services/${id}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
         })
         if(res.status == 200){
             dispatch({

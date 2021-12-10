@@ -9,6 +9,7 @@ import salaryReducers from './salary';
 import serviceReducers from './service';
 import statisticsReducers from './statistics';
 import statisticsRentedAreasReducers from './statistics_rented_areas';
+import rentedAreaReducers from './rented_area';
 
 const reducers = combineReducers({
     login: loginReducers,

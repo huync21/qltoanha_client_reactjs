@@ -61,6 +61,7 @@ function App() {
                     </Route>
                     <Route path="/buildingemployee">
                         <BuildingEmployee/>
+                    </Route>
                     <Route path="/floors">
                         <Floor />
                     </Route>
