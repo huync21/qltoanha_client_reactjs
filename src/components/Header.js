@@ -144,6 +144,15 @@ const Header = () => {
                             </li>
 
                             <li className="nav__item">
+                                <Link id='buildingemployee'
+                                    className="nav__link"
+                                    to={`/buildingemployee`}
+                                    onClick={() => linkAction('buildingemployee', true)}>
+                                    Quản lý nhân viên tòa nhà
+                                </Link>
+                            </li>
+
+                            <li className="nav__item">
                                 <Link id='contact'
                                     className="nav__link"
                                     to={`/contact`}

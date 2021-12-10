@@ -1,12 +1,11 @@
 import axios from "axios";
-import { ERROR } from "../constants/base";
-import {DELETE, GET_ALL, GET_ONE, POST, UPDATE} from "../constants/service"
-export const getAllService = () => async dispatch => {
+
+export const getSalaryByService = (serviceId) => async dispatch => {
     try {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: 'services',
+            url: `salaries/serviceId=${serviceId}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
@@ -14,30 +13,30 @@ export const getAllService = () => async dispatch => {
         })
         if(res.status == 200){
             dispatch({
-                type: GET_ALL,
+                type: 'GET_SALARY_BY_SERVICE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
-export const getServiceById = (id) => async dispatch => {
+export const getSalaryById = (id) => async dispatch => {
     try {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services/${id}`,
+            url: `salaries/${id}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
@@ -45,63 +44,94 @@ export const getServiceById = (id) => async dispatch => {
         })
         if(res.status == 200){
             dispatch({
-                type: GET_ONE,
-                data: res.data
+                type: 'GET_ONE_SALARY',
+                data: res.salary,
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
+export const getAllSalary = () => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `salaries`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            dispatch({
+                type: 'GET_ALL_SALARY',
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: 'ERROR',
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: 'ERROR',
+            data: null,
+        })
+    }
+}
 
-export const createNewService = (data) => async dispatch => {
+export const createNewSalary = (serviceId, data) => async dispatch => {
     try {
         const res = await axios({
             method: 'POST',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services`,
+            url: `salaries/create/serviceId=${serviceId}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
             },
-            data: data
+            serviceId: serviceId,
+            data: data,
         })
         if(res.status == 200){
             dispatch({
-                type: POST,
+                type: 'CREATE_SALARY',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
-export const updateService = (id, data) => async dispatch => {
+export const updateSalary = (id, data) => async dispatch => {
     try {
         const res = await axios({
             method: 'PUT',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services/${id}`,
+            url: `salaries/${id}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
@@ -110,47 +140,58 @@ export const updateService = (id, data) => async dispatch => {
         })
         if(res.status == 200){
             dispatch({
-                type: UPDATE,
+                type: 'UPDATE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
-export const deleteService = (id) => async dispatch => {
+export const deleteSalary = (id) => async dispatch => {
     try {
         const res = await axios({
             method: 'DELETE',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services/${id}`,
+            url: `salaries/${id}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            },
         })
         if(res.status == 200){
             dispatch({
-                type: DELETE,
+                type: 'DELETE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
+}
+
+export const saveServiceToRedux = (service) => async dispatch => {
+    dispatch({
+        type: 'SAVE_SERVICE_TO_REDUX',
+        data: service,
+    })
 }

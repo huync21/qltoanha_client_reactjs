@@ -1,12 +1,43 @@
 import axios from "axios";
-import { ERROR } from "../constants/base";
-import {DELETE, GET_ALL, GET_ONE, POST, UPDATE} from "../constants/service"
-export const getAllService = () => async dispatch => {
+
+export const getAllBuildingEmployees = () => async dispatch => {
     try {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: 'services',
+            url: `buildingEmployees/`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        if(res.status == 200){
+            
+            dispatch({
+                type: 'GET_ALL_BUILDING_EMPLOYEE',
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: 'ERROR',
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: 'ERROR',
+            data: null,
+        })
+    }
+}
+
+export const getBuildingEmployeeById = (id) => async dispatch => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `buildingEmployees/${id}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
@@ -14,94 +45,63 @@ export const getAllService = () => async dispatch => {
         })
         if(res.status == 200){
             dispatch({
-                type: GET_ALL,
+                type: 'GET_ONE_BUILDING_EMPLOYEE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
-export const getServiceById = (id) => async dispatch => {
-    try {
-        const res = await axios({
-            method: 'GET',
-            baseURL: process.env.REACT_APP_URL_API,
-            url: `services/${id}`,
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token"),
-                "Content-Type": "application/json" 
-            }
-        })
-        if(res.status == 200){
-            dispatch({
-                type: GET_ONE,
-                data: res.data
-            })
-        }
-        else {
-            dispatch({
-                type: ERROR,
-                data: null,
-            })
-        }
-    } catch (error) {
-        dispatch({
-            type: ERROR,
-            data: null,
-        })
-    }
-}
-
-
-export const createNewService = (data) => async dispatch => {
+export const createNewBuildingEmployee = (salaryId, data) => async dispatch => {
     try {
         const res = await axios({
             method: 'POST',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services`,
+            url: `buildingEmployees/create/salaryId=${salaryId}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
             },
-            data: data
+            salaryId: salaryId,
+            data: data,
         })
         if(res.status == 200){
             dispatch({
-                type: POST,
+                type: 'CREATE_BUILDING_EMPLOYEE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
-export const updateService = (id, data) => async dispatch => {
+export const updateBuildingEmployee = (id, data) => async dispatch => {
     try {
         const res = await axios({
             method: 'PUT',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services/${id}`,
+            url: `buildingEmployees/${id}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
@@ -110,46 +110,50 @@ export const updateService = (id, data) => async dispatch => {
         })
         if(res.status == 200){
             dispatch({
-                type: UPDATE,
+                type: 'UPDATE_BUILDING_EMPLOYEE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }
 }
 
-export const deleteService = (id) => async dispatch => {
+export const deleteBuildingEmployee = (id) => async dispatch => {
     try {
         const res = await axios({
             method: 'DELETE',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services/${id}`,
+            url: `buildingEmployees/${id}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            },
         })
         if(res.status == 200){
             dispatch({
-                type: DELETE,
+                type: 'DELETE_BUILDING_EMPLOYEE',
                 data: res.data
             })
         }
         else {
             dispatch({
-                type: ERROR,
+                type: 'ERROR',
                 data: null,
             })
         }
     } catch (error) {
         dispatch({
-            type: ERROR,
+            type: 'ERROR',
             data: null,
         })
     }

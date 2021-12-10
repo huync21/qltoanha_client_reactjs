@@ -17,7 +17,8 @@ import ServiceRegistration_Company from './components/ServiceRegistration_Compan
 import ServiceRegistration_RegisteredService from './components/ServiceRegistration_RegisteredServices';
 import ServiceRegistration_Services from './components/ServiceRegistration_Services';
 import Service from './components/Service';
-
+import Salary  from './components/Salary';
+import BuildingEmployee  from './components/BuildingEmployee';
 import Floor from './components/Floor';
 import RentedArea from './components/RentedArea';
 import ContractCompany from './components/Contract_Companies';
@@ -55,6 +56,11 @@ function App() {
                     <Route path="/service-registration/services">
                         <ServiceRegistration_Services />
                     </Route>
+                    <Route path="/salary">
+                        <Salary/>
+                    </Route>
+                    <Route path="/buildingemployee">
+                        <BuildingEmployee/>
                     <Route path="/floors">
                         <Floor />
                     </Route>
