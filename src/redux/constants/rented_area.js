@@ -1,5 +1,6 @@
-export const GET_ALL = 'GET_ALL';
-export const POST = 'POST';
-export const UPDATE = 'UPDATE';
-export const DELETE = 'DELETE';
+export const GET_ALL = 'GET_ALL_CONTRACT';
+export const POST = 'POST_CONTRACT';
+export const UPDATE = 'UPDATE_CONTRACT';
+export const DELETE = 'DELETE_CONTRACT';
 export const REGISTER_CONTRACT = 'REGISTER_CONTRACT';
+export const GET_COMPANIES_FOR_REGISTRATION_BY_NAME = 'GET-COMPANY-RENTEDAREA';

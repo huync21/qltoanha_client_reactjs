@@ -4,7 +4,7 @@ import '../css/form.css'
 import '../css/dialog.css'
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompaniesForRegistrationByName, saveCompanyToRedux,getAllCompanyForRegistration} from '../redux/actions/registed_service';
+import { getCompaniesForRegistrationByName, saveCompanyToRedux, getAllCompanyForRegistration } from '../redux/actions/registed_service';
 import { Link } from 'react-router-dom';
 import '../css/search_bar.css'
 
@@ -13,7 +13,7 @@ const ServiceRegistration_Company = () => {
     const location = useLocation();
 
     const dispatch = useDispatch();
-    const [companyName,setCompanyName] = useState("")
+    const [companyName, setCompanyName] = useState("")
     useEffect(() => {
         dispatch(getAllCompanyForRegistration());
         return () => {
@@ -28,11 +28,11 @@ const ServiceRegistration_Company = () => {
         dispatch(saveCompanyToRedux(item))
     }
 
-    const searchBarChange= (e) =>{
+    const searchBarChange = (e) => {
         setCompanyName(e.target.value)
     }
 
-    const findCompaniesByNameClick=()=>{
+    const findCompaniesByNameClick = () => {
         dispatch(getCompaniesForRegistrationByName(companyName))
     }
 
@@ -45,9 +45,9 @@ const ServiceRegistration_Company = () => {
                             <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
                                 Chọn công ty để đăng ký hoặc hủy dịch vụ
                             </div>
-                            <form action="javascript:" class="search-bar" style={{marginRight: "-45px"}}>
-                                <input value={companyName}  onChange={(e)=>{searchBarChange(e)}} type="search" name="search" pattern=".*\S.*" required/>
-                                <button onClick={()=>{findCompaniesByNameClick()}} class="search-btn" type="submit">
+                            <form action="javascript:" class="search-bar" style={{ marginRight: "-45px" }}>
+                                <input value={companyName} onChange={(e) => { searchBarChange(e) }} type="search" name="search" pattern=".*\S.*" required />
+                                <button onClick={() => { findCompaniesByNameClick() }} class="search-btn" type="submit">
                                     <span>Search</span>
                                 </button>
                             </form>

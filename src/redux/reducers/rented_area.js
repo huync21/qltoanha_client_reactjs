@@ -1,6 +1,6 @@
 import { ERROR } from "../constants/base";
 import { GET_THE_REST_AREA } from "../constants/floor";
-import { DELETE, GET_ALL, POST, UPDATE, REGISTER_CONTRACT } from "../constants/rented_area";
+import { DELETE, GET_ALL, POST, UPDATE, REGISTER_CONTRACT, GET_COMPANIES_FOR_REGISTRATION_BY_NAME } from "../constants/rented_area";
 
 const initState = {
     data: [],
@@ -21,6 +21,13 @@ const rentedAreaReducers = (state = initState, payload) => {
         case DELETE:
             return {
                 ...state,
+                success: true,
+                error: false
+            }
+        case GET_COMPANIES_FOR_REGISTRATION_BY_NAME:
+            return {
+                ...state,
+                data: payload.data,
                 success: true,
                 error: false
             }
