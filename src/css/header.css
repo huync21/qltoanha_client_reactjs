@@ -332,7 +332,7 @@ a {
     color: var(--dark-color);
   }
   .dropdown__item:hover {
-    background-color: rgb(209, 209, 209);
+    /* background-color: rgb(209, 209, 209); */
   }
   .nav__link:hover {
     color: #f6e58d;
@@ -342,7 +342,7 @@ a {
     color: #f6e58d;
   }
   .link__item:hover {
-    color: var(--dark-color);
+    /* color: var(--dark-color); */
   }
   .dropdown {
     position: relative;

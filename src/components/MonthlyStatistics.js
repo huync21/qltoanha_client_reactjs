@@ -61,7 +61,7 @@ const MonthlyStatistics = () => {
                         </div>
                         <div className="admin-post__head">
                             <div className="selectdiv">
-                                <label>
+                                <label style={{display:"block"}}>
                                     <select value={selectedMonth} onChange={(e)=>{onSelectChanged(e)}}>
                                         {months.map((item,index)=>(
                                             <option key={index}>Tháng {item?.month} Năm {item?.year}</option>
@@ -69,9 +69,6 @@ const MonthlyStatistics = () => {
                                         }
                                     </select>
                                 </label>
-                            </div>
-                            <div style={{ right: '10px' }} className="admin-post__button">
-                                <button onClick={()=>{onThongKe()}}>Thống kê</button>       
                             </div>
                         </div>
                         
@@ -88,8 +85,8 @@ const MonthlyStatistics = () => {
                                         <th style={{ width: '200px' }}>Sô nhân viên</th>
                                         <th style={{ width: '200px' }}>Tổng diện tích mặt bằng</th>
                                         <th style={{ width: '200px' }}>Tổng tiền phải trả tháng này</th>
-                                        <th style={{ width: '105px' }}>Dịch vụ</th>
-                                        <th style={{ width: '105px' }}>Mặt bằng thuê</th>
+                                        <th style={{ width: '105px' }}>Chi tiết</th>
+                                        
                                     </tr>
                                     {
                                         statistics?.map((item, index) => (
@@ -111,8 +108,8 @@ const MonthlyStatistics = () => {
                                                 }).format(item?.totalAmount)}</td>
                                                 <td>
                                                     <Link to={{
-                                                        pathname: "/service-registration/registered-services",
-                                                        search: `?companyId=` + item?.company?.id,
+                                                        pathname: "/monthly-statistics-details",
+                                                        search: `?companyId=` + item?.company?.id+`&monthId=`+item?.month?.id,
                                                     }}>
                                                         <button className="post-edit-item-btn">
                                                             <i className='bx bxs-pencil'></i>
@@ -120,17 +117,7 @@ const MonthlyStatistics = () => {
                                                         </button>
                                                     </Link>
                                                 </td>
-                                                <td>
-                                                    <Link to={{
-                                                        pathname: "/monthly-fee-statistics/rented-areas-of-company",
-                                                        search: `?companyId=` + item?.company?.id,
-                                                    }}>
-                                                        <button className="post-edit-item-btn">
-                                                            <i className='bx bxs-pencil'></i>
-                                                            Xem
-                                                        </button>
-                                                    </Link>
-                                                </td>
+                                                
                                             </tr>
                                         ))
                                     }
