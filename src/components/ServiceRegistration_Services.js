@@ -39,8 +39,8 @@ function ServiceRegistration_Services() {
     const [description, setDescription] = useState("")
 
     const [doneRegistration, setDoneRegistration] = useState(false)
-    const [iconLoad,setIconLoad] = useState(false)
-    const [serviceName,setServiceName] = useState("")
+    const [iconLoad, setIconLoad] = useState(false)
+    const [serviceName, setServiceName] = useState("")
     useEffect(() => {
         dispatch(getALLServicesToAdd());
         dispatch(getAllRegisterdServices(companyId))
@@ -96,11 +96,11 @@ function ServiceRegistration_Services() {
         }
     }
 
-    const searchBarChange= (e) =>{
+    const searchBarChange = (e) => {
         setServiceName(e.target.value)
     }
 
-    const searchClick=()=>{
+    const searchClick = () => {
         dispatch(getServicesForRegistrationByName(serviceName))
     }
 
@@ -113,9 +113,9 @@ function ServiceRegistration_Services() {
             :
             <>
                 <div style={{ position: 'relative' }}>
-                    <div class="loading-content" style={{display:iconLoad? "block":"none"}}>
-                    <div class="loader"></div>
-                </div>
+                    <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                        <div class="loader"></div>
+                    </div>
                     <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                         <div className="modal_overlay"></div>
                         <div className="form-post">
@@ -167,12 +167,12 @@ function ServiceRegistration_Services() {
                                     <br />
 
                                 </div>
-                                <form action="javascript:" class="search-bar" style={{marginRight: "-45px"}}>
-                                <input  onChange={(e)=>{searchBarChange(e)}} type="search" name="search" pattern=".*\S.*" required/>
-                                <button onClick={()=>{searchClick()}} class="search-btn" type="submit">
-                                    <span>Search</span>
-                                </button>
-                            </form>
+                                <form action="javascript:" class="search-bar" style={{ marginRight: "-45px" }}>
+                                    <input onChange={(e) => { searchBarChange(e) }} type="search" name="search" pattern=".*\S.*" required />
+                                    <button onClick={() => { searchClick() }} class="search-btn" type="submit">
+                                        <span>Search</span>
+                                    </button>
+                                </form>
                             </div>
                             <div className="admin-post__body">
                                 <table id="admin-post__table">

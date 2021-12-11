@@ -54,6 +54,10 @@ const Service = () =>{
     const cancelClick = () => {
         setIsShow(false);
         setIsAdd(false);
+        document.getElementById('is-required').value = "";
+        document.getElementById('name').value = "";
+        document.getElementById('price').value = "";
+        document.getElementById('type').value = "";
         document.querySelector('.form-post').classList.remove('active');
     }
 

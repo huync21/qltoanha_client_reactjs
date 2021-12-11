@@ -1,3 +1,4 @@
+
 // Fix dob not showing up on Edit form
 // Add salary update for employee
 // useDispatch instead of windows.reload
@@ -10,8 +11,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import PopUpSalaryTable from './PopUpSalaryTable';
-import {getSalaryById, getAllSalary} from '../redux/actions/salary';
-import {createNewBuildingEmployee, deleteBuildingEmployee, getAllBuildingEmployees, getBuildingEmployeeById, updateBuildingEmployee} from '../redux/actions/building_employee';
+import { getSalaryById, getAllSalary } from '../redux/actions/salary';
+import { createNewBuildingEmployee, deleteBuildingEmployee, getAllBuildingEmployees, getBuildingEmployeeById, updateBuildingEmployee } from '../redux/actions/building_employee';
 
 const BuildingEmployee = () => {
     const salaryData = useSelector(state => state.salary.salary)
@@ -28,6 +29,7 @@ const BuildingEmployee = () => {
     const dispatch = useDispatch();
     const [editIndex, setEditIndex] = useState("");
     const [showSalaryPopUp, setShowSalaryPopUp] = useState(false);
+    const [iconLoad, setIconLoad] = useState(false)
 
     useEffect(() => {
         dispatch(getAllBuildingEmployees());
@@ -38,7 +40,7 @@ const BuildingEmployee = () => {
 
     useEffect(() => {
         setBuildingEmployees(data);
-        console.log('setBE',data);
+        console.log('setBE', data);
     }, [data])
 
     // useEffect(() => {
@@ -53,7 +55,12 @@ const BuildingEmployee = () => {
         if (id) {
             // dispatch(deleteRegisterdService(registerdServiceId));
             dispatch(deleteBuildingEmployee(id));
-            window.location.reload();
+            setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllBuildingEmployees())
+                setIconLoad(false)
+            }, 300)
+
         }
     }
 
@@ -80,16 +87,26 @@ const BuildingEmployee = () => {
     const cancelClick = () => {
         setIsShow(false)
         setIsAdd(false)
+        document.getElementById('name').value = ""
+        document.getElementById('address').value = ""
+        document.getElementById('dob').value = ""
+        document.getElementById('phone-no').value = ""
+        document.getElementById('position').value = ""
+        document.getElementById('salary-id').value = ""
     }
 
     const addOrEdit = () => {
-        if(isAdd) {
+        if (isAdd) {
             addBuildingEmployee();
-        }else{
+        } else {
             editBuildingEmployee();
         }
-        cancelClick();
-        window.location.reload();
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllBuildingEmployees())
+                setIconLoad(false)
+                cancelClick();
+            }, 300)
     }
 
     const editBuildingEmployee = () => {
@@ -136,9 +153,13 @@ const BuildingEmployee = () => {
     }
 
 
-    return(
+    return (
         <>
+
             <div style={{ position: 'relative' }}>
+                <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                    <div class="loader"></div>
+                </div>
                 <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                     <div className="modal_overlay"></div>
                     <div className="form-post">
@@ -148,32 +169,32 @@ const BuildingEmployee = () => {
                         <div className="form-post__content">
                             <div className="form-post__wrapper">
                                 <div className="form-post__field">
-                                    <p style ={{textAlign: "left"}}><strong>Tên</strong></p>
-                                    <input style={{width: '100%'}} type="text" id='name'/>
+                                    <p style={{ textAlign: "left" }}><strong>Tên</strong></p>
+                                    <input style={{ width: '100%' }} type="text" id='name' />
                                 </div>
                                 <div className="form-post__field">
-                                    <p style ={{textAlign: "left"}}><strong>Địa chỉ</strong></p>
-                                    <input style={{width: '100%'}} type="text" id='address' />
+                                    <p style={{ textAlign: "left" }}><strong>Địa chỉ</strong></p>
+                                    <input style={{ width: '100%' }} type="text" id='address' />
                                 </div>
                                 <div className="form-post__field">
-                                    <p style ={{textAlign: "left"}}><strong>Ngày sinh</strong></p>
-                                    <input style={{width: '100%'}} onChange={(e) => { onDobChange(e) }} type="date" id='dob'/>
+                                    <p style={{ textAlign: "left" }}><strong>Ngày sinh</strong></p>
+                                    <input style={{ width: '100%' }} onChange={(e) => { onDobChange(e) }} type="date" id='dob' />
                                 </div>
                                 <div className="form-post__field">
-                                    <p style ={{textAlign: "left"}}><strong>SĐT</strong></p>
-                                    <input style={{width: '100%'}} type="text" id='phone-no'/>
+                                    <p style={{ textAlign: "left" }}><strong>SĐT</strong></p>
+                                    <input style={{ width: '100%' }} type="text" id='phone-no' />
                                 </div>
                                 <div className="form-post__field">
-                                    <p style ={{textAlign: "left"}}><strong>Vị trí</strong></p>
-                                    <input style={{width: '100%'}} type="text" id='position' />
+                                    <p style={{ textAlign: "left" }}><strong>Vị trí</strong></p>
+                                    <input style={{ width: '100%' }} type="text" id='position' />
                                 </div>
                                 <div className="form-post__field">
-                                    <p style ={{textAlign: "left"}}><strong>ID mức lương</strong></p>
-                                    <div style ={{display: 'flex'}}>
-                                        <input className = "salary-field" style={{width: '100%'}} type="text" id='salary-id' readonly value=""/>
-                                        <button onClick={() => chooseSalary()} style={{background: 'yellow', height: '40px', width: '150px', border: 'none', borderRadius: '5px', marginLeft: '5px', hover: 'pointer'}}>Chọn mức lương</button>
+                                    <p style={{ textAlign: "left" }}><strong>ID mức lương</strong></p>
+
+                                    <div className="form-post__field">
+                                        <p style={{ textAlign: "left" }}><strong>Chọn mức lương</strong></p>
+                                        <input style={{ width: '100%' }} type="text" id='salary-id' />
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div className="form-post__control">
@@ -195,11 +216,11 @@ const BuildingEmployee = () => {
                                 Thông tin nhân viên tòa nhà
                                 <br />
                             </div>
-                            <div style={{right: '10px'}} className="admin-post__button">
-                            <button onClick={() => popUpAddForm()}>
-                                Thêm nhân viên mới
-                            </button>
-                        </div>
+                            <div style={{ right: '10px' }} className="admin-post__button">
+                                <button onClick={() => popUpAddForm()}>
+                                    Thêm nhân viên mới
+                                </button>
+                            </div>
                         </div>
                         <div className="admin-post__body">
                             <table id="admin-post__table">
@@ -246,7 +267,7 @@ const BuildingEmployee = () => {
                     </div>
                 </div>
             </div>
-            {<PopUpSalaryTable/>}
+            {<PopUpSalaryTable />}
         </>
     )
 

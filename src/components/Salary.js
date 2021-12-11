@@ -89,6 +89,7 @@ const Salary = () => {
         const data = {
             salary: Number(salary),
             salaryLevel: Number(salaryLevel),
+            service:service
         }
         dispatch(updateSalary(salaries[editIndex].id, data));
     }
