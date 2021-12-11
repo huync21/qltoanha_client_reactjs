@@ -1,3 +1,6 @@
+// Fix dob not showing up on Edit form
+// Add salary update for employee
+// useDispatch instead of windows.reload
 import React, {useState, useEffect} from 'react';
 import '../css/company.css'
 import '../css/form.css'
