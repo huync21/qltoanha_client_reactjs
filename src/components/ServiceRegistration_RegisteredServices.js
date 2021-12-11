@@ -30,7 +30,7 @@ function ServiceRegistration_RegisteredServices() {
     const [startDate, setStartDate] = useState(null)
     const [description, setDescription] = useState("")
 
-    const [iconLoad,setIconLoad] = useState(false)
+    const [iconLoad, setIconLoad] = useState(false)
     useEffect(() => {
         dispatch(getAllRegisterdServices(companyId));
         dispatch(getCompanyById(companyId))
@@ -48,9 +48,9 @@ function ServiceRegistration_RegisteredServices() {
         if (registerdServiceId) {
             dispatch(deleteRegisterdService(registerdServiceId));
             setIconLoad(true)
-            setTimeout(() => { 
-                dispatch(getAllRegisterdServices(companyId)); 
-                    setIconLoad(false)
+            setTimeout(() => {
+                dispatch(getAllRegisterdServices(companyId));
+                setIconLoad(false)
             }, 500)
         }
     }
@@ -94,14 +94,14 @@ function ServiceRegistration_RegisteredServices() {
             }
             dispatch(updateRegisterdService(copyOfRegisteredService.id, copyOfRegisteredService))
             setIconLoad(true)
-            setTimeout(() => { 
-                dispatch(getAllRegisterdServices(companyId)); 
+            setTimeout(() => {
+                dispatch(getAllRegisterdServices(companyId));
                 setIconLoad(false)
                 setIsShow(false)
                 setStartDate(null)
                 setDescription("")
             }, 500)
-            
+
         }
     }
 
@@ -111,9 +111,9 @@ function ServiceRegistration_RegisteredServices() {
     return (
         <>
             <div style={{ position: 'relative' }}>
-            <div class="loading-content" style={{display:iconLoad? "block":"none"}}>
+                <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
                     <div class="loader"></div>
-                    </div>
+                </div>
                 <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                     <div className="modal_overlay"></div>
                     <div className="form-post">
@@ -170,7 +170,7 @@ function ServiceRegistration_RegisteredServices() {
                                     pathname: "/service-registration/services",
                                     search: `?companyId=` + companyId,
                                 }}>
-                                        Đăng ký thêm dịch vụ
+                                    Đăng ký thêm dịch vụ
                                 </Link>
                             </div>
                         </div>
