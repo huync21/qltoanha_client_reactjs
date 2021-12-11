@@ -4,18 +4,49 @@ import '../css/form.css'
 import '../css/dialog.css'
 import { Redirect, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllStatistics } from '../redux/actions/statistics';
+
 import { Link } from 'react-router-dom';
 import '../css/select_option.css'
+import { getAllMonth } from '../redux/actions/month';
+import { getAllMonthlyStatsOfCompanies } from '../redux/actions/monthly_statistics';
 
-const Statistics = () => {
-    const statistics = useSelector(state => state.statistic.data)
+const MonthlyStatistics = () => {
+    const statistics = useSelector(state => state.monthlyStatistics.data)
     const location = useLocation();
+    const months = useSelector(state => state.months.data)
+    const [selectedMonth,setSelectedMonth] = useState(null)
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllStatistics());
+        dispatch(getAllMonth())
+        setTimeout(()=>{
+            dispatch(getAllMonthlyStatsOfCompanies(months[0]))
+        },300)
     }, [location.pathname])
+
+    const onSelectChanged=(e)=>{
+        const monthString = e.target.value
+        setSelectedMonth(monthString)
+        setTimeout(()=>{
+        const monthInt = monthString.split(" ")[1]
+        console.log(monthInt)
+        const yearInt = monthString.split(" ")[3]
+        console.log(yearInt)
+        let selectedMonthItem = null
+        months.forEach(month=>{
+            if(month.month==monthInt && month.year==yearInt){
+                selectedMonthItem=month;
+            }
+        })
+        console.log("check",selectedMonthItem)
+        dispatch(getAllMonthlyStatsOfCompanies(selectedMonthItem))
+        },100)
+    }
+
+    const onThongKe = ()=>{
+        
+
+    }
 
     return (
         <>
@@ -24,9 +55,24 @@ const Statistics = () => {
                     <div className="admin-post__wrapper">
                         <div className="admin-post__head">
                             <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
-                                 Tiền phải trả tháng {new Date().getMonth() + 1} năm {new Date().getFullYear()} của các công ty từ đầu tháng tính tới thời điểm hiện tại
+                                Thống kê doanh thu các công ty đem lại theo {selectedMonth}
                             </div>
 
+                        </div>
+                        <div className="admin-post__head">
+                            <div className="selectdiv">
+                                <label>
+                                    <select value={selectedMonth} onChange={(e)=>{onSelectChanged(e)}}>
+                                        {months.map((item,index)=>(
+                                            <option key={index}>Tháng {item?.month} Năm {item?.year}</option>
+                                        ))
+                                        }
+                                    </select>
+                                </label>
+                            </div>
+                            <div style={{ right: '10px' }} className="admin-post__button">
+                                <button onClick={()=>{onThongKe()}}>Thống kê</button>       
+                            </div>
                         </div>
                         
                         <div className="admin-post__body" >
@@ -100,4 +146,4 @@ const Statistics = () => {
     )
 };
 
-export default Statistics;
+export default MonthlyStatistics;
