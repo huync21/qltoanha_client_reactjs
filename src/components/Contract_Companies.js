@@ -3,10 +3,10 @@ import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCompany } from '../redux/actions/company';
+
 import { useLocation } from 'react-router';
 import { getFloorById } from '../redux/actions/floor';
-import { getTheRestArea, createContract, getCompaniesForRegistrationByName } from '../redux/actions/rented_area';
+import { getAllCompanyForRegistration, getTheRestArea, createContract, getCompaniesForRegistrationByName } from '../redux/actions/rented_area';
 import { Redirect } from 'react-router';
 import '../css/search_bar.css'
 import '../css/validation.css'
@@ -17,7 +17,7 @@ const ContractCompany = () => {
     const [is_ground_empty, setIsGroundEmpty] = useState(false)
     const [is_ground_area_empty, setIsGroundAreaEmpty] = useState(false)
     const [is_not_over_rest_area, setIsNotOverRestArea] = useState(false)
-    const data = useSelector(state => state.company.data)
+    const data = useSelector(state => state.rentedAreas.data)
     const [companies, setCompanies] = useState(data);
     const location = useLocation();
     const [isShow, setIsShow] = useState(false)
@@ -37,7 +37,7 @@ const ContractCompany = () => {
     const [companyName, setCompanyName] = useState(null)
     const [doneRegistration, setDoneRegistration] = useState(false)
     useEffect(() => {
-        dispatch(getAllCompany());
+        dispatch(getAllCompanyForRegistration());
         dispatch(getFloorById(floorId))
         dispatch(getTheRestArea(floorId))
         console.log("use effect 1");
@@ -59,6 +59,11 @@ const ContractCompany = () => {
         setCompany(item)
         setIsShow(true)
         document.querySelector('.form-post').classList.add('active');
+        setStartDate(null);
+        setEndDate(null);
+        setRentArea("");
+        setPosition("");
+
     }
 
     // Tắt pop up
@@ -100,10 +105,10 @@ const ContractCompany = () => {
         initBooleanTrue()
         if (startDate) setIsRentedDateNull(false)
         if (endDate) setIsExpiredDateNull(false)
-        if (isNaN(rentArea)) setIsNumber(true)
-        if (rentArea && rentArea <= restAreaFromReducer) setIsNotOverRestArea(false)
+        if (!isNaN(parseFloat(rentArea))) setIsNumber(true)
+        if (rentArea && parseFloat(rentArea) <= restAreaFromReducer) setIsNotOverRestArea(true)
         if (position && position != "") setIsGroundEmpty(false)
-        if (is_number && !is_expiredDate_null && !is_rentedDate_null && !is_ground_empty && !is_not_over_rest_area) {
+        if (is_number && !is_expiredDate_null && !is_rentedDate_null && !is_ground_empty && is_not_over_rest_area) {
             const contract = {
                 rentedDate: startDate,
                 expiredDate: endDate,
@@ -154,23 +159,23 @@ const ContractCompany = () => {
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Ngày bắt đầu:</strong></p>
-                                        <input onChange={(e) => { startDateOnChange(e) }} style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
+                                        <input value={startDate} onChange={(e) => { startDateOnChange(e) }} style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
                                         {is_rentedDate_null ? <p className="font-validation" style={{ color: 'red' }}>Vui lòng chọn ngày bắt đầu</p> : ""}
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Ngày kết thúc:</strong></p>
-                                        <input onChange={(e) => { endDateOnChange(e) }} style={{ width: '100%' }} type="date" id='end-date' placeholder="Ngày kết thúc" />
+                                        <input value={endDate} onChange={(e) => { endDateOnChange(e) }} style={{ width: '100%' }} type="date" id='end-date' placeholder="Ngày kết thúc" />
                                         {is_expiredDate_null ? <p className="font-validation">Vui lòng chọn ngày kết thúc</p> : ""}
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Diện tích thuê:</strong></p>
-                                        <input onChange={(e) => { rentAreaChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
+                                        <input value={rentArea} onChange={(e) => { rentAreaChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
                                         {is_number ? "" : <p className="font-validation">Vui lòng nhập số</p>}
-                                        {is_number && is_not_over_rest_area ? "" : <p className="font-validation">Vui lòng chọn diện tích bé hơn diện tích còn lại</p>}
+                                        {is_not_over_rest_area ? "" : <p className="font-validation">Vui lòng chọn diện tích bé hơn diện tích còn lại</p>}
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Tên khu vực thuê:</strong></p>
-                                        <input onChange={(e) => { positionChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
+                                        <input value={position} onChange={(e) => { positionChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
                                         {is_ground_empty ? <p className="font-validation">Vui lòng nhập vị trí</p> : ""}
                                     </div>
                                 </div>

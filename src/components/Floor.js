@@ -5,9 +5,13 @@ import { getAllFloors, deleteFloor, createNewFloor, updateFloor } from '../redux
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import '../css/loading.css'
 
 function Floor() {
+    const [iconLoad, setIconLoad] = useState(false)
+    const [name, setName] = useState(null);
+    const [pricePerM2, setPricePerM2] = useState(null);
+    const [groundArea, setGroundArea] = useState(null);
 
     const [isShow, setIsShow] = useState(false)
     const [isAdd, setIsAdd] = useState(false);
@@ -22,107 +26,119 @@ function Floor() {
 
         }
     }, [location.pathname])
-
-    const editClick = (index) => {
+    const editClick = (item) => {
         setIsShow(true);
+        document.querySelector('.form-post').classList.add('active');
         setIsAdd(false);
-        setIndexEditFloor(index);
-        document.getElementById('name').value = floorsFromReducer[index].name;
-        document.getElementById('price-per-m2').value = floorsFromReducer[index].pricePerM2;
-        document.getElementById('ground-area').value = floorsFromReducer[index].groundArea;
-        document.querySelector('.form-post').classList.add('active');
+        setName(item.name);
+        setPricePerM2(item.pricePerM2);
+        setGroundArea(item.groundArea);
+        setIndexEditFloor(item.id);
     }
-    const popUpActive = (mode) => {
+    const addClick = () => {
         setIsShow(true);
-        setIsAdd(true);
         document.querySelector('.form-post').classList.add('active');
-        if (mode === "edit") {
-            document.querySelector('.dialog__title').textContent = "Sửa thông tin tầng này";
+        setIsAdd(true);
+        setName("");
+        setPricePerM2("");
+        setGroundArea("");
+    }
+    const onNameChange = (e) => {
+        setName(e.target.value)
+    }
+    const onPricePerM2Change = (e) => {
+        setPricePerM2(e.target.value)
+    }
+    const onGroundAreaChange = (e) => {
+        setGroundArea(e.target.value)
+    }
+    const editFloor = () => {
+        const data = {
+            name: name,
+            pricePerM2: pricePerM2,
+            groundArea: groundArea
         }
-        else {
-            document.querySelector('.dialog__title').textContent = "Thêm mới tầng";
+        setIconLoad(true)
+        dispatch(updateFloor(indexEditFloor, data));
+        setTimeout(() => {
+            dispatch(getAllFloors())
+            setIconLoad(false)
+        }, 500)
+        cancelClick();
+    }
+    const addFloor = () => {
+        const data = {
+            name: name,
+            pricePerM2: pricePerM2,
+            groundArea: groundArea
+        }
+        setIconLoad(true)
+        dispatch(createNewFloor(data));
+        setTimeout(() => {
+            dispatch(getAllFloors())
+            setIconLoad(false)
+        }, 500)
+        cancelClick();
+    }
+    const removeFloor = (id) => {
+        if (id) {
+            setIconLoad(true)
+            dispatch(deleteFloor(id));
+            setTimeout(() => {
+                dispatch(getAllFloors())
+                setIconLoad(false)
+            }, 500)
+
         }
     }
+    const addOrUpdateFloor = () => {
+
+        if (isAdd) {
+            addFloor();
+        }
+        else editFloor();
+    }
+
     const cancelClick = () => {
         setIsShow(false);
         setIsAdd(false);
         document.querySelector('.form-post').classList.remove('active');
     }
-    const addOrUpdateItem = () => {
-        if (isAdd) {
-            addItem();
-        }
-        else {
-            editCompany();
-        }
-
-        cancelClick();
-        window.location.reload();
-    }
-    const editCompany = () => {
-        const name = document.getElementById('name').value;
-        const pricePerM2 = document.getElementById('price-per-m2').value;
-        const groundArea = document.getElementById('ground-area').value;
 
 
-        const data = {
-            name: name,
-            pricePerM2: pricePerM2,
-            groundArea: groundArea
-
-        }
-        dispatch(updateFloor(floorsFromReducer[indexEditFloor].id, data));
-        window.location.reload();
-    }
-    const removeFloor = (id) => {
-        if (id) {
-            dispatch(deleteFloor(id));
-            window.location.reload();
-        }
-    }
-    const addItem = () => {
-        const name = document.getElementById('name').value;
-        const pricePerM2 = document.getElementById('price-per-m2').value;
-        const groundArea = document.getElementById('ground-area').value;
-
-        const data = {
-            name: name,
-            pricePerM2: pricePerM2,
-            groundArea: groundArea
-
-        }
-
-        dispatch(createNewFloor(data));
-
-        cancelClick();
-        window.location.reload();
-    }
     return (
         <div style={{ position: 'relative' }}>
+            <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                <div class="loader"></div>
+            </div>
             <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                 <div className="modal_overlay"></div>
                 <div className="form-post">
-                    <div className="form-post__title dialog__title">
+                    {isAdd ? <div className="form-post__title dialog__title">
                         Thêm mới tầng
-                    </div>
+                    </div> : <div className="form-post__title dialog__title">
+                        Sửa thông tin
+                    </div>}
                     <div className="form-post__content">
                         <div className="form-post__wrapper">
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='name' placeholder="Tên" />
+                                <p style={{ textAlign: "left" }}><strong>Tên Tầng</strong></p>
+                                <input value={name} onChange={(e) => { onNameChange(e) }} style={{ width: '100%' }} type="text" id='name' placeholder="tên" />
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='price-per-m2' placeholder="Giá / m2" />
+                                <p style={{ textAlign: "left" }}><strong>Giá tiền/m2</strong></p>
+                                <input value={pricePerM2} onChange={(e) => { onPricePerM2Change(e) }} style={{ width: '100%' }} type="text" id='name' placeholder="Giá tiền" />
                             </div>
                             <div className="form-post__field">
-                                <input style={{ width: '100%' }} type="text" id='ground-area' placeholder="Tổng diện tích" />
+                                <p style={{ textAlign: "left" }}><strong>Diện tích tầng</strong></p>
+                                <input value={groundArea} onChange={(e) => { onGroundAreaChange(e) }} style={{ width: '100%' }} type="text" id='name' placeholder="Diện tích" />
                             </div>
-
                         </div>
                         <div className="form-post__control">
                             <button className="cancel-btn" onClick={() => cancelClick()}>
                                 Hủy
                             </button>
-                            <button className="add-section-btn" onClick={() => addOrUpdateItem()} >
+                            <button className="add-section-btn" onClick={() => addOrUpdateFloor()} >
                                 <i className='bx bx-save'></i>
                                 Lưu
                             </button>
@@ -137,7 +153,7 @@ function Floor() {
                             Danh sách các tầng
                         </div>
                         <div style={{ right: '10px' }} className="admin-post__button">
-                            <button onClick={() => popUpActive()}>
+                            <button onClick={() => addClick()}>
                                 Thêm tầng
                             </button>
                         </div>
@@ -178,7 +194,7 @@ function Floor() {
                                                 </Link>
                                             </td>
                                             <td>
-                                                <button className="post-edit-item-btn" onClick={() => editClick(index)} >
+                                                <button className="post-edit-item-btn" onClick={() => editClick(item)} >
                                                     <i className='bx bxs-pencil'></i>
                                                     Sửa
                                                 </button>
