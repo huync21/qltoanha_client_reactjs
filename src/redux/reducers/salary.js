@@ -18,7 +18,7 @@ const salaryReducers = (state = initState, payload) => {
         case 'GET_ONE_SALARY':
             return{
                 ...state,
-                data: payload.salary,
+                salary: payload.data,
                 success: true,
                 error: false,
             }

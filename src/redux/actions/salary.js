@@ -43,9 +43,10 @@ export const getSalaryById = (id) => async dispatch => {
             }
         })
         if(res.status == 200){
+            console.log('dispatched');
             dispatch({
                 type: 'GET_ONE_SALARY',
-                data: res.salary,
+                data: res.data,
             })
         }
         else {

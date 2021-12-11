@@ -96,12 +96,12 @@ export const createNewBuildingEmployee = (salaryId, data) => async dispatch => {
     }
 }
 
-export const updateBuildingEmployee = (id, data) => async dispatch => {
+export const updateBuildingEmployee = (empId,salaryId, data) => async dispatch => {
     try {
         const res = await axios({
             method: 'PUT',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `buildingEmployees/${id}`,
+            url: `buildingEmployees/${empId}/${salaryId}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
