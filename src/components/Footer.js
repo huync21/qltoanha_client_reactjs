@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <div className="footer-container">
             <div style={{justifyContent: 'center', marginBottom: "30px", display: 'none'}} className="footer-logo">
-                <Logo fz="50px" w1="100px" h1="80px" w2="450px" h2="70px" />
+                <Logo fz="50px" w1="150px" h1="80px" w2="450px" h2="70px" />
             </div>
             <div className="footer-content">
                 <div className="footer-item footer-contact">

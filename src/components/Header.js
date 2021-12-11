@@ -157,14 +157,14 @@ const Header = () => {
                                 </Link>
                             </li>
 
-                            <li className="nav__item">
+                            {/* <li className="nav__item">
                                 <Link id='contact'
                                     className="nav__link"
                                     to={`/contact`}
                                     onClick={() => linkAction('contact', true)}>
                                     Liên hệ
                                 </Link>
-                            </li>
+                            </li> */}
 
                             {
                                 !token ?

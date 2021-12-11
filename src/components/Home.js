@@ -24,13 +24,13 @@ const Home = () => {
 
                                 <div className="abt_txt_box">
                                     <div className="tb_left_heading_wraper">
-                                        <h4>Chào Mừng Bạn Đến Với Bidland GROUP</h4>
-                                        <h3>TẠI SAO BẠN N&#202;N L&#192;M VIỆC VỚI CH&#218;NG T&#212;I</h3>
+                                        <h4>Giải pháp quản lý tòa nhà văn phòng</h4>
+                                        <h3>Hệ thống quản lý tòa nhà version 1.0.1</h3>
                                         <h2><span></span></h2>
                                     </div>
-                                    <p>Sự ra đời của nhiều sản phẩm c&ocirc;ng nghệ trong c&aacute;ch mạng c&ocirc;ng nghiệp 4.0
-                                        l&agrave;m thay đổi bức tranh chung của nhiều ng&agrave;nh, trong đ&oacute; phải kể đến
-                                        bất động sản. Nhiều...</p>
+                                    <p>Hệ thống cho phép admin có thể quản lý các công ty thuê văn phòng trong tòa nhà cũng như thông tin
+                                        về các mặt bằng mà công ty đó thuê, quản lý các dịch vụ trong tòa nhà và các nhân viên tòa nhà
+                                    </p>
 
                                     <div className="abt_btn_wrapper">
                                         <a href="/thu-ngo/tai-sao-ban-nen-lam-viec-voi-chung-toi">
@@ -52,7 +52,7 @@ const Home = () => {
                         </div>
                         <div className="col-md-6 col-lg-6 col-sm-6 col-xs-12">
                             <div className="tb-flex-bdr-img">
-                                <img src="http://bidlandgroup.vn/UploadFile/Images/637420862878439507_tsssss.png" alt="About"
+                                <img src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.15752-9/261962836_256384876493757_8182171597846667018_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=ae9488&_nc_ohc=T_2Pz6JSjLEAX9b9CH1&tn=OdnVT4pmUlCA1G2w&_nc_ht=scontent-sin6-1.xx&oh=0397248d9b438662014e216ac2b0192b&oe=61D9E39E" alt="About"
                                     className="img-responsive" />
                             </div>
                         </div>
