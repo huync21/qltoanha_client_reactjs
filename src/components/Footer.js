@@ -13,7 +13,7 @@ const Footer = () => {
             </div>
             <div className="footer-content">
                 <div className="footer-item footer-contact">
-                    <div className="footer-item-title">LIÊN HỆ</div>
+                    <div className="footer-item-title">Contact Manage Company</div>
                     <div className="footer-contact-container">
                         <div className="footer-contact-item footer-contact-facebook">
                             <div className="footer-contact-title">Facebook</div>
@@ -37,7 +37,83 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
+                <div className="footer-item footer-contact">
+                    <div className="footer-item-title">Manage Building Employee</div>
+                    <div className="footer-contact-container">
+                        <div className="footer-contact-item footer-contact-facebook">
+                            <div className="footer-contact-title">Facebook</div>
+                            <div className="footer-contact-content">ĐÀO KỶ NGUYÊN</div>    
+                        </div>
+                        <div className="footer-contact-item footer-contact-email">
+                            <div className="footer-contact-title">
+                                <i className='bx bxs-envelope footer-contact-icon'></i>
+                                Email
+                            </div>
+                            <div className="footer-contact-content">daokynguyen@gmail.com</div>
+                        </div>
+                        <div className="footer-contac-item footer-contact-phone">
+                            <div className="footer-contact-title">
+                                <i className='bx bxs-phone footer-contact-icon'></i>
+                                Số điện thoại
+                            </div>
+                            <div className="footer-contact-content">
+                                <span>+84</span> 375511200
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-item footer-contact">
+                    <div className="footer-item-title">Manage Building </div>
+                    <div className="footer-contact-container">
+                        <div className="footer-contact-item footer-contact-facebook">
+                            <div className="footer-contact-title">Facebook</div>
+                            <div className="footer-contact-content">Nguyễn QUANG HƯNG</div>    
+                        </div>
+                        <div className="footer-contact-item footer-contact-email">
+                            <div className="footer-contact-title">
+                                <i className='bx bxs-envelope footer-contact-icon'></i>
+                                Email
+                            </div>
+                            <div className="footer-contact-content">nguyenquanghung@gmail.com</div>
+                        </div>
+                        <div className="footer-contac-item footer-contact-phone">
+                            <div className="footer-contact-title">
+                                <i className='bx bxs-phone footer-contact-icon'></i>
+                                Số điện thoại
+                            </div>
+                            <div className="footer-contact-content">
+                                <span>+84</span> 375511200
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-item footer-contact">
+                    <div className="footer-item-title">Manage Building </div>
+                    <div className="footer-contact-container">
+                        <div className="footer-contact-item footer-contact-facebook">
+                            <div className="footer-contact-title">Facebook</div>
+                            <div className="footer-contact-content">Nguyễn Công Huy</div>    
+                        </div>
+                        <div className="footer-contact-item footer-contact-email">
+                            <div className="footer-contact-title">
+                                <i className='bx bxs-envelope footer-contact-icon'></i>
+                                Email
+                            </div>
+                            <div className="footer-contact-content">nguyenconghuy@gmail.com</div>
+                        </div>
+                        <div className="footer-contac-item footer-contact-phone">
+                            <div className="footer-contact-title">
+                                <i className='bx bxs-phone footer-contact-icon'></i>
+                                Số điện thoại
+                            </div>
+                            <div className="footer-contact-content">
+                                <span>+84</span> 375511200
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+           
         </div>
     )
 }

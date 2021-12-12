@@ -61,7 +61,7 @@ const Header = () => {
     }
 
 
-    return (isLogout) ? <Redirect to='/login' /> : (
+    return (isLogout) ? <Redirect to='/logout?redirect=true' /> : (
         <header className="header">
             <Link className="header__logo" to='/'  >
                 MANAGEMENTBUILDING.COM
