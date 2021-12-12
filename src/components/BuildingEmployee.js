@@ -56,6 +56,7 @@ const BuildingEmployee = () => {
 
     const onDobChange = (e) => {
         setDob(e.target.value);
+        console.log(dob);
     }
 
     const deleteClick = (id) => {
@@ -135,12 +136,12 @@ const BuildingEmployee = () => {
             return;
         const position = document.getElementById('position').value;
         const salaryId = document.getElementById('salary-id').textContent;
-        console.log('about to run');
+        console.log('about to run', salaryId);
         // setTimeout(() => {setSalary(salaryData); console.log('salary updated: ',salary)}, 600);
         const data = {
             address: address,
             name: name,
-            dateOfBirth: dob,
+            dateOfBirth: moment(dob).format("YYYY-MM-DD"),
             phoneNo: phoneNo,
             position: position,
         }
