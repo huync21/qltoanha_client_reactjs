@@ -135,9 +135,8 @@ function RentedArea() {
                                 pathname: "/contract-registration",
                                 search: `?floorId=` + floorId,
                             }}>
-                                <button>
                                     Đăng ký mặt bằng tại {floor?.name}
-                                </button>
+                                
                             </Link>
                         </div>
                     </div>

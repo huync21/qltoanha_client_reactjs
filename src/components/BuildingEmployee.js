@@ -128,7 +128,8 @@ const BuildingEmployee = () => {
     const editBuildingEmployee = () => {
         const name = document.getElementById('name').value;
         const address = document.getElementById('address').value;
-        // const dob = moment(document.getElementById('dob').value).format("YYYY-MM-DD");
+        const dob1 = document.getElementById('dob').value;
+        // console.log("ngay sinh 1",dob1)
         const phoneNo = document.getElementById('phone-no').value;
         const validate = validatePhone(phoneNo);
         setIsPhone(validate);
@@ -136,16 +137,18 @@ const BuildingEmployee = () => {
             return;
         const position = document.getElementById('position').value;
         const salaryId = document.getElementById('salary-id').textContent;
-        console.log('about to run', salaryId);
+        // console.log('about to run', salaryId);
         // setTimeout(() => {setSalary(salaryData); console.log('salary updated: ',salary)}, 600);
-        const data = {
+        const data1 = {
             address: address,
             name: name,
-            dateOfBirth: moment(dob).format("YYYY-MM-DD"),
+            dateOfBirth: moment(dob1).format("YYYY-MM-DD"),
             phoneNo: phoneNo,
             position: position,
         }
-        dispatch(updateBuildingEmployee(buildingEmployees[editIndex].id,salaryId, data));
+    
+        // console.log("data:-======= ",data1)
+        dispatch(updateBuildingEmployee(buildingEmployees[editIndex].id,salaryId, data1));
         setIconLoad(true)
             setTimeout(() => {
                 dispatch(getAllBuildingEmployees())

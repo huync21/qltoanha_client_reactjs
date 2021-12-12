@@ -139,6 +139,7 @@ export const updateBuildingEmployee = (empId,salaryId, data) => async dispatch =
             },
             data: data
         })
+        console.log("res data", res.data)
         if(res.status == 200){
             dispatch({
                 type: 'UPDATE_BUILDING_EMPLOYEE',

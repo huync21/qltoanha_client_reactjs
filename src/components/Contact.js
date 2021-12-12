@@ -2,8 +2,8 @@ import React from 'react';
 
 const Contact = () => {
     return (
-        <div>
-            Contact
+        <div style={{marginTop:"100px"}}>
+            
         </div>
     );
 };

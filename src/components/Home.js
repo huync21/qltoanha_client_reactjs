@@ -33,9 +33,9 @@ const Home = () => {
                                     </p>
 
                                     <div className="abt_btn_wrapper">
-                                        <a href="/thu-ngo/tai-sao-ban-nen-lam-viec-voi-chung-toi">
+                                        <a href="/contact">
                                             <div className="blob-btn abt_btn">
-                                                Xem Thêm
+                                                Liên Hệ
                                                 <span className="blob-btn__inner">
                                                     <span className="blob-btn__blobs">
                                                         <span className="blob-btn__blob"></span>

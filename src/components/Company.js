@@ -219,14 +219,17 @@ const Company = () => {
                                             <td>{index + 1}</td>
                                             <td>{item?.name}</td>
                                             <td>{item?.taxCode}</td>
-                                            <td>{item?.authorizedCapital}</td>
+                                            <td>{new Intl.NumberFormat('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            }).format(item?.authorizedCapital)}</td>
                                             <td>{item?.phoneNo}</td>
                                             <td>{item?.numberOfEmployee}</td>
                                             <td>{item?.sumOfRentedArea}</td>
                                             <td>
                                                 <button onClick={() => viewEmployee(item.id)} className="post-edit-item-btn">
-                                                    <i className='fas fa-eye' aria-hidden="true"></i>
-                                                    <Link to={`company/view-employees/${item.id}`}>View</Link>
+                                                    <i className='bx bxs-pencil'></i>
+                                                    <Link style={{color:"white"}}to={`company/view-employees/${item.id}`}>Xem</Link>
                                                 </button>
                                             </td>
                                             <td>
