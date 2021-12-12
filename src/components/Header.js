@@ -114,6 +114,11 @@ const Header = () => {
                                             Thống kê doanh thu
                                         </Link>
                                     </li>
+                                    <li className="dropdown__item">
+                                        <Link className="nav__link link__item" to='/monthly-salary' onClick={() => linkAction('about', true)}>
+                                            Thống kê lương tháng nhân viên
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
                             <li className="nav__item dropdown">
