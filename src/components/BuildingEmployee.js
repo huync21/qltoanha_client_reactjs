@@ -72,7 +72,9 @@ const BuildingEmployee = () => {
         setEditIndex(index);
         document.getElementById('name').value = buildingEmployees[index].name;
         document.getElementById('address').value = buildingEmployees[index].address;
-        document.getElementById('dob').value = buildingEmployees[index].dateOfBirth;
+        // setDob(moment(buildingEmployees[index].dateOfBirth).format("YYYY-MM-DD"));
+        document.getElementById('dob').value = moment(buildingEmployees[index].dateOfBirth, "DD-MM-YYYY", true).format("YYYY-MM-DD");
+        // document.getElementById('dob').value = buildingEmployees[index].dateOfBirth;
         document.getElementById('phone-no').value = buildingEmployees[index].phoneNo;
         document.getElementById('position').value = buildingEmployees[index].position;
         document.querySelector('.salary__id').textContent = buildingEmployees[index].salary.id;
