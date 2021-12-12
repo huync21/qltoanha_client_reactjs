@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/loading.css'
-
+import '../css/floor-validation.css';
 function Floor() {
+
     const [iconLoad, setIconLoad] = useState(false)
     const [name, setName] = useState(null);
     const [pricePerM2, setPricePerM2] = useState(null);
@@ -27,6 +28,12 @@ function Floor() {
         }
     }, [location.pathname])
     const editClick = (item) => {
+        const nameFloorTag = document.querySelector("#name-floor");
+        const pricePerM2Tag = document.querySelector("#price-per-M2");
+        const groundAreaTag = document.querySelector("#ground-area");
+        nameFloorTag.parentElement.classList.remove("empty");
+        pricePerM2Tag.parentElement.classList.remove("empty");
+        groundAreaTag.parentElement.classList.remove("empty");
         setIsShow(true);
         document.querySelector('.form-post').classList.add('active');
         setIsAdd(false);
@@ -36,6 +43,12 @@ function Floor() {
         setIndexEditFloor(item.id);
     }
     const addClick = () => {
+        const nameFloorTag = document.querySelector("#name-floor");
+        const pricePerM2Tag = document.querySelector("#price-per-M2");
+        const groundAreaTag = document.querySelector("#ground-area");
+        nameFloorTag.parentElement.classList.remove("empty");
+        pricePerM2Tag.parentElement.classList.remove("empty");
+        groundAreaTag.parentElement.classList.remove("empty");
         setIsShow(true);
         document.querySelector('.form-post').classList.add('active');
         setIsAdd(true);
@@ -93,6 +106,27 @@ function Floor() {
     }
     const addOrUpdateFloor = () => {
 
+        const nameFloorTag = document.querySelector("#name-floor");
+        const pricePerM2Tag = document.querySelector("#price-per-M2");
+        const groundAreaTag = document.querySelector("#ground-area");
+        nameFloorTag.parentElement.classList.remove("empty");
+        pricePerM2Tag.parentElement.classList.remove("empty");
+        groundAreaTag.parentElement.classList.remove("empty");
+        let count = 0;
+        if (name.trim().length < 1) {
+            nameFloorTag.parentElement.classList.add("empty");
+            count++;
+        }
+        if (pricePerM2.toString().trim().length < 1) {
+            pricePerM2Tag.parentElement.classList.add("empty");
+            count++;
+        }
+        if (groundArea.toString().trim().length < 1) {
+            groundAreaTag.parentElement.classList.add("empty");
+            count++;
+        }
+
+        if (count > 0) return;
         if (isAdd) {
             addFloor();
         }
@@ -105,7 +139,9 @@ function Floor() {
         document.querySelector('.form-post').classList.remove('active');
     }
 
-
+    const onSubmit = () => (data) => {
+        console.log(data);
+    }
     return (
         <div style={{ position: 'relative' }}>
             <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
@@ -119,19 +155,24 @@ function Floor() {
                     </div> : <div className="form-post__title dialog__title">
                         Sửa thông tin
                     </div>}
+
                     <div className="form-post__content">
                         <div className="form-post__wrapper">
-                            <div className="form-post__field">
+                            <div className="form-post__field .floor-form">
                                 <p style={{ textAlign: "left" }}><strong>Tên Tầng</strong></p>
-                                <input value={name} onChange={(e) => { onNameChange(e) }} style={{ width: '100%' }} type="text" id='name' placeholder="tên" />
+                                <input value={name} onChange={(e) => { onNameChange(e) }} style={{ width: '100%' }} type="text" id='name-floor' placeholder="tên"
+                                />
+
                             </div>
                             <div className="form-post__field">
                                 <p style={{ textAlign: "left" }}><strong>Giá tiền/m2</strong></p>
-                                <input value={pricePerM2} onChange={(e) => { onPricePerM2Change(e) }} style={{ width: '100%' }} type="text" id='name' placeholder="Giá tiền" />
+                                <input value={pricePerM2} onChange={(e) => { onPricePerM2Change(e) }} style={{ width: '100%' }} type="number" id='price-per-M2' placeholder="Giá tiền"
+                                />
                             </div>
                             <div className="form-post__field">
                                 <p style={{ textAlign: "left" }}><strong>Diện tích tầng</strong></p>
-                                <input value={groundArea} onChange={(e) => { onGroundAreaChange(e) }} style={{ width: '100%' }} type="text" id='name' placeholder="Diện tích" />
+                                <input value={groundArea} onChange={(e) => { onGroundAreaChange(e) }} style={{ width: '100%' }} type="number" id='ground-area' placeholder="Diện tích"
+                                />
                             </div>
                         </div>
                         <div className="form-post__control">
@@ -144,6 +185,8 @@ function Floor() {
                             </button>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <div style={{ maxWidth: "1100px", minHeight: "100vh" }} className="admin-post__container">
