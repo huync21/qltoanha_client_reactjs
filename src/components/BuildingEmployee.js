@@ -246,6 +246,11 @@ const BuildingEmployee = () => {
                                     }
                                 </tbody>
                             </table>
+                            <div className="form-post__control">
+                                <button onClick={() => {setShowSalaryPopUp(false);}} className="cancel-btn">
+                                    Hủy
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
