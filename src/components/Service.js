@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
+import '../css/search_bar.css'
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllService, createNewService, updateService, deleteService, getServiceByName } from '../redux/actions/service';
@@ -15,6 +16,10 @@ const Service = () =>{
     const location = useLocation();
     const [indexEditService, setIndexEditService] = useState(null);
     const [name, setName] = useState(null);
+
+    const [isPrice, setIsPrice] = useState(true);
+    const [isMandatory, setIsMandatory] = useState(true);
+    const [iconLoad, setIconLoad] = useState(null);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -69,9 +74,6 @@ const Service = () =>{
         else{
             editService();
         }
-        
-        cancelClick();
-        window.location.reload();
     }
 
     const editService = () => {
@@ -87,12 +89,22 @@ const Service = () =>{
             type: type
         }
         dispatch(updateService(services[indexEditService].id, data));
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllService())
+                setIconLoad(false)
+            }, 300)
+        cancelClick();
     }
 
     const removeService = (id) => {
         if(id){
             dispatch(deleteService(id));
-            window.location.reload();
+            setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllService())
+                setIconLoad(false)
+            }, 300)
         }
     }
 
@@ -102,6 +114,13 @@ const Service = () =>{
         const price = document.getElementById('price').value;
         const type = document.getElementById('type').value;
         
+        const validateIsRequired = validateMandatory(isRequired);
+        setIsMandatory(validateIsRequired);
+        const validateIsPrice = validatePrice(price);
+        setIsPrice(validateIsPrice);
+        if(! (validateIsPrice&&validateIsRequired))
+            return;
+
         const data = {
             name: name,
             required: Number(isRequired),
@@ -110,7 +129,11 @@ const Service = () =>{
         }
 
         dispatch(createNewService(data));
-        
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllService())
+                setIconLoad(false)
+            }, 300)
         cancelClick();
     }
 
@@ -128,8 +151,21 @@ const Service = () =>{
         dispatch(getServiceByName(name));
     }
 
+    const validateMandatory = (mandatory) => {
+        var regMandatory = /^(1|0)$/;
+        return mandatory.match(regMandatory);
+    }
+
+    const validatePrice = (price) => {
+        var regPrice = /^\d{0,8}(\.\d{1,4})?$/;
+        return price.match(regPrice);
+    }
+
     return(
         <div style={{position: 'relative'}}>
+            <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                    <div class="loader"></div>
+            </div>
             <div style={{display: isShow ? 'block' : 'none'}} className="modal">
             <div className="form-post">
                 <div className="form-post__title dialog__title">
@@ -142,9 +178,11 @@ const Service = () =>{
                         </div>
                         <div className="form-post__field">
                             <input style={{width: '100%'}} type="text" id='is-required' placeholder = "Dịch vụ bắt buộc? (1 nếu có, 0 nếu ngược lại)"/>
+                            <span style={{display: isMandatory ? "none" : ""}} className='validate-phone'>Nhập 1 hoặc 0</span>
                         </div>
                         <div className="form-post__field">
                             <input style={{width: '100%'}} type="text" id='price' placeholder = "Giá"/>
+                            <span style={{display: isPrice ? "none" : ""}} className='validate-phone'>Nhập lượng giá phù hợp</span>
                         </div>
                         <div className="form-post__field">
                             <input style={{width: '100%'}} type="text" id='type' placeholder = "Loại dịch vụ"/>

@@ -20,6 +20,9 @@ const Salary = () => {
     const search = useLocation().search;
     const serviceId = new URLSearchParams(search).get('serviceId');
     const [editIndex, setEditIndex] = useState("");
+    const [isSalaryLevel, setIsSalaryLevel] = useState(true);
+    const [isSalary, setIsSalary] = useState(true);
+    const [iconLoad, setIconLoad] = useState(false);
 
     // Lấy dữ liệu dich vu
     const dataService = useSelector(state => state.service.service);
@@ -49,7 +52,12 @@ const Salary = () => {
         if (id) {
             // dispatch(deleteRegisterdService(registerdServiceId));
             dispatch(deleteSalary(id));
-            window.location.reload();
+            setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getSalaryByService(serviceId))
+                setIconLoad(false)
+                cancelClick();
+            }, 300)
         }
     }
 
@@ -79,8 +87,6 @@ const Salary = () => {
         }else{
             editSalary();
         }
-        cancelClick();
-        window.location.reload();
     }
 
     const editSalary = () => {
@@ -92,22 +98,57 @@ const Salary = () => {
             service:service
         }
         dispatch(updateSalary(salaries[editIndex].id, data));
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getSalaryByService(serviceId))
+                setIconLoad(false)
+                cancelClick();
+            }, 300)
     }
 
     const addSalary = () => {
         const salaryLevel = document.getElementById('salary-level').value;
         const salary = document.getElementById('salary').value;
+        const checkSalaryLevel = validateSalaryLevel(salaryLevel);
+        console.log(checkSalaryLevel);
+        setIsSalaryLevel(checkSalaryLevel);
+        const checkSalary = validateSalary(salary);
+        setIsSalary(checkSalary);
+        if(!(checkSalaryLevel&&checkSalary))
+            return;
         const data = {
             salary: Number(salary),
             salaryLevel: Number(salaryLevel),
         }
         dispatch(createNewSalary(serviceId, data));
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getSalaryByService(serviceId))
+                setIconLoad(false)
+                cancelClick();
+            }, 300)
     }
 
+    const validateSalaryLevel = (sl) => {
+        if(!isNaN(sl) && sl >0)
+            return true;
+        else
+            return false;
+    }
+
+    const validateSalary = (s) => {
+        if(!isNaN(s) && s >0)
+            return true;
+        else
+            return false;
+    }
 
     return(
         <>
             <div style={{ position: 'relative' }}>
+                <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                    <div class="loader"></div>
+                </div>
                 <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                     <div className="modal_overlay"></div>
                     <div className="form-post">
@@ -118,9 +159,11 @@ const Salary = () => {
                             <div className="form-post__wrapper">
                                 <div className="form-post__field">
                                     <input style={{width: '100%'}} type="text" id='salary-level' placeholder = "Mức lương"/>
+                                    <span style={{display: isSalaryLevel ? "none" : ""}} className='validate-phone'>Mức lương phải là số lớn hơn 0</span>
                                 </div>
                                 <div className="form-post__field">
                                     <input style={{width: '100%'}} type="text" id='salary' placeholder = "Lương"/>
+                                    <span style={{display: isSalary ? "none" : ""}} className='validate-phone'>Lương phải là số lớn hơn 0</span>
                                 </div>
                             </div>
                             <div className="form-post__control">

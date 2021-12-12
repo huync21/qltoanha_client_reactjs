@@ -32,6 +32,7 @@ const BuildingEmployee = () => {
     const [iconLoad, setIconLoad] = useState(false);
 
     const [name, setName] = useState(null);
+    const [isPhone, setIsPhone] = useState(true);
 
     useEffect(() => {
         dispatch(getAllBuildingEmployees());
@@ -91,8 +92,15 @@ const BuildingEmployee = () => {
     const popUpAddForm = () => {
         setIsShow(true);
         setIsAdd(true);
+        setIsPhone(true);
         document.querySelector('.dialog__title').textContent = "Thêm mới nhân viên";
         document.querySelector('.form-post').classList.add('active');
+        document.getElementById('name').value = ""
+        document.getElementById('address').value = ""
+        document.getElementById('dob').value = ""
+        document.getElementById('phone-no').value = ""
+        document.getElementById('position').value = ""
+        document.getElementById('salary-id').textContent = ""
         
     }
 
@@ -114,12 +122,6 @@ const BuildingEmployee = () => {
         } else {
             editBuildingEmployee();
         }
-        setIconLoad(true)
-            setTimeout(() => {
-                dispatch(getAllBuildingEmployees())
-                setIconLoad(false)
-                cancelClick();
-            }, 300)
     }
 
     const editBuildingEmployee = () => {
@@ -127,6 +129,10 @@ const BuildingEmployee = () => {
         const address = document.getElementById('address').value;
         // const dob = moment(document.getElementById('dob').value).format("YYYY-MM-DD");
         const phoneNo = document.getElementById('phone-no').value;
+        const validate = validatePhone(phoneNo);
+        setIsPhone(validate);
+        if(!validate)
+            return;
         const position = document.getElementById('position').value;
         const salaryId = document.getElementById('salary-id').textContent;
         console.log('about to run');
@@ -139,6 +145,12 @@ const BuildingEmployee = () => {
             position: position,
         }
         dispatch(updateBuildingEmployee(buildingEmployees[editIndex].id,salaryId, data));
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllBuildingEmployees())
+                setIconLoad(false)
+                cancelClick();
+            }, 300)
     }
 
     const addBuildingEmployee = () => {
@@ -146,6 +158,11 @@ const BuildingEmployee = () => {
         const address = document.getElementById('address').value;
         // const dob = document.getElementById('dob').value;
         const phoneNo = document.getElementById('phone-no').value;
+        const validate = validatePhone(phoneNo);
+        setIsPhone(validate);
+        if(!validate)
+            return;
+        
         const position = document.getElementById('position').value;
         const salaryId = document.getElementById('salary-id').textContent;
         console.log('salaryID=',salaryId);
@@ -157,6 +174,12 @@ const BuildingEmployee = () => {
             position: position,
         }
         dispatch(createNewBuildingEmployee(salaryId, data));
+        setIconLoad(true)
+            setTimeout(() => {
+                dispatch(getAllBuildingEmployees())
+                setIconLoad(false)
+                cancelClick();
+            }, 300)
     }
 
     const chooseSalary = () => {
@@ -178,6 +201,11 @@ const BuildingEmployee = () => {
 
     const searchBuildingEmployeeByName = () => {
         dispatch(getBuildingEmployeeByName(name));
+    }
+
+    const validatePhone = (phoneNumber) => {
+        var regPhone = /^\d{10}$/;
+        return phoneNumber.match(regPhone);
     }
 
     return (
@@ -208,6 +236,7 @@ const BuildingEmployee = () => {
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>SĐT</strong></p>
                                     <input style={{ width: '100%' }} type="text" id='phone-no' />
+                                    <span style={{display: isPhone ? "none" : ""}} className='validate-phone'>SĐT phải bao gồm 10 chữ số</span>
                                 </div>
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Vị trí</strong></p>
