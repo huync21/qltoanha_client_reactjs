@@ -84,7 +84,7 @@ const MonthlyStatistics = () => {
                                         <th style={{ width: '200px' }}>SĐT</th>
                                         <th style={{ width: '200px' }}>Sô nhân viên</th>
                                         <th style={{ width: '200px' }}>Tổng diện tích mặt bằng</th>
-                                        <th style={{ width: '200px' }}>Tổng tiền phải trả tháng này</th>
+                                        <th style={{ width: '200px' }}>Tổng tiền</th>
                                         <th style={{ width: '105px' }}>Chi tiết</th>
                                         
                                     </tr>

@@ -226,7 +226,7 @@ export const getServicesForRegistrationByName = (name) => async dispatch => {
         const res = await axios({
             method: 'GET',
             baseURL: process.env.REACT_APP_URL_API,
-            url: `services/name=${name}`,
+            url: `services/name/${name}`,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json" 
