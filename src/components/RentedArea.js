@@ -4,10 +4,12 @@ import { useLocation } from 'react-router';
 import { deleteRentedArea, getAllRentedAreas, getTheRestArea, updateRegisterdRentedArea } from '../redux/actions/rented_area';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import '../css/loading.css'
 import { Link } from 'react-router-dom';
 import { getFloorById } from '../redux/actions/floor';
 import moment from 'moment';
 function RentedArea() {
+    const [iconLoad, setIconLoad] = useState(false)
     const [isShow, setIsShow] = useState(false)
     const location = useLocation()
     const dispatch = useDispatch();
@@ -42,10 +44,13 @@ function RentedArea() {
             const copyOfRegisteredRentedArea = {
                 ...item
             }
-
+            setIconLoad(true);
             dispatch(updateRegisterdRentedArea(copyOfRegisteredRentedArea.id, copyOfRegisteredRentedArea))
             cancelClick();
-            window.location.reload();
+            setTimeout(() => {
+                dispatch(getAllRentedAreas(floorId))
+                setIconLoad(false)
+            }, 500)
 
         }
     }
@@ -58,8 +63,12 @@ function RentedArea() {
     }, [location.pathname])
     const removeRentedArea = (id) => {
         if (id) {
+            setIconLoad(true)
             dispatch(deleteRentedArea(id));
-            window.location.reload();
+            setTimeout(() => {
+                dispatch(getAllRentedAreas(floorId))
+                setIconLoad(false)
+            }, 500)
         }
     }
 
@@ -72,6 +81,9 @@ function RentedArea() {
     }
     return (
         <div style={{ position: 'relative' }}>
+            <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                <div class="loader"></div>
+            </div>
             <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                 <div className="modal_overlay"></div>
                 <div className="form-post">

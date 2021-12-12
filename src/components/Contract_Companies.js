@@ -3,20 +3,15 @@ import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
 import { useDispatch, useSelector } from 'react-redux';
-
+import '../css/loading.css'
 import { useLocation } from 'react-router';
 import { getFloorById } from '../redux/actions/floor';
 import { getAllCompanyForRegistration, getTheRestArea, createContract, getCompaniesForRegistrationByName } from '../redux/actions/rented_area';
 import { Redirect } from 'react-router';
 import '../css/search_bar.css'
-import '../css/validation.css'
+import '../css/rented-area-validation.css'
 const ContractCompany = () => {
-    const [is_rentedDate_null, setIsRentedDateNull] = useState(false)
-    const [is_expiredDate_null, setIsExpiredDateNull] = useState(false)
-    const [is_number, setIsNumber] = useState(false)
-    const [is_ground_empty, setIsGroundEmpty] = useState(false)
-    const [is_ground_area_empty, setIsGroundAreaEmpty] = useState(false)
-    const [is_not_over_rest_area, setIsNotOverRestArea] = useState(false)
+    const [iconLoad, setIconLoad] = useState(false)
     const data = useSelector(state => state.rentedAreas.data)
     const [companies, setCompanies] = useState(data);
     const location = useLocation();
@@ -30,11 +25,11 @@ const ContractCompany = () => {
 
     //form states
 
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
     const [rentArea, setRentArea] = useState(0)
     const [position, setPosition] = useState("")
-    const [companyName, setCompanyName] = useState(null)
+    const [companyName, setCompanyName] = useState("")
     const [doneRegistration, setDoneRegistration] = useState(false)
     useEffect(() => {
         dispatch(getAllCompanyForRegistration());
@@ -55,12 +50,20 @@ const ContractCompany = () => {
 
     // Mở pop up edit item
     const popUpEditForm = (item) => {
-        initBooleanFalse();
+        const starDateTag = document.querySelector("#start-date");
+        const endDateTag = document.querySelector("#end-date");
+        const rentedAreaTag = document.querySelector("#rented-area");
+        const posionalAreaTag = document.querySelector("#position");
+        starDateTag.parentElement.classList.remove("empty");
+        endDateTag.parentElement.classList.remove("empty");
+        rentedAreaTag.parentElement.classList.remove("empty");
+        posionalAreaTag.parentElement.classList.remove("empty");
+        rentedAreaTag.parentElement.classList.remove("rentedError");
         setCompany(item)
         setIsShow(true)
         document.querySelector('.form-post').classList.add('active');
-        setStartDate(null);
-        setEndDate(null);
+        setStartDate("");
+        setEndDate("");
         setRentArea("");
         setPosition("");
 
@@ -85,47 +88,64 @@ const ContractCompany = () => {
     const positionChange = (e) => {
         setPosition(e.target.value)
     }
-    const initBooleanFalse = () => {
-        setIsNumber(true)
-        setIsExpiredDateNull(false)
-        setIsRentedDateNull(false)
 
-        setIsNotOverRestArea(true)
-        setIsGroundEmpty(false)
-    }
-    const initBooleanTrue = () => {
-        setIsNumber(false)
-        setIsExpiredDateNull(true)
-        setIsRentedDateNull(true)
-
-        setIsNotOverRestArea(false)
-        setIsGroundEmpty(true)
-    }
     const registerContract = () => {
-        initBooleanTrue()
-        if (startDate) setIsRentedDateNull(false)
-        if (endDate) setIsExpiredDateNull(false)
-        if (!isNaN(parseFloat(rentArea))) setIsNumber(true)
-        if (rentArea && parseFloat(rentArea) <= restAreaFromReducer) setIsNotOverRestArea(true)
-        if (position && position != "") setIsGroundEmpty(false)
-        if (is_number && !is_expiredDate_null && !is_rentedDate_null && !is_ground_empty && is_not_over_rest_area) {
-            const contract = {
-                rentedDate: startDate,
-                expiredDate: endDate,
-                rentedArea: rentArea,
-                position: position
+        const starDateTag = document.querySelector("#start-date");
+        const endDateTag = document.querySelector("#end-date");
+        const rentedAreaTag = document.querySelector("#rented-area");
+        const posionalAreaTag = document.querySelector("#position");
+        starDateTag.parentElement.classList.remove("empty");
+        endDateTag.parentElement.classList.remove("empty");
+        rentedAreaTag.parentElement.classList.remove("empty");
+        rentedAreaTag.parentElement.classList.remove("rentedError");
+        posionalAreaTag.parentElement.classList.remove("empty");
+        let count = 0;
+        if (startDate.trim().length < 1) {
+            starDateTag.parentElement.classList.add("empty");
+            count++;
+        }
+        if (endDate.toString().trim().length < 1) {
+            endDateTag.parentElement.classList.add("empty");
+            count++;
+        }
+        let isRentedAreaEmpty = false;
+        if (rentArea.toString().trim().length < 1) {
+            isRentedAreaEmpty = true;
+            rentedAreaTag.parentElement.classList.add("empty");
+            count++;
+        }
+        if (!isRentedAreaEmpty) {
+            if (parseFloat(rentArea) > restAreaFromReducer || parseFloat(rentArea) < 0) {
+                rentedAreaTag.parentElement.classList.remove("empty");
+                rentedAreaTag.parentElement.classList.add("rentedError");
+                count++;
             }
 
-            dispatch(createContract(company.id, floorId, contract))
-            setTimeout(() => {
-                setDoneRegistration(true)
-            }, 1000)
+        }
+        if (position.toString().trim().length < 1) {
+            posionalAreaTag.parentElement.classList.add("empty");
+            count++;
         }
 
-
-
-
+        if (count > 0) return;
+        const contract = {
+            rentedDate: startDate,
+            expiredDate: endDate,
+            rentedArea: rentArea,
+            position: position
+        }
+        setIconLoad(true)
+        dispatch(createContract(company.id, floorId, contract))
+        setTimeout(() => {
+            setIconLoad(false);
+            setDoneRegistration(true)
+        }, 1000)
     }
+
+
+
+
+
     const searchBarChange = (e) => {
         setCompanyName(e.target.value)
     }
@@ -142,6 +162,9 @@ const ContractCompany = () => {
             :
             <>
                 <div style={{ position: 'relative' }} >
+                    <div class="loading-content" style={{ display: iconLoad ? "block" : "none" }}>
+                        <div class="loader"></div>
+                    </div>
                     <div style={{ display: isShow ? 'block' : 'none' }} className="modal">
                         <div className="modal_overlay"></div>
                         <div className="form-post" style={{ height: "700px" }}>
@@ -160,23 +183,18 @@ const ContractCompany = () => {
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Ngày bắt đầu:</strong></p>
                                         <input value={startDate} onChange={(e) => { startDateOnChange(e) }} style={{ width: '100%' }} type="date" id='start-date' placeholder="Ngày bắt đầu" />
-                                        {is_rentedDate_null ? <p className="font-validation" style={{ color: 'red' }}>Vui lòng chọn ngày bắt đầu</p> : ""}
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Ngày kết thúc:</strong></p>
                                         <input value={endDate} onChange={(e) => { endDateOnChange(e) }} style={{ width: '100%' }} type="date" id='end-date' placeholder="Ngày kết thúc" />
-                                        {is_expiredDate_null ? <p className="font-validation">Vui lòng chọn ngày kết thúc</p> : ""}
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Diện tích thuê:</strong></p>
-                                        <input value={rentArea} onChange={(e) => { rentAreaChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
-                                        {is_number ? "" : <p className="font-validation">Vui lòng nhập số</p>}
-                                        {is_not_over_rest_area ? "" : <p className="font-validation">Vui lòng chọn diện tích bé hơn diện tích còn lại</p>}
+                                        <input value={rentArea} onChange={(e) => { rentAreaChange(e) }} style={{ width: '100%' }} type="number" id='rented-area' placeholder="Diện tích thuê" />
                                     </div>
                                     <div className="form-post__field">
                                         <p style={{ textAlign: "left" }}><strong>Tên khu vực thuê:</strong></p>
-                                        <input value={position} onChange={(e) => { positionChange(e) }} style={{ width: '100%' }} type="text" id='description' placeholder="Diện tích thuê" />
-                                        {is_ground_empty ? <p className="font-validation">Vui lòng nhập vị trí</p> : ""}
+                                        <input value={position} onChange={(e) => { positionChange(e) }} style={{ width: '100%' }} type="text" id='position' placeholder="Diện tích thuê" />
                                     </div>
                                 </div>
                                 <div className="form-post__control">
