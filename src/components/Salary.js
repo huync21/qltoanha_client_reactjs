@@ -143,10 +143,10 @@ const Salary = () => {
                                 <br />
                             </div>
                             <div style={{right: '10px'}} className="admin-post__button">
-                            <button onClick={() => popUpAddForm()}>
-                                Thêm mức lương mới
-                            </button>
-                        </div>
+                                <button onClick={() => popUpAddForm()}>
+                                    Thêm mức lương mới
+                                </button>
+                            </div>
                         </div>
                         <div className="admin-post__body">
                             <table id="admin-post__table">

@@ -6,12 +6,13 @@ import React, {useState, useEffect} from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
+import '../css/search_bar.css'
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { getSalaryById, getAllSalary } from '../redux/actions/salary';
-import { createNewBuildingEmployee, deleteBuildingEmployee, getAllBuildingEmployees, getBuildingEmployeeById, updateBuildingEmployee } from '../redux/actions/building_employee';
+import { createNewBuildingEmployee, deleteBuildingEmployee, getAllBuildingEmployees, getBuildingEmployeeById, updateBuildingEmployee, getBuildingEmployeeByName } from '../redux/actions/building_employee';
 
 const BuildingEmployee = () => {
     const salaryData = useSelector(state => state.salary.salary);
@@ -28,7 +29,9 @@ const BuildingEmployee = () => {
     const dispatch = useDispatch();
     const [editIndex, setEditIndex] = useState("");
     const [showSalaryPopUp, setShowSalaryPopUp] = useState(false);
-    const [iconLoad, setIconLoad] = useState(false)
+    const [iconLoad, setIconLoad] = useState(false);
+
+    const [name, setName] = useState(null);
 
     useEffect(() => {
         dispatch(getAllBuildingEmployees());
@@ -168,6 +171,15 @@ const BuildingEmployee = () => {
 
     }
 
+    const onNameChange = (e) => {
+        setName(e.target.value);
+        console.log(name);
+    }
+
+    const searchBuildingEmployeeByName = () => {
+        dispatch(getBuildingEmployeeByName(name));
+    }
+
     return (
         <>
             <div style={{ position: 'relative' }}>
@@ -260,14 +272,24 @@ const BuildingEmployee = () => {
                     <div className="admin-post__wrapper">
                         <div className="admin-post__head">
                             <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
-                                Thông tin nhân viên tòa nhà
-                                <br />
-                            </div>
+                                    Tìm kiếm nhân viên:
+                                    <br />
+                            </div>                            
+                            <form action="javascript:" class="search-bar">
+                                <input value={name} onChange={(e) => {onNameChange(e)}}type="search" name="search" pattern=".*\S.*" required />
+                                <button onClick={() => searchBuildingEmployeeByName()} class="search-btn" type="submit">
+                                    <span>Search</span>
+                                </button>
+                            </form>                            
                             <div style={{ right: '10px' }} className="admin-post__button">
                                 <button onClick={() => popUpAddForm()}>
                                     Thêm nhân viên mới
                                 </button>
                             </div>
+                        </div>
+                        <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
+                                Thông tin nhân viên tòa nhà
+                                <br />
                         </div>
                         <div className="admin-post__body">
                             <table id="admin-post__table">

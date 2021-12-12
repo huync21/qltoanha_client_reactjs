@@ -4,16 +4,17 @@ import '../css/form.css'
 import '../css/dialog.css'
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllService, createNewService, updateService, deleteService } from '../redux/actions/service';
+import { getAllService, createNewService, updateService, deleteService, getServiceByName } from '../redux/actions/service';
 import {saveServiceToRedux} from '../redux/actions/salary'
 import { Link } from 'react-router-dom';
 const Service = () =>{
-    const [isShow, setIsShow] = useState(false)
-    const data = useSelector(state => state.service.data)
+    const [isShow, setIsShow] = useState(false);
+    const data = useSelector(state => state.service.data);
     const [services, setServices] = useState(data);
     const [isAdd, setIsAdd] = useState(false);
     const location = useLocation();
     const [indexEditService, setIndexEditService] = useState(null);
+    const [name, setName] = useState(null);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -117,6 +118,16 @@ const Service = () =>{
         dispatch(saveServiceToRedux(service));
     }
     
+    const onNameChange = (e) => {
+        setName(e.target.value);
+        console.log('name changed', name);
+    }
+
+    const searchServiceByName = () => {
+        console.log('dispatching ',name);
+        dispatch(getServiceByName(name));
+    }
+
     return(
         <div style={{position: 'relative'}}>
             <div style={{display: isShow ? 'block' : 'none'}} className="modal">
@@ -154,15 +165,26 @@ const Service = () =>{
             <div style={{maxWidth: "1100px", minHeight: "100vh"}} className="admin-post__container">
                 <div className="admin-post__wrapper">
                     <div className="admin-post__head">
-                        <div style={{fontSize: "20px", marginLeft: "-20px"}} className="admin-post__title">
-                            Danh sách dịch vụ
+                            <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
+                                    Tìm kiếm dịch vụ:
+                                    <br />
+                            </div>                            
+                            <form action="javascript:" class="search-bar">
+                                <input value={name} onChange={(e) => {onNameChange(e)}}type="search" name="search" pattern=".*\S.*" required />
+                                <button onClick={() => searchServiceByName()} class="search-btn" type="submit">
+                                    <span>Search</span>
+                                </button>
+                            </form>                            
+                            <div style={{ right: '10px' }} className="admin-post__button">
+                                <button onClick={() => popUpActive()}>
+                                    Thêm dịch vụ mới
+                                </button>
+                            </div>
                         </div>
-                        <div style={{right: '10px'}} className="admin-post__button">
-                            <button onClick={() => popUpActive()}>
-                                Thêm dịch vụ
-                            </button>
+                        <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
+                                Thông tin các dịch vụ
+                                <br />
                         </div>
-                    </div>
                     <div className="admin-post__body">
                         <table id="admin-post__table">
                             <tbody>

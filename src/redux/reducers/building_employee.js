@@ -21,6 +21,13 @@ const buildingEmployeeReducers = (state = initState, payload) => {
                 success: true,
                 error: false,
             }
+        case 'GET_BUILDING_EMPLOYEE_BY_NAME':
+            return {
+                ...state,
+                data: payload.data,
+                success: true,
+                error: false
+            }            
         case 'ERROR':
             return {
                 ...state,

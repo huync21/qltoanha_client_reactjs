@@ -23,6 +23,13 @@ const serviceReducers = (state=initState, payload) => {
                 success: true,
                 error: false
             }
+        case 'GET_SERVICE_BY_NAME':
+            return {
+                ...state,
+                data: payload.data,
+                success: true,
+                error: false
+            }
         case POST:
             return {
                 ...state,

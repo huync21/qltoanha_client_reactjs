@@ -63,6 +63,39 @@ export const getServiceById = (id) => async dispatch => {
     }
 }
 
+export const getServiceByName = (name) => async dispatch => {
+    try {
+        console.log('dispatched: ',name);
+        const res = await axios({
+            method: 'GET',
+            baseURL: process.env.REACT_APP_URL_API,
+            url: `services/name/${name}`,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json" 
+            }
+        })
+        
+        if(res.status == 200){
+            console.log('dispatched: ');
+            dispatch({
+                type: 'GET_SERVICE_BY_NAME',
+                data: res.data
+            })
+        }
+        else {
+            dispatch({
+                type: ERROR,
+                data: null,
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type: ERROR,
+            data: null,
+        })
+    }
+}
 
 export const createNewService = (data) => async dispatch => {
     try {
