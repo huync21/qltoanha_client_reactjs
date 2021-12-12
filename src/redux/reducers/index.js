@@ -12,7 +12,7 @@ import statisticsRentedAreasReducers from './statistics_rented_areas';
 import rentedAreaReducers from './rented_area';
 import monthReducers from './month';
 import monthlyStatisticsReducers from './monthly_statistics';
-
+import monthlyStatisticsDetailReducers from './monthly_statistics_details';
 const reducers = combineReducers({
     login: loginReducers,
     company: companyReducers,
@@ -26,7 +26,8 @@ const reducers = combineReducers({
     statistic: statisticsReducers,
     statisticsRentedAreas: statisticsRentedAreasReducers,
     months: monthReducers,
-    monthlyStatistics: monthlyStatisticsReducers
+    monthlyStatistics: monthlyStatisticsReducers,
+    monthlyStatisticDetail: monthlyStatisticsDetailReducers
 });
 
 export default (state, action) => reducers(state, action);  

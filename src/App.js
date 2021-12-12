@@ -26,6 +26,7 @@ import Statistics from './components/Statistics';
 import StatisticsRentedAreas from './components/Statistics_RentedAreas';
 import Employee from './components/Employee';
 import MonthlyStatistics from './components/MonthlyStatistics';
+import MonthlyStatisticDetails from './components/MonthlyStatisticsDetails';
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
     return (
@@ -80,6 +81,9 @@ function App() {
                     </Route>
                     <Route path="/monthly-statistics">
                         <MonthlyStatistics/>
+                    </Route>
+                    <Route path="/monthly-statistics-details">
+                        <MonthlyStatisticDetails/>
                     </Route>
                     <Route path="/">
                         <Home />
