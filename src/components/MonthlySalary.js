@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../css/select_option.css'
 import { getAllMonth } from '../redux/actions/month';
-import { getAllMonthlyStatsOfCompanies } from '../redux/actions/monthly_statistics';
+import { getAllSalaryOfMonth } from '../redux/actions/monthly_salary';
 
 const MonthlySalary = () => {
     const monthlySalaries = useSelector(state => state.monthlySalary.data)
@@ -20,7 +20,7 @@ const MonthlySalary = () => {
     useEffect(() => {
         dispatch(getAllMonth())
         setTimeout(()=>{
-            dispatch(getAllMonthlyStatsOfCompanies(months[0]))
+            dispatch(getAllSalaryOfMonth(months[0]))
         },300)
     }, [location.pathname])
 
@@ -39,7 +39,7 @@ const MonthlySalary = () => {
             }
         })
         console.log("check",selectedMonthItem)
-        dispatch(getAllMonthlyStatsOfCompanies(selectedMonthItem))
+        dispatch(getAllSalaryOfMonth(selectedMonthItem))
         },100)
     }
 
@@ -98,7 +98,7 @@ const MonthlySalary = () => {
                                                 <td>{new Intl.NumberFormat('vi-VN', {
                                                     style: 'currency',
                                                     currency: 'VND',
-                                                }).format(item?.salary.id)}</td>
+                                                }).format(item?.salary)}</td>
                                                 
                                                 
                                             </tr>
