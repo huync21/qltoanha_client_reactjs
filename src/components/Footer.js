@@ -13,11 +13,11 @@ const Footer = () => {
             </div>
             <div className="footer-content">
                 <div className="footer-item footer-contact">
-                    <div className="footer-item-title">Contact Manage Company</div>
+                    <div className="footer-item-title">Manage Company And Employees</div>
                     <div className="footer-contact-container">
                         <div className="footer-contact-item footer-contact-facebook">
                             <div className="footer-contact-title">Facebook</div>
-                            <div className="footer-contact-content">Vũ Đình Công</div>    
+                            <div className="footer-contact-content">VŨ ĐÌNH CÔNG</div>    
                         </div>
                         <div className="footer-contact-item footer-contact-email">
                             <div className="footer-contact-title">
@@ -49,7 +49,7 @@ const Footer = () => {
                                 <i className='bx bxs-envelope footer-contact-icon'></i>
                                 Email
                             </div>
-                            <div className="footer-contact-content">daokynguyen@gmail.com</div>
+                            <div className="footer-contact-content">daokynguyen2000@gmail.com</div>
                         </div>
                         <div className="footer-contac-item footer-contact-phone">
                             <div className="footer-contact-title">
@@ -63,11 +63,11 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="footer-item footer-contact">
-                    <div className="footer-item-title">Manage Building </div>
+                    <div className="footer-item-title">Manage Floors And Contract </div>
                     <div className="footer-contact-container">
                         <div className="footer-contact-item footer-contact-facebook">
                             <div className="footer-contact-title">Facebook</div>
-                            <div className="footer-contact-content">Nguyễn QUANG HƯNG</div>    
+                            <div className="footer-contact-content">ĐÀO QUANG HƯNG</div>    
                         </div>
                         <div className="footer-contact-item footer-contact-email">
                             <div className="footer-contact-title">
@@ -88,18 +88,18 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="footer-item footer-contact">
-                    <div className="footer-item-title">Manage Building </div>
+                    <div className="footer-item-title">Manage Registerd Services </div>
                     <div className="footer-contact-container">
                         <div className="footer-contact-item footer-contact-facebook">
                             <div className="footer-contact-title">Facebook</div>
-                            <div className="footer-contact-content">Nguyễn Công Huy</div>    
+                            <div className="footer-contact-content">NGUYỄN CÔNG HUY</div>    
                         </div>
                         <div className="footer-contact-item footer-contact-email">
                             <div className="footer-contact-title">
                                 <i className='bx bxs-envelope footer-contact-icon'></i>
                                 Email
                             </div>
-                            <div className="footer-contact-content">nguyenconghuy@gmail.com</div>
+                            <div className="footer-contact-content">huync21@gmail.com</div>
                         </div>
                         <div className="footer-contac-item footer-contact-phone">
                             <div className="footer-contact-title">
