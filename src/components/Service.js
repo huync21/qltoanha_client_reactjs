@@ -82,6 +82,14 @@ const Service = () =>{
         const price = document.getElementById('price').value;
         const type = document.getElementById('type').value;
         
+        const validateIsRequired = validateMandatory(isRequired);
+        setIsMandatory(validateIsRequired);
+        const validateIsPrice = validatePrice(price);
+        setIsPrice(validateIsPrice);
+        console.log(validateIsPrice,validateIsRequired);
+        if(! (validateIsPrice&&validateIsRequired))
+            return;
+        
         const data = {
             name: name,
             required: isRequired,
@@ -118,6 +126,7 @@ const Service = () =>{
         setIsMandatory(validateIsRequired);
         const validateIsPrice = validatePrice(price);
         setIsPrice(validateIsPrice);
+        console.log(validateIsPrice,validateIsRequired);
         if(! (validateIsPrice&&validateIsRequired))
             return;
 
@@ -152,13 +161,14 @@ const Service = () =>{
     }
 
     const validateMandatory = (mandatory) => {
-        var regMandatory = /^(1|0)$/;
-        return mandatory.match(regMandatory);
+        return (mandatory==1||mandatory==0);
     }
 
     const validatePrice = (price) => {
-        var regPrice = /^\d{0,8}(\.\d{1,4})?$/;
-        return price.match(regPrice);
+        if(!isNaN(price) && price >0)
+            return true;
+        else
+            return false;
     }
 
     return(
