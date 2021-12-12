@@ -18,6 +18,8 @@ const Employee = () => {
     const location = useLocation();
     const [indexEditEmployee, setIndexEditEmployee] = useState(null);
     const [companyId, setCompanyId] = useState(0);
+    const [nameSearch, setNameSearch] = useState("");
+    const [isPhone, setIsPhone] = useState(true);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -64,6 +66,7 @@ const Employee = () => {
     }
 
     const addOrUpdateItem = () => {
+        setIsPhone(true);
         if (isAdd) {
             addItem();
         }
@@ -71,8 +74,6 @@ const Employee = () => {
             editEmployee();
         }
 
-        cancelClick();
-        window.location.reload();
     }
 
     const editEmployee = () => {
@@ -80,6 +81,11 @@ const Employee = () => {
         const dateOfBirth = document.getElementById('date').value;
         const socialId = document.getElementById('socialId').value;
         const phoneNo = document.getElementById('phone-no').value;
+        const validate = validatePhone(phoneNo);
+        setIsPhone(validate);
+        if(!validate)
+            return;
+
 
         const data = {
             name: name,
@@ -88,15 +94,29 @@ const Employee = () => {
             phoneNo: phoneNo,
             company: employees[indexEditEmployee].company
         }
-        console.log("employees[indexEditEmployee].id ", employees[indexEditEmployee].id)
+        
         dispatch(updateEmployee(employees[indexEditEmployee].id, data));
+        let tmpEmployees = employees;
+        tmpEmployees.name = name;
+        tmpEmployees.dateOfBirth = new Date(dateOfBirth);
+        tmpEmployees.socialId = socialId;
+        tmpEmployees.phoneNo = phoneNo;
+        tmpEmployees.company = employees[indexEditEmployee].company;
+        setEmployees(tmpEmployees);
+        cancelClick();
     }
 
     const removeEmployee = (id) => {
         if (id) {
             dispatch(deleteEmployee(id));
-            window.location.reload();
+            const tmpEmployees = employees.filter(emp => emp.id != id);
+            setEmployees(tmpEmployees);
         }
+    }
+
+    const validatePhone = (phoneNumber) => {
+        var regPhone = /^\d{10}$/;
+        return phoneNumber.match(regPhone);
     }
 
     const addItem = () => {
@@ -104,6 +124,10 @@ const Employee = () => {
         const dateOfBirth = document.getElementById('date').value;
         const socialId = document.getElementById('socialId').value;
         const phoneNo = document.getElementById('phone-no').value;
+        const validate = validatePhone(phoneNo);
+        setIsPhone(validate);
+        if(!validate)
+            return;
 
         const data = {
             name: name,
@@ -113,8 +137,15 @@ const Employee = () => {
         }
 
         dispatch(createEmployee(data, companyId));
-
+        window.location.reload();
         cancelClick();
+    }
+
+    const searchEmployee = () => {
+        if(nameSearch.trim().length == 0)
+            return;
+        const tmpEmployees = employees.filter(emp => emp.name.includes(nameSearch.trim()));
+        setEmployees(tmpEmployees);
     }
 
 
@@ -133,12 +164,14 @@ const Employee = () => {
                             </div>
                             <div className="form-post__field">
                                 <input style={{ width: '100%' }} type="text" id='date' placeholder="date of birth: mm/dd/yyyy" />
+                                <span style={{display: "none"}}>Vui lòng nhập đúng định dạng</span>
                             </div>
                             <div className="form-post__field">
                                 <input style={{ width: '100%' }} type="text" id='socialId' placeholder="social id"/>
                             </div>
                             <div className="form-post__field">
                                 <input style={{ width: '100%' }} type="text" id='phone-no' placeholder="Phone No" />
+                                <span style={{display: isPhone ? "none" : ""}} className='validate-phone'>Sai định dạng số điện thoại</span>
                             </div>
                         </div>
                         <div className="form-post__control">
@@ -159,6 +192,12 @@ const Employee = () => {
                         <div style={{ fontSize: "20px", marginLeft: "-20px" }} className="admin-post__title">
                             Danh sách nhân viên
                         </div>
+                        <form action="javascript:" class="search-bar">
+                            <input placeholder='Tìm kiếm nhân viên theo tên' type="search" name="search" pattern=".*\S.*" required onChange={(e) => setNameSearch(e.target.value)}/>
+                            <button onClick={() => searchEmployee()} class="search-btn" type="submit">
+                                <span>Search</span>
+                            </button>
+                        </form> 
                         <div style={{ right: '10px' }} className="admin-post__button">
                             <button onClick={() => popUpActive()}>
                                 Thêm nhân viên

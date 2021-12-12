@@ -87,7 +87,7 @@ const Home = () => {
                             <h3>
                                 Quản lý các công ty thuê tại tòa nhà
                             </h3>
-                            <p>Thực hiện bởi VŨ ĐÌNH CÔNG - B18DCCN???, cho phép quản lý danh sách các công ty thuê mặt bằng trong tòa nhà cũng như quản lý các nhân viên của công ty
+                            <p>Thực hiện bởi VŨ ĐÌNH CÔNG - B18DCCN062, cho phép quản lý danh sách các công ty thuê mặt bằng trong tòa nhà cũng như quản lý các nhân viên của công ty
                             </p>
                         </div>
                     </div>
