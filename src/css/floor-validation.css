@@ -1,0 +1,14 @@
+.empty::after {
+    content: "Không được bỏ trống ô này";
+    color: red;
+    font-size: 12px;
+
+    font-weight: lighter;
+}
+.numError::after {
+    content: "Vui lòng điền giá trị số";
+    color: red;
+    font-size: 12px;
+
+    font-weight: lighter;
+}
