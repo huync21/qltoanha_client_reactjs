@@ -87,7 +87,7 @@ const Home = () => {
                             <h3>
                                 Quản lý các công ty thuê tại tòa nhà
                             </h3>
-                            <p>Thực hiện bởi VŨ THÀNH CÔNG - B18DCCN???, cho phép quản lý danh sách các công ty thuê mặt bằng trong tòa nhà cũng như quản lý các nhân viên của công ty
+                            <p>Thực hiện bởi VŨ ĐÌNH CÔNG - B18DCCN???, cho phép quản lý danh sách các công ty thuê mặt bằng trong tòa nhà cũng như quản lý các nhân viên của công ty
                             </p>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ const Home = () => {
                             <h3>
                                 Quản lý các đầu mục dịch vụ, mức lương và nhân viên tòa nhà
                             </h3>
-                            <p>Thực hiện bởi ĐÀO KỈ NGUYÊN - B18DCCN??? cho phép quản lý các đầu mục dịch vụ, mức lương của mỗi đầu mục dịch vụ và
+                            <p>Thực hiện bởi ĐÀO KỶ NGUYÊN - B18DCCN458 cho phép quản lý các đầu mục dịch vụ, mức lương của mỗi đầu mục dịch vụ và
                                 các nhân viên cung cấp dịch vụ trong tòa nhà 
                             </p>
                         </div>
