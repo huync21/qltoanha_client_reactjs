@@ -206,7 +206,10 @@ const Salary = () => {
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{item?.salaryLevel}</td>
-                                                <td>{item?.salary}</td>
+                                                <td>{new Intl.NumberFormat('vi-VN', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    }).format(item?.salary)}</td>
                                                 <td>
                                                     <button onClick={() => popUpEditForm(index)} className="post-edit-item-btn">
                                                         <i className='bx bxs-pencil'></i>

@@ -254,7 +254,10 @@ const Service = () =>{
                                             <td>{index+1}</td>
                                             <td>{item.name}</td>
                                             <td>{item.required===1 ? "Có": "Không"}</td>
-                                            <td>{item.price}</td>
+                                            <td>{new Intl.NumberFormat('vi-VN', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    }).format(item?.price)}</td>
                                             <td>{item.type}</td>
                                             {/* <td>{item?.numberOfEmployee}</td> */}
                                             {/* <td>
