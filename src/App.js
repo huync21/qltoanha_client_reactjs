@@ -28,6 +28,7 @@ import Employee from './components/Employee';
 import MonthlyStatistics from './components/MonthlyStatistics';
 import MonthlyStatisticDetails from './components/MonthlyStatisticsDetails';
 import MonthlySalary from './components/MonthlySalary';
+import Work from './components/Work';
 function App() {
     // const isAdmin = useSelector(state => state.login.isAdmin);
     return (
@@ -88,6 +89,9 @@ function App() {
                     </Route>
                     <Route path="/monthly-salary">
                         <MonthlySalary/>
+                    </Route>
+                    <Route path="/work">
+                        <Work/>
                     </Route>
                     <Route path="/">
                         <Home />

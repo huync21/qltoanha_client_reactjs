@@ -14,6 +14,7 @@ import monthReducers from './month';
 import monthlyStatisticsReducers from './monthly_statistics';
 import monthlyStatisticsDetailReducers from './monthly_statistics_details';
 import monthlySalaryReducers from './monthly_salary';
+import workReducers from './work';
 const reducers = combineReducers({
     login: loginReducers,
     company: companyReducers,
@@ -29,7 +30,8 @@ const reducers = combineReducers({
     months: monthReducers,
     monthlyStatistics: monthlyStatisticsReducers,
     monthlyStatisticDetail: monthlyStatisticsDetailReducers,
-    monthlySalary: monthlySalaryReducers
+    monthlySalary: monthlySalaryReducers,
+    work: workReducers,
 });
 
 export default (state, action) => reducers(state, action);  

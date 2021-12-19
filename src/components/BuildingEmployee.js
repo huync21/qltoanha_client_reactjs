@@ -1,14 +1,9 @@
-
-// Fix dob not showing up on Edit form
-// Add salary update for employee
-// useDispatch instead of windows.reload
 import React, {useState, useEffect} from 'react';
 import '../css/company.css'
 import '../css/form.css'
 import '../css/dialog.css'
 import '../css/search_bar.css'
 import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { getSalaryById, getAllSalary } from '../redux/actions/salary';
@@ -100,7 +95,7 @@ const BuildingEmployee = () => {
         document.getElementById('address').value = ""
         document.getElementById('dob').value = ""
         document.getElementById('phone-no').value = ""
-        document.getElementById('position').value = ""
+        document.getElementById('position').textContent = ""
         document.getElementById('salary-id').textContent = ""
         
     }
@@ -135,7 +130,7 @@ const BuildingEmployee = () => {
         setIsPhone(validate);
         if(!validate)
             return;
-        const position = document.getElementById('position').value;
+        const position = document.getElementById('position').textContent;
         const salaryId = document.getElementById('salary-id').textContent;
         // console.log('about to run', salaryId);
         // setTimeout(() => {setSalary(salaryData); console.log('salary updated: ',salary)}, 600);
@@ -167,9 +162,8 @@ const BuildingEmployee = () => {
         if(!validate)
             return;
         
-        const position = document.getElementById('position').value;
+        const position = document.getElementById('position').textContent;
         const salaryId = document.getElementById('salary-id').textContent;
-        console.log('salaryID=',salaryId);
         const data = {
             address: address,
             name: name,
@@ -195,7 +189,17 @@ const BuildingEmployee = () => {
     const salaryChosen = (item) => {
         setShowSalaryPopUp(false);
         document.querySelector('.salary__id').textContent = item.id;
-
+        switch(item.salaryLevel){
+            case 1:
+                document.querySelector('.position__id').textContent = "Nhân viên " + item.service.name;
+                break;
+            case 2:
+                document.querySelector('.position__id').textContent = "Phó phòng " + item.service.name;
+                break;
+            case 3:
+                document.querySelector('.position__id').textContent = "Trưởng phòng " + item.service.name;
+                break;                
+        }
     }
 
     const onNameChange = (e) => {
@@ -244,7 +248,7 @@ const BuildingEmployee = () => {
                                 </div>
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>Vị trí</strong></p>
-                                    <input style={{ width: '100%' }} type="text" id='position' />
+                                    <div className = "position__id" id="position" style={{display: 'block', width: '100%', textAlign:'left',border:'1px solid #bbbbbb',borderRadius:'5px', textIndent:"10px", height: "38px"}}/>
                                 </div>
                                 <div className="form-post__field">
                                     <p style={{ textAlign: "left" }}><strong>ID mức lương</strong></p>
@@ -313,7 +317,7 @@ const BuildingEmployee = () => {
                                 <button onClick={() => searchBuildingEmployeeByName()} class="search-btn" type="submit">
                                     <span>Search</span>
                                 </button>
-                            </form>                            
+                            </form>
                             <div style={{ right: '10px' }} className="admin-post__button">
                                 <button onClick={() => popUpAddForm()}>
                                     Thêm nhân viên mới
